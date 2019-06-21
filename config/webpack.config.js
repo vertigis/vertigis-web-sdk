@@ -1,10 +1,12 @@
 // @ts-check
 "use strict";
 
+const path = require("path");
 const paths = require("./paths");
 const webpack = require("webpack");
 
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const HtmlWebPackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
 const isProdMode = process.env.NODE_ENV === "production";
@@ -13,13 +15,14 @@ module.exports = {
     mode: isProdMode ? "production" : "development",
     context: paths.projPath,
     devtool: isProdMode ? false : "eval",
-    entry: paths.projSrc,
     resolve: {
-        extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
+        extensions: paths.moduleFileExtensions,
     },
+    entry: paths.projIndexJs,
     externals: [/^esri\/.+$/, /^@geocortex\/.+$/],
     output: {
         libraryTarget: "amd",
+        publicPath: ".",
     },
     optimization: {
         minimize: isProdMode,
@@ -62,6 +65,11 @@ module.exports = {
         // Define process.env variables that should be made available in source code.
         new webpack.DefinePlugin({
             "process.env.NODE_ENV": process.env.NODE_ENV,
+        }),
+
+        // Generates an `index.html` file with the <script> injected.
+        new HtmlWebPackPlugin({
+            template: path.resolve(paths.ownPath, "lib", "index.html"),
         }),
     ].filter(Boolean),
     node: {
