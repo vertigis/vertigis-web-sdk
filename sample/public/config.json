@@ -1,0 +1,14 @@
+{
+    "schemaVersion": "1.0",
+    "settings": {
+        "XMLNS_LAYOUT_CUSTOM": "custom.foo"
+    },
+    "items": [
+        {
+            "id": "test",
+            "$type": "component",
+            "namespace": "setting://XMLNS_LAYOUT_CUSTOM",
+            "location": "@custom"
+        }
+    ]
+}

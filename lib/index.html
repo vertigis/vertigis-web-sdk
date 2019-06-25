@@ -26,6 +26,48 @@
         </style>
     </head>
     <body>
-        <iframe src="/viewer/index.html" />
+        <script>
+            function iframeLoaded(event) {
+                const webpackFiles = <%= JSON.stringify(htmlWebpackPlugin.files) %>;
+                const iframeDocument = event.target.contentDocument;
+                const iframeWindow = event.target.contentWindow;
+
+                if (!iframeWindow.require) {
+                    console.error("Geocortex Web frame failed to load");
+                    return;
+                }
+
+                function getAbsoluteUrl(relativePath) {
+                    const a = document.createElement("a");
+                    a.href = relativePath;
+                    return a.href;
+                }
+
+                let script;
+
+                for (const file of webpackFiles.js) {
+                    script = iframeDocument.createElement("script");
+                    script.src = getAbsoluteUrl(file);
+                    iframeDocument.head.appendChild(script);
+                }
+
+                script.onload = () => {
+                    iframeWindow.require(["gwv"], function(webViewer) {
+                        webViewer.bootstrap({
+                            appConfig: getAbsoluteUrl("app.json"),
+                            layout: getAbsoluteUrl("layout.xml"),
+                            viewerConfig: {
+                                import: [
+                                    "/viewer/config/common.json",
+                                    "/viewer/config/web.json",
+                                    getAbsoluteUrl("config.json"),
+                                ],
+                            },
+                        });
+                    });
+                };
+            }
+        </script>
+        <iframe src="/viewer/index.html#no-bootstrap" onload="iframeLoaded(event)"></iframe>
     </body>
 </html>

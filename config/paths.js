@@ -25,6 +25,7 @@ const resolveOwn = relativePath => path.resolve(__dirname, "..", relativePath);
 module.exports = {
     projIndexJs: resolveModule(resolveApp, "src/index"),
     projPath: resolveApp("."),
+    projPublicDir: resolveApp("public"),
     projSrc: resolveApp("src"),
     ownPath: resolveOwn("."),
 };
