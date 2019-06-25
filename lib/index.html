@@ -27,6 +27,10 @@
     </head>
     <body>
         <script>
+            function iframeLoadStart(event) {
+                console.log(event);
+            }
+
             function iframeLoaded(event) {
                 const webpackFiles = <%= JSON.stringify(htmlWebpackPlugin.files) %>;
                 const iframeDocument = event.target.contentDocument;
@@ -37,22 +41,28 @@
                     return;
                 }
 
-                function getAbsoluteUrl(relativePath) {
-                    const a = document.createElement("a");
-                    a.href = relativePath;
-                    return a.href;
-                }
 
-                let script;
+                iframeWindow.require(["gwv"], function(webViewer) {
+                    function getAbsoluteUrl(relativePath) {
+                        const a = document.createElement("a");
+                        a.href = relativePath;
+                        return a.href;
+                    }
 
-                for (const file of webpackFiles.js) {
-                    script = iframeDocument.createElement("script");
-                    script.src = getAbsoluteUrl(file);
-                    iframeDocument.head.appendChild(script);
-                }
+                    let script;
 
-                script.onload = () => {
-                    iframeWindow.require(["gwv"], function(webViewer) {
+                    // Don't add scripts until all viewer dependencies are satisified and evaluated
+                    // as this gives opportunity for Web to inject the necessary AMD plugin
+                    for (const file of webpackFiles.js) {
+                        script = iframeDocument.createElement("script");
+                        script.type = "text/javascript";
+                        script.src = getAbsoluteUrl(file);
+                        iframeDocument.body.appendChild(script);
+                    }
+
+                    // Wait for our custom code to have been loaded before boostrapping the app
+                    // so it defines the appropriate module to the AMD loader
+                    script.onload = () => {
                         webViewer.bootstrap({
                             appConfig: getAbsoluteUrl("app.json"),
                             layout: getAbsoluteUrl("layout.xml"),
@@ -64,10 +74,33 @@
                                 ],
                             },
                         });
-                    });
-                };
+                    };
+                });
             }
         </script>
-        <iframe src="/viewer/index.html#no-bootstrap" onload="iframeLoaded(event)"></iframe>
+        <iframe
+            src="/viewer/index.html#no-bootstrap"
+            onload="iframeLoaded(event)"
+            onloadstart="iframeLoadStart(event)"
+        ></iframe>
+        <script>
+            (function() {
+                const iframe = document.querySelector("iframe");
+                const iframeDocument = iframe.contentDocument;
+                const iframeWindow = iframe.contentWindow;
+
+                const hookReactDevTools = () => {
+                    // Hook in React Dev Tools support
+                    iframeWindow.__REACT_DEVTOOLS_GLOBAL_HOOK__ =
+                        window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+                };
+
+                if (iframeDocument.readyState === "loading") {
+                    iframe.contentDocument.addEventListener("DOMContentLoaded", hookReactDevTools);
+                } else {
+                    hookReactDevTools();
+                }
+            })();
+        </script>
     </body>
 </html>
