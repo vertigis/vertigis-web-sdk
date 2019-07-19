@@ -9,25 +9,37 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
-const isProdMode = process.env.NODE_ENV === "production";
+const isEnvProduction = process.env.NODE_ENV === "production";
+const libraryName = require(path.join(paths.projPath, "package.json")).name || "custom-library";
 
 module.exports = {
-    mode: isProdMode ? "production" : "development",
+    mode: isEnvProduction ? "production" : "development",
     context: paths.projPath,
-    devtool: isProdMode ? false : "eval",
+    devtool: isEnvProduction ? false : "eval",
     resolve: {
         extensions: paths.moduleFileExtensions,
     },
     entry: paths.projIndexJs,
     externals: [/^esri\/.+$/, /^@geocortex\/.+$/, "react", "react-dom"],
     output: {
-        library: "@custom",
+        // `library` will be automatically concatenated with `output.jsonpFunction`s value.
+        // It's important to have a unique `jsonpFunction` value to allow multiple webpack
+        // runtimes on the same page.
+        library: "@custom" || libraryName,
         libraryTarget: "amd",
         publicPath: ".",
-        jsonpFunction: "sdk",
+        // TODO: remove this when upgrading to webpack 5
+        futureEmitAssets: true,
+        // There will be one main bundle, and one file per asynchronous chunk.
+        // In development, it does not produce real files.
+        filename: isEnvProduction ? "static/js/[name].[contenthash:8].js" : "static/js/[name].js",
+        // There are also additional JS chunk files if you use code splitting.
+        chunkFilename: isEnvProduction
+            ? "static/js/[name].[contenthash:8].chunk.js"
+            : "static/js/[name].chunk.js",
     },
     optimization: {
-        minimize: isProdMode,
+        minimize: isEnvProduction,
         // This is only used in production mode
         minimizer: [
             // Minify JS output
@@ -42,9 +54,6 @@ module.exports = {
         splitChunks: {
             chunks: "all",
         },
-        // Keep the runtime chunk separated to enable long term caching
-        // https://twitter.com/wSokra/status/969679223278505985
-        // runtimeChunk: true,
     },
     module: {
         strictExportPresence: true,
@@ -77,7 +86,7 @@ module.exports = {
                             // It enables caching results in ./node_modules/.cache/babel-loader/
                             // directory for faster rebuilds.
                             cacheDirectory: true,
-                            cacheCompression: isProdMode,
+                            cacheCompression: isEnvProduction,
                         },
                     },
                     // "file" loader makes sure those assets get served by WebpackDevServer.
@@ -103,7 +112,7 @@ module.exports = {
         ],
     },
     plugins: [
-        isProdMode && new CleanWebpackPlugin(),
+        isEnvProduction && new CleanWebpackPlugin(),
 
         // Define process.env variables that should be made available in source code.
         new webpack.DefinePlugin({
