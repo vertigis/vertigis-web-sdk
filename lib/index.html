@@ -26,11 +26,8 @@
         </style>
     </head>
     <body>
+        <iframe src="/viewer/index.html#no-bootstrap" onload="iframeLoaded(event)"></iframe>
         <script>
-            function iframeLoadStart(event) {
-                console.log(event);
-            }
-
             function iframeLoaded(event) {
                 const webpackFiles = <%= JSON.stringify(htmlWebpackPlugin.files) %>;
                 const iframeDocument = event.target.contentDocument;
@@ -77,13 +74,7 @@
                     };
                 });
             }
-        </script>
-        <iframe
-            src="/viewer/index.html#no-bootstrap"
-            onload="iframeLoaded(event)"
-            onloadstart="iframeLoadStart(event)"
-        ></iframe>
-        <script>
+
             (function() {
                 const iframe = document.querySelector("iframe");
                 const iframeDocument = iframe.contentDocument;
