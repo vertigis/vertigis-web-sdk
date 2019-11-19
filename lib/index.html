@@ -38,8 +38,7 @@
                     return;
                 }
 
-
-                iframeWindow.require(["gwv"], function(webViewer) {
+                iframeWindow.require(["require", "gwv"], function(require, webViewer) {
                     function getAbsoluteUrl(relativePath) {
                         const a = document.createElement("a");
                         a.href = relativePath;
@@ -60,16 +59,27 @@
                     // Wait for our custom code to have been loaded before boostrapping the app
                     // so it defines the appropriate module to the AMD loader
                     script.onload = () => {
-                        webViewer.bootstrap({
-                            appConfig: getAbsoluteUrl("app.json"),
-                            layout: getAbsoluteUrl("layout.xml"),
-                            viewerConfig: {
-                                import: [
-                                    "/viewer/config/common.json",
-                                    "/viewer/config/web.json",
-                                    getAbsoluteUrl("config.json"),
+                        require([
+                            "@geocortex/web-viewer!/viewer-common",
+                            "@geocortex/web-viewer!/web",
+                            "@custom"
+                        ], (
+                            commonLibrary,
+                            webOrMobileLibrary,
+                            customLibrary
+                        ) => {
+                            const options ={
+                                appConfig: getAbsoluteUrl("app.json"),
+                                layout: getAbsoluteUrl("layout.xml"),
+                                libraries: [
+                                    commonLibrary.default,
+                                    webOrMobileLibrary.default,
+                                    // TODO: There isn't a .default property here like we would expect
+                                    customLibrary
                                 ],
-                            },
+                            }
+
+                            webViewer.bootstrap(options);
                         });
                     };
                 });

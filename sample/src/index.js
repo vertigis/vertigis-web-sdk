@@ -1,12 +1,28 @@
-import React from "react";
-import { LayoutElement } from "@geocortex/web-viewer!/framework/components";
+import Test, { TestModel } from "./components/Test";
 
-export function Test(props) {
-    return (
-        <LayoutElement {...props}>
-            <div>
-                <img src="https://www.reactiongifs.us/wp-content/uploads/2013/07/its_working_star_wars.gif" />
-            </div>
-        </LayoutElement>
-    );
+const LAYOUT_NAMESPACE = "custom.foo";
+
+export default function(registry) {
+    registerComponents(registry);
+    registerServices(registry);
+    registerModels(registry);
+}
+
+function registerComponents(registry) {
+    registry.registerComponent({
+        name: "test",
+        namespace: LAYOUT_NAMESPACE,
+        getComponentType: () => Test,
+        itemType: "test-model",
+        title: "Test Component",
+    });
+}
+
+function registerServices(registry) {}
+
+function registerModels(registry) {
+    registry.registerModel({
+        getModelType: () => TestModel,
+        itemType: "test-model",
+    });
 }
