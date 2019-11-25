@@ -30,6 +30,7 @@
         <script>
             function iframeLoaded(event) {
                 const webpackFiles = <%= JSON.stringify(htmlWebpackPlugin.files) %>;
+                const customLibraryName = <%= JSON.stringify(htmlWebpackPlugin.options.libraryName) %>;
                 const iframeDocument = event.target.contentDocument;
                 const iframeWindow = event.target.contentWindow;
 
@@ -62,7 +63,7 @@
                         require([
                             "@geocortex/web-viewer!/viewer-common",
                             "@geocortex/web-viewer!/web",
-                            "@custom"
+                            customLibraryName
                         ], (
                             commonLibrary,
                             webOrMobileLibrary,
