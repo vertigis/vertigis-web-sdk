@@ -5,7 +5,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "geocortex-web-sdk"
+        "build": "geocortex-web-sdk build",
+        "start": "geocortex-web-sdk start"
     },
     "dependencies": {
         "geocortex-web-sdk": "file:../"
