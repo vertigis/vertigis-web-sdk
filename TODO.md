@@ -1,0 +1,1 @@
+-   Check GVF for enums as these have runtime implications - use string union instead
