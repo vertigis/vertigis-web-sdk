@@ -1,4 +1,4 @@
-import { ComponentModelBase, serializable } from "@geocortex/web-viewer!/framework/models";
+import { ComponentModelBase, serializable } from "@geocortex/web/models";
 
 class TestModel extends ComponentModelBase {}
 

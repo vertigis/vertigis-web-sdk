@@ -1,5 +1,5 @@
 import React from "react";
-import { LayoutElement } from "@geocortex/web-viewer!/framework/components";
+import { LayoutElement } from "@geocortex/web/components";
 
 export default function Test(props) {
     return (
