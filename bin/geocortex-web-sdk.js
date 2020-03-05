@@ -12,7 +12,9 @@ const nodeArgs = scriptIndex > 0 ? args.slice(0, scriptIndex) : [];
 if (["build", "start"].includes(script)) {
     const result = spawn.sync(
         "node",
-        nodeArgs.concat(require.resolve("./scripts/" + script)).concat(args.slice(scriptIndex + 1)),
+        nodeArgs
+            .concat(require.resolve("../scripts/" + script))
+            .concat(args.slice(scriptIndex + 1)),
         { stdio: "inherit" }
     );
     if (result.signal) {

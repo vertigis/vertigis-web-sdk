@@ -18,10 +18,10 @@ const resolveModule = (resolveFn, filePath) => {
 
     return resolveFn(`${filePath}.js`);
 };
-const appDirectory = fs.realpathSync(process.cwd());
+const appDirectory = fs.realpathSync(process.env.SDK_SOURCE || process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
-// Up 2 from "lib/config/"
-const resolveOwn = relativePath => path.resolve(__dirname, "..", "..", relativePath);
+// Up 1 from "config/"
+const resolveOwn = relativePath => path.resolve(__dirname, "..", relativePath);
 
 module.exports = {
     projBuild: resolveApp("build"),

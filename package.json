@@ -1,5 +1,5 @@
 {
-    "name": "geocortex-web-sdk",
+    "name": "@geocortex/web-sdk",
     "private": true,
     "version": "0.1.0",
     "description": "SDK for Geocortex Web",
@@ -9,9 +9,12 @@
     "files": [
         "lib"
     ],
-    "bin": "lib/index.js",
+    "bin": {
+        "geocortex-web-sdk": "bin/index.js"
+    },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "build": "SDK_SOURCE=$(pwd)/sample node bin/geocortex-web-sdk.js build",
+        "start": "SDK_SOURCE=$(pwd)/sample node bin/geocortex-web-sdk.js start"
     },
     "author": "",
     "license": "UNLICENSED",

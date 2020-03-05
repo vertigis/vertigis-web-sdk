@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "module": "esnext",
+        "target": "es2018",
+        "lib": ["es2018", "dom", "dom.iterable"],
+        "jsx": "preserve",
+        "esModuleInterop": true,
+        "isolatedModules": true,
+        "moduleResolution": "node",
+        "noEmit": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "noImplicitAny": false,
+        "skipLibCheck": true,
+        "strict": true,
+        "suppressImplicitAnyIndexErrors": true
+    },
+    "include": ["src"]
+}
