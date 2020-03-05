@@ -13,9 +13,11 @@ process.on("unhandledRejection", err => {
 });
 
 const chalk = require("chalk");
+const formatWebpackMessages = require("react-dev-utils/formatWebpackMessages");
 const webpack = require("webpack");
 
 const webpackConfig = require("../config/webpack.config");
+
 function build() {
     console.log("Creating an optimized production build...");
 
@@ -38,12 +40,14 @@ function build() {
                         "\nCompileError: Begins at CSS selector " + err["postcssNode"].selector;
                 }
 
-                messages = {
+                messages = formatWebpackMessages({
                     errors: [errMessage],
                     warnings: [],
-                };
+                });
             } else {
-                messages = stats.toJson({ all: false, warnings: true, errors: true });
+                messages = formatWebpackMessages(
+                    stats.toJson({ all: false, warnings: true, errors: true })
+                );
             }
             if (messages.errors.length) {
                 // Only keep the first error. Others are often indicative
@@ -65,6 +69,13 @@ function build() {
                     )
                 );
                 return reject(new Error(messages.warnings.join("\n\n")));
+            }
+
+            if (messages.warnings.length) {
+                console.log(chalk.yellow("Compiled with warnings.\n"));
+                console.log(messages.warnings.join("\n\n"));
+            } else {
+                console.log(chalk.green("Compiled successfully.\n"));
             }
 
             resolve();

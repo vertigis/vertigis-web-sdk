@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 // @ts-check
 "use strict";
 
@@ -9,8 +10,8 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
-const isEnvProduction = process.env.NODE_ENV === "production";
 const isEnvDevelopment = process.env.NODE_ENV === "development";
+const isEnvProduction = process.env.NODE_ENV === "production";
 const libraryName = require(path.join(paths.projPath, "package.json")).name || "custom-library";
 
 // TODO: Enforce single bundle - to load via portal we need a singular request as they don't support .js,
@@ -55,6 +56,30 @@ module.exports = {
     module: {
         strictExportPresence: true,
         rules: [
+            // First, run the linter.
+            // It's important to do this before Babel processes the JS.
+            {
+                test: /\.(js|jsx|ts|tsx)$/,
+                enforce: "pre",
+                use: [
+                    {
+                        options: {
+                            cache: true,
+                            emitWarning: true,
+                            eslintPath: require.resolve("eslint"),
+                            formatter: require.resolve("react-dev-utils/eslintFormatter"),
+                            resolvePluginsRelativeTo: __dirname,
+                            ignore: true,
+                            baseConfig: {
+                                extends: [path.join(__dirname, ".eslintrc.js")],
+                            },
+                            useEslintrc: true,
+                        },
+                        loader: require.resolve("eslint-loader"),
+                    },
+                ],
+                include: paths.appSrc,
+            },
             {
                 // "oneOf" will traverse all following loaders until one will
                 // match the requirements. When no loader matches it will fall
@@ -103,6 +128,7 @@ module.exports = {
         fs: "empty",
         net: "empty",
         tls: "empty",
+        // eslint-disable-next-line @typescript-eslint/camelcase
         child_process: "empty",
     },
 };
