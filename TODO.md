@@ -1,1 +1,7 @@
--   Check GVF for enums as these have runtime implications - use string union instead
+-   Project creation CLI
+-   Reference `@vertigis/web` npm package
+-   Change from `webzoo.latitudegeo.com` to `apps.geocortex.com` for the default web viewer url
+-   Think about supporting injecting libraries via URL to simplify SDK
+    -   Iframe page likely no longer necessary
+    -   Better future compat
+    -   **Would have to be careful about XSS attacks by providing a malicious URL to unsuspecting user**

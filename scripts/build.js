@@ -18,7 +18,7 @@ const webpack = require("webpack");
 
 const webpackConfig = require("../config/webpack.config");
 
-function build() {
+const build = () => {
     console.log("Creating an optimized production build...");
 
     const compiler = webpack(webpackConfig);
@@ -76,14 +76,23 @@ function build() {
                 console.log(messages.warnings.join("\n\n"));
             } else {
                 console.log(chalk.green("Compiled successfully.\n"));
+                console.log(
+                    `Your production build was created inside the ${chalk.cyan("build")} folder.`
+                );
+                // TODO: Update link when available
+                console.log(
+                    `You can learn more about deploying your custom code at ${chalk.cyan(
+                        "https://geocortex.github.io/dev-center/docs/web/overview"
+                    )}`
+                );
             }
 
             resolve();
         });
     });
-}
+};
 
-(async function() {
+(async () => {
     try {
         await build();
     } catch (e) {

@@ -1,20 +1,24 @@
 {
-    "name": "@geocortex/web-sdk",
-    "private": true,
+    "name": "@vertigis/web-sdk",
     "version": "0.1.0",
-    "description": "SDK for Geocortex Web",
+    "description": "The SDK for extending Geocortex Web",
     "engines": {
-        "node": ">=10.17.0"
+        "node": ">=12.13.1"
     },
     "files": [
-        "lib"
+        "bin",
+        "config",
+        "lib",
+        "scripts",
+        "template"
     ],
     "bin": {
-        "geocortex-web-sdk": "bin/index.js"
+        "vertigis-web-sdk": "bin/vertigis-web-sdk.js"
     },
     "scripts": {
-        "build": "SDK_SOURCE=$(pwd)/sample node bin/geocortex-web-sdk.js build",
-        "start": "SDK_SOURCE=$(pwd)/sample node bin/geocortex-web-sdk.js start"
+        "build": "SDK_SOURCE=$(pwd) node bin/vertigis-web-sdk.js build",
+        "create": "SDK_SOURCE=$(pwd) node bin/vertigis-web-sdk.js create",
+        "start": "SDK_SOURCE=$(pwd) node bin/vertigis-web-sdk.js start"
     },
     "author": "",
     "license": "UNLICENSED",
@@ -37,6 +41,7 @@
         "eslint-config-prettier": "^6.10.0",
         "eslint-loader": "^3.0.3",
         "eslint-plugin-react": "^7.18.3",
+        "fs-extra": "^9.0.0",
         "html-webpack-plugin": "^3.2.0",
         "react-dev-utils": "^10.2.0",
         "terser-webpack-plugin": "^2.3.4",

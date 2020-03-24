@@ -28,7 +28,14 @@ module.exports = {
         extensions: paths.moduleFileExtensions,
     },
     entry: paths.projEntry,
-    externals: [/^dojo\/.+$/, /^esri\/.+$/, /^@geocortex\/.+$/, "react", "react-dom"],
+    externals: [
+        /^dojo\/.+$/,
+        /^esri\/.+$/,
+        /^@geocortex\/.+$/,
+        /^@vertigis\/.+$/,
+        "react",
+        "react-dom",
+    ],
     output: {
         // `library` will be automatically concatenated with `output.jsonpFunction`s value.
         // It's important to have a unique `jsonpFunction` value to allow multiple webpack
@@ -60,6 +67,7 @@ module.exports = {
             // It's important to do this before Babel processes the JS.
             {
                 test: /\.(js|jsx|ts|tsx)$/,
+                include: paths.projSrc,
                 enforce: "pre",
                 use: [
                     {
@@ -78,7 +86,7 @@ module.exports = {
                         loader: require.resolve("eslint-loader"),
                     },
                 ],
-                include: paths.appSrc,
+                include: paths.projSrc,
             },
             {
                 // "oneOf" will traverse all following loaders until one will
@@ -89,7 +97,7 @@ module.exports = {
                     // The preset includes JSX, Flow, TypeScript, and some ESnext features.
                     {
                         test: /\.(js|jsx|ts|tsx)$/,
-                        include: paths.appSrc,
+                        include: paths.projSrc,
                         loader: require.resolve("babel-loader"),
                         options: {
                             babelrc: false,

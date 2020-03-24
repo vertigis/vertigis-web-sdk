@@ -1,0 +1,13 @@
+{
+    "name": "sample",
+    "private": true,
+    "version": "1.0.0",
+    "description": "",
+    "license": "UNLICENSED",
+    "author": "",
+    "scripts": {
+        "build": "vertigis-web-sdk build",
+        "start": "vertigis-web-sdk start"
+    },
+    "dependencies": {}
+}

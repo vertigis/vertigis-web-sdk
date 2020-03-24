@@ -65,7 +65,7 @@ devServer.listen(serverConfig.port, serverConfig.host, err => {
     }
 });
 
-["SIGINT", "SIGTERM"].forEach(function(signal) {
+["SIGINT", "SIGTERM"].forEach(signal => {
     process.on(signal, () => {
         devServer.close(() => {
             process.exit();
