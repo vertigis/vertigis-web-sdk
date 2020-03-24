@@ -7,6 +7,7 @@ const paths = require("./paths");
 const webpack = require("webpack");
 
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
@@ -63,31 +64,6 @@ module.exports = {
     module: {
         strictExportPresence: true,
         rules: [
-            // First, run the linter.
-            // It's important to do this before Babel processes the JS.
-            {
-                test: /\.(js|jsx|ts|tsx)$/,
-                include: paths.projSrc,
-                enforce: "pre",
-                use: [
-                    {
-                        options: {
-                            cache: true,
-                            emitWarning: true,
-                            eslintPath: require.resolve("eslint"),
-                            formatter: require.resolve("react-dev-utils/eslintFormatter"),
-                            resolvePluginsRelativeTo: __dirname,
-                            ignore: true,
-                            baseConfig: {
-                                extends: [path.join(__dirname, ".eslintrc.js")],
-                            },
-                            useEslintrc: true,
-                        },
-                        loader: require.resolve("eslint-loader"),
-                    },
-                ],
-                include: paths.projSrc,
-            },
             {
                 // "oneOf" will traverse all following loaders until one will
                 // match the requirements. When no loader matches it will fall
@@ -121,6 +97,16 @@ module.exports = {
                 template: path.resolve(paths.ownPath, "lib", "index.ejs"),
                 libraryName,
             }),
+
+        new ForkTsCheckerWebpackPlugin({
+            async: isEnvProduction ? false : true,
+            eslint: true,
+            eslintOptions: {
+                cache: true,
+                formatter: require.resolve("react-dev-utils/eslintFormatter"),
+                resolvePluginsRelativeTo: __dirname,
+            },
+        }),
 
         // Define process.env variables that should be made available in source code.
         new webpack.DefinePlugin({
