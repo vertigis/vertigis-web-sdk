@@ -103,9 +103,9 @@ module.exports = {
             eslint: true,
             eslintOptions: {
                 cache: true,
-                formatter: require.resolve("react-dev-utils/eslintFormatter"),
                 resolvePluginsRelativeTo: __dirname,
             },
+            formatter: "codeframe",
         }),
 
         // Define process.env variables that should be made available in source code.
