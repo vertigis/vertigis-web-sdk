@@ -16,9 +16,9 @@
         "vertigis-web-sdk": "bin/vertigis-web-sdk.js"
     },
     "scripts": {
-        "build": "SDK_SOURCE=$(pwd) node bin/vertigis-web-sdk.js build",
-        "create": "SDK_SOURCE=$(pwd) node bin/vertigis-web-sdk.js create",
-        "start": "SDK_SOURCE=$(pwd) node bin/vertigis-web-sdk.js start"
+        "build": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-web-sdk.js build",
+        "create": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-web-sdk.js create",
+        "start": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-web-sdk.js start"
     },
     "author": "",
     "license": "UNLICENSED",
@@ -50,6 +50,7 @@
     },
     "devDependencies": {
         "@types/node": "^12.0.8",
+        "cross-env": "^7.0.2",
         "eslint-plugin-react-hooks": "^2.5.0",
         "husky": "^4.2.1",
         "prettier": "^1.19.1",

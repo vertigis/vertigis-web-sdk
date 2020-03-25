@@ -20,7 +20,7 @@ const resolveModule = (resolveFn, filePath) => {
     return resolveFn(`${filePath}.js`);
 };
 const appDirectory = fs.realpathSync(
-    (process.env.SDK_SOURCE && path.join(process.env.SDK_SOURCE, "template")) || process.cwd()
+    (process.env.SDK_LOCAL_DEV === "true" && path.join(process.cwd(), "template")) || process.cwd()
 );
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 // Up 1 from "config/"

@@ -23,7 +23,11 @@ const installDeps = rootPath => {
     console.log(`Installing packages. This might take a couple minutes.`);
     const result = spawn.sync(
         "npm",
-        ["install", "--save", process.env.SDK_SOURCE || "@vertigis/web-sdk"],
+        [
+            "install",
+            "--save",
+            process.env.SDK_LOCAL_DEV === "true" ? process.cwd() : "@vertigis/web-sdk",
+        ],
         {
             cwd: rootPath,
             stdio: "inherit",
