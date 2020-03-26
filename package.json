@@ -18,7 +18,8 @@
     "scripts": {
         "build": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-web-sdk.js build",
         "create": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-web-sdk.js create",
-        "start": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-web-sdk.js start"
+        "start": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-web-sdk.js start",
+        "test": "echo \"No tests yet. All clear!\""
     },
     "author": "Ian Schmitz <ianschmitz@gmail.com>",
     "license": "MIT",
