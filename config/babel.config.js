@@ -56,8 +56,8 @@ module.exports = function(api, opts, env) {
                     useESModules: !isEnvTest,
                 },
             ],
-            // Turn on legacy decorators for TypeScript files
-            [require("@babel/plugin-proposal-decorators").default, false],
+            // Enable experimental decorator support.
+            [require("@babel/plugin-proposal-decorators").default, { legacy: true }],
             // class { handleClick = () => { } }
             // Enable loose mode to use assignment instead of defineProperty
             // See discussion in https://github.com/facebook/create-react-app/issues/4263
@@ -67,17 +67,12 @@ module.exports = function(api, opts, env) {
                     loose: true,
                 },
             ],
-            // Adds syntax support for import()
-            require("@babel/plugin-syntax-dynamic-import").default,
-            isEnvTest &&
-                // Transform dynamic import to require
-                require("babel-plugin-dynamic-import-node"),
-        ].filter(Boolean),
-        overrides: [
-            {
-                test: /\.tsx?$/,
-                plugins: [[require("@babel/plugin-proposal-decorators").default, { legacy: true }]],
-            },
+            // Optional chaining and nullish coalescing are supported in @babel/preset-env,
+            // but not yet supported in webpack due to support missing from acorn.
+            // These can be removed once webpack has support.
+            // See https://github.com/facebook/create-react-app/issues/8445#issuecomment-588512250
+            require("@babel/plugin-proposal-optional-chaining").default,
+            require("@babel/plugin-proposal-nullish-coalescing-operator").default,
         ].filter(Boolean),
     };
 };
