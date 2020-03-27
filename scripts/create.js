@@ -5,28 +5,33 @@ const chalk = require("chalk");
 const spawn = require("cross-spawn");
 const fs = require("fs-extra");
 const path = require("path");
+const paths = require("../config/paths");
 
 const directoryName = process.argv[2];
 const directoryPath = path.resolve(directoryName);
 
 // TODO: Change project name in package.json after copy
 
-const copyTemplate = rootPath => {
+const copyTemplate = (rootPath) => {
     console.log(`Creating new project at ${chalk.green(rootPath)}`);
-    fs.copySync(path.join(__dirname, "../template"), rootPath, {
+    fs.copySync(path.join(paths.ownPath, "template"), rootPath, {
         errorOnExist: true,
         overwrite: false,
     });
 };
 
-const installDeps = rootPath => {
+const installDeps = (rootPath) => {
     console.log(`Installing packages. This might take a couple minutes.`);
+    const selfVersion = require(path.join(paths.ownPath, "package.json")).version;
     const result = spawn.sync(
         "npm",
         [
             "install",
-            "--save",
-            process.env.SDK_LOCAL_DEV === "true" ? process.cwd() : "@vertigis/web-sdk",
+            "--save-dev",
+            "--save-exact",
+            process.env.SDK_LOCAL_DEV === "true"
+                ? process.cwd()
+                : `@vertigis/web-sdk@${selfVersion}`,
         ],
         {
             cwd: rootPath,
@@ -40,7 +45,7 @@ const installDeps = rootPath => {
 };
 
 // Initialize newly cloned directory as a git repo
-const gitInit = rootPath => {
+const gitInit = (rootPath) => {
     console.log(`Initialising git in ${rootPath}`);
 
     spawn.sync(`git init`, { cwd: rootPath }).status;
