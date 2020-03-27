@@ -6,6 +6,7 @@ const path = require("path");
 const paths = require("./paths");
 const webpack = require("webpack");
 
+const autoprefixer = require("autoprefixer");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
@@ -51,7 +52,7 @@ module.exports = {
         futureEmitAssets: true,
         // There will be one main bundle, and one file per asynchronous chunk.
         // In development, it does not produce real files.
-        filename: isEnvProduction ? "static/js/[name].[contenthash:8].js" : "static/js/[name].js",
+        filename: "[name].js",
     },
     optimization: {
         minimize: isEnvProduction,
@@ -72,7 +73,7 @@ module.exports = {
                     // Process application JS with Babel.
                     // The preset includes JSX, Flow, TypeScript, and some ESnext features.
                     {
-                        test: /\.(js|jsx|ts|tsx)$/,
+                        test: /\.(js|jsx|ts|tsx)$/i,
                         include: paths.projSrc,
                         loader: require.resolve("babel-loader"),
                         options: {
@@ -84,6 +85,35 @@ module.exports = {
                             cacheDirectory: true,
                             cacheCompression: isEnvProduction,
                         },
+                    },
+                    {
+                        test: /\.css$/i,
+                        sideEffects: true,
+                        use: [
+                            "style-loader",
+                            {
+                                loader: "css-loader",
+                                options: {
+                                    // How many loaders before "css-loader" should be applied to "@import"ed resources
+                                    importLoaders: 1,
+                                },
+                            },
+                            {
+                                // Adds vendor prefixing based on your specified browser support in
+                                // package.json
+                                loader: "postcss-loader",
+                                options: {
+                                    ident: "postcss",
+                                    plugins: () =>
+                                        [
+                                            autoprefixer({
+                                                flexbox: "no-2009",
+                                            }),
+                                            isEnvProduction && require("cssnano")(),
+                                        ].filter(Boolean),
+                                },
+                            },
+                        ],
                     },
                 ],
             },
