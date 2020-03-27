@@ -10,7 +10,11 @@ const paths = require("../config/paths");
 const directoryName = process.argv[2];
 const directoryPath = path.resolve(directoryName);
 
-// TODO: Change project name in package.json after copy
+const checkSpawnSyncResult = (syncResult) => {
+    if (syncResult.status !== 0) {
+        process.exit(1);
+    }
+};
 
 const copyTemplate = (rootPath) => {
     console.log(`Creating new project at ${chalk.green(rootPath)}`);
@@ -19,29 +23,36 @@ const copyTemplate = (rootPath) => {
         overwrite: false,
     });
 };
-
-const installDeps = (rootPath) => {
+const installNpmDeps = (rootPath) => {
     console.log(`Installing packages. This might take a couple minutes.`);
     const selfVersion = require(path.join(paths.ownPath, "package.json")).version;
-    const result = spawn.sync(
-        "npm",
-        [
-            "install",
-            "--save-dev",
-            "--save-exact",
-            process.env.SDK_LOCAL_DEV === "true"
-                ? process.cwd()
-                : `@vertigis/web-sdk@${selfVersion}`,
-        ],
-        {
+
+    // First install existing deps.
+    checkSpawnSyncResult(
+        spawn.sync("npm", ["install"], {
             cwd: rootPath,
             stdio: "inherit",
-        }
+        })
     );
 
-    if (result.status !== 0) {
-        process.exit(1);
-    }
+    // Add this package as dep.
+    checkSpawnSyncResult(
+        spawn.sync(
+            "npm",
+            [
+                "install",
+                "--save-dev",
+                "--save-exact",
+                process.env.SDK_LOCAL_DEV === "true"
+                    ? process.cwd()
+                    : `@vertigis/web-sdk@${selfVersion}`,
+            ],
+            {
+                cwd: rootPath,
+                stdio: "inherit",
+            }
+        )
+    );
 };
 
 // Initialize newly cloned directory as a git repo
@@ -64,6 +75,6 @@ const printSuccess = () => {
 };
 
 copyTemplate(directoryPath);
-installDeps(directoryPath);
+installNpmDeps(directoryPath);
 gitInit(directoryPath);
 printSuccess();
