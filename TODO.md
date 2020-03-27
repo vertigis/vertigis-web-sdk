@@ -2,3 +2,5 @@
 -   Change from `webzoo.latitudegeo.com` to `apps.geocortex.com` for the default web viewer url
 -   Fix portal.json 404
     -   Request is unnecessary in this case
+-   Disable code splitting (if possible) and call it out in readme
+-   Decide on babel vs ts
