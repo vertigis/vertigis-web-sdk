@@ -4,3 +4,9 @@
     -   Request is unnecessary in this case
 -   Disable code splitting (if possible) and call it out in readme
 -   Decide on babel vs ts
+-   Rename "public" folder in template to something else? This won't be available in prod
+-   Develop against an existing app - instead of using app/layout in template?
+-   Use Case that might break:
+    -   Develop library, upload to app via designer and push to prod
+    -   Go to make changes to same library and test in designer (this functionality doesn't yet exist)
+    -   We are now loading duplicate libraries. What happens now? GAD could handle this by not loading the existing library resource, but we don't have a good way to match which existing library resource is the current dev library
