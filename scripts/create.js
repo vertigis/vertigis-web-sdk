@@ -35,7 +35,7 @@ const installNpmDeps = (rootPath) => {
         })
     );
 
-    // Add this package as dep.
+    // Add SDK package.
     checkSpawnSyncResult(
         spawn.sync(
             "npm",
@@ -52,6 +52,14 @@ const installNpmDeps = (rootPath) => {
                 stdio: "inherit",
             }
         )
+    );
+
+    // Add Web runtime types package.
+    checkSpawnSyncResult(
+        spawn.sync("npm", ["install", "--save", "--save-exact", "@geocortex/web"], {
+            cwd: rootPath,
+            stdio: "inherit",
+        })
     );
 };
 
