@@ -3,7 +3,7 @@
 -   Fix portal.json 404
     -   Request is unnecessary in this case
 -   Disable code splitting (if possible) and call it out in readme. Validate behavior of `import()`
--   Rename "public" folder in template to something else? This won't be available in prod
+-   Add README.md to template
 -   Develop against an existing app use case - instead of using app/layout in template?
 -   Use Case that might break:
     -   Develop library, upload to app via designer and push to prod
