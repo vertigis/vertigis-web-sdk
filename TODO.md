@@ -1,11 +1,10 @@
--   Reference `@vertigis/web` npm package
 -   Change from `webzoo.latitudegeo.com` to `apps.geocortex.com` for the default web viewer url
+-   Reference `@vertigis/web` npm package
 -   Fix portal.json 404
     -   Request is unnecessary in this case
--   Disable code splitting (if possible) and call it out in readme
--   Decide on babel vs ts
+-   Disable code splitting (if possible) and call it out in readme. Validate behavior of `import()`
 -   Rename "public" folder in template to something else? This won't be available in prod
--   Develop against an existing app - instead of using app/layout in template?
+-   Develop against an existing app use case - instead of using app/layout in template?
 -   Use Case that might break:
     -   Develop library, upload to app via designer and push to prod
     -   Go to make changes to same library and test in designer (this functionality doesn't yet exist)

@@ -6,10 +6,12 @@ const fs = require("fs");
 const path = require("path");
 
 const moduleFileExtensions = [".tsx", ".ts", ".jsx", ".js", ".json"];
+// This assumes that commands are always run from project root.
+const projRoot = process.cwd();
 
 // Resolve file paths in the same order as webpack
 const resolveModule = (resolveFn, filePath) => {
-    const extension = moduleFileExtensions.find(extension =>
+    const extension = moduleFileExtensions.find((extension) =>
         fs.existsSync(resolveFn(`${filePath}${extension}`))
     );
 
@@ -19,19 +21,16 @@ const resolveModule = (resolveFn, filePath) => {
 
     return resolveFn(`${filePath}.js`);
 };
-const appDirectory = fs.realpathSync(
-    (process.env.SDK_LOCAL_DEV === "true" && path.join(process.cwd(), "template")) || process.cwd()
-);
-const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+const resolveProj = (relativePath) => path.resolve(projRoot, relativePath);
 // Up 1 from "config/"
-const resolveOwn = relativePath => path.resolve(__dirname, "..", relativePath);
+const resolveOwn = (relativePath) => path.resolve(__dirname, "..", relativePath);
 
 module.exports = {
-    projBuild: resolveApp("build"),
-    projEntry: resolveModule(resolveApp, "src/index"),
-    projPath: resolveApp("."),
-    projPublicDir: resolveApp("public"),
-    projSrc: resolveApp("src"),
+    projBuild: resolveProj("build"),
+    projEntry: resolveModule(resolveProj, "src/index"),
+    projPublicDir: resolveProj("public"),
+    projRoot: resolveProj("."),
+    projSrc: resolveProj("src"),
     ownPath: resolveOwn("."),
 };
 

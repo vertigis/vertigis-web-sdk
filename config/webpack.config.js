@@ -14,16 +14,11 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 const isEnvDevelopment = process.env.NODE_ENV === "development";
 const isEnvProduction = process.env.NODE_ENV === "production";
-const libraryName = require(path.join(paths.projPath, "package.json")).name || "custom-library";
-
-// TODO: Enforce single bundle - to load via portal we need a singular request as they don't support .js,
-// etc. file extensions.
-// - No code splitting
-// - CSS should be embedded
+const libraryName = require(path.join(paths.projRoot, "package.json")).name || "custom-library";
 
 module.exports = {
     mode: isEnvProduction ? "production" : "development",
-    context: paths.projPath,
+    context: paths.projRoot,
     devtool: isEnvProduction ? false : "eval",
     stats: "minimal",
     resolve: {
@@ -75,15 +70,10 @@ module.exports = {
                     {
                         test: /\.(js|jsx|ts|tsx)$/i,
                         include: paths.projSrc,
-                        loader: require.resolve("babel-loader"),
+                        loader: require.resolve("ts-loader"),
                         options: {
-                            babelrc: false,
-                            configFile: require.resolve("./babel.config.js"),
-                            // This is a feature of `babel-loader` for webpack (not Babel itself).
-                            // It enables caching results in ./node_modules/.cache/babel-loader/
-                            // directory for faster rebuilds.
-                            cacheDirectory: true,
-                            cacheCompression: isEnvProduction,
+                            context: paths.projRoot,
+                            transpileOnly: true,
                         },
                     },
                     {
@@ -132,7 +122,6 @@ module.exports = {
             async: isEnvProduction ? false : true,
             eslint: true,
             eslintOptions: {
-                cache: true,
                 resolvePluginsRelativeTo: __dirname,
             },
             formatter: "codeframe",

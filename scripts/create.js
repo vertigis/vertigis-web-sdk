@@ -5,8 +5,8 @@ const chalk = require("chalk");
 const spawn = require("cross-spawn");
 const fs = require("fs-extra");
 const path = require("path");
-const paths = require("../config/paths");
 
+const rootDir = path.join(__dirname, "..");
 const directoryName = process.argv[2];
 const directoryPath = path.resolve(directoryName);
 
@@ -18,14 +18,14 @@ const checkSpawnSyncResult = (syncResult) => {
 
 const copyTemplate = (rootPath) => {
     console.log(`Creating new project at ${chalk.green(rootPath)}`);
-    fs.copySync(path.join(paths.ownPath, "template"), rootPath, {
+    fs.copySync(path.join(rootDir, "template"), rootPath, {
         errorOnExist: true,
         overwrite: false,
     });
 };
 const installNpmDeps = (rootPath) => {
-    console.log(`Installing packages. This might take a couple minutes.`);
-    const selfVersion = require(path.join(paths.ownPath, "package.json")).version;
+    console.log(`Installing packages. This might take a couple minutes.\n`);
+    const selfVersion = require(path.join(rootDir, "package.json")).version;
 
     // First install existing deps.
     checkSpawnSyncResult(
@@ -57,13 +57,13 @@ const installNpmDeps = (rootPath) => {
 
 // Initialize newly cloned directory as a git repo
 const gitInit = (rootPath) => {
-    console.log(`Initialising git in ${rootPath}`);
+    console.log(`Initialising git in ${rootPath}\n`);
 
     spawn.sync(`git init`, { cwd: rootPath }).status;
 };
 
 const printSuccess = () => {
-    console.log(`Success! Created ${directoryName} at ${directoryPath}`);
+    console.log(`${chalk.green("Success!")} Created ${directoryName} at ${directoryPath}\n`);
     console.log("Inside that directory, you can run several commands:\n");
     console.log(chalk.cyan(`  npm start`));
     console.log("    Starts the development server.\n");
