@@ -17,7 +17,17 @@ const checkSpawnSyncResult = (syncResult) => {
 };
 
 const copyTemplate = (rootPath) => {
+    if (fs.existsSync(rootPath) && fs.readdirSync(rootPath).length > 0) {
+        console.error(
+            chalk.red(
+                `Cannot create new project at ${chalk.green(rootPath)} as it already exists.\n`
+            )
+        );
+        process.exit(1);
+    }
+
     console.log(`Creating new project at ${chalk.green(rootPath)}`);
+
     fs.copySync(path.join(rootDir, "template"), rootPath, {
         errorOnExist: true,
         overwrite: false,
