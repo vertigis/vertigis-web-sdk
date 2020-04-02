@@ -1,8 +1,7 @@
--   Reference `@vertigis/web` npm package
 -   Fix portal.json 404
     -   Request is unnecessary in this case
 -   Disable code splitting (if possible) and call it out in readme. Validate behavior of `import()`
--   Add README.md to template
+-   Flesh out README.md in template with additional info and validate hyperlinks
 -   Develop against an existing app use case - instead of using app/layout in template?
 -   Use Case that might break:
     -   Develop library, upload to app via designer and push to prod
