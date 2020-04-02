@@ -32,6 +32,9 @@ const copyTemplate = (rootPath) => {
         errorOnExist: true,
         overwrite: false,
     });
+    // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
+    // See: https://github.com/npm/npm/issues/1862
+    fs.moveSync(path.join(rootPath, "gitignore"), path.join(rootPath, ".gitignore"));
 };
 const installNpmDeps = (rootPath) => {
     console.log(`Installing packages. This might take a couple minutes.\n`);
