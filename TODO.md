@@ -1,4 +1,3 @@
--   Change from `webzoo.latitudegeo.com` to `apps.geocortex.com` for the default web viewer url
 -   Reference `@vertigis/web` npm package
 -   Fix portal.json 404
     -   Request is unnecessary in this case

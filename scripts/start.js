@@ -8,7 +8,7 @@ process.env.NODE_ENV = "development";
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
-process.on("unhandledRejection", err => {
+process.on("unhandledRejection", (err) => {
     throw err;
 });
 
@@ -22,7 +22,7 @@ const webpackConfig = require("../config/webpack.config");
 const httpAgent = new http.Agent({ keepAlive: true });
 const httpsAgent = new https.Agent({ keepAlive: true });
 
-const viewerTarget = process.env.VIEWER_URL || "https://webzoo.latitudegeo.com/webviewer";
+const viewerTarget = process.env.VIEWER_URL || "https://apps.geocortex.com/webviewer";
 const port = process.env.PORT || 3000;
 
 const compiler = webpack(webpackConfig);
@@ -59,13 +59,13 @@ const serverConfig = {
 };
 
 const devServer = new WebpackDevServer(compiler, serverConfig);
-devServer.listen(serverConfig.port, serverConfig.host, err => {
+devServer.listen(serverConfig.port, serverConfig.host, (err) => {
     if (err) {
         throw err;
     }
 });
 
-["SIGINT", "SIGTERM"].forEach(signal => {
+["SIGINT", "SIGTERM"].forEach((signal) => {
     process.on(signal, () => {
         devServer.close(() => {
             process.exit();
