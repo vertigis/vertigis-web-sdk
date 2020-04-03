@@ -2,6 +2,7 @@
 "use strict";
 
 const chalk = require("chalk");
+const crypto = require("crypto");
 const spawn = require("cross-spawn");
 const fs = require("fs-extra");
 const path = require("path");
@@ -36,6 +37,22 @@ const copyTemplate = (rootPath) => {
     // See: https://github.com/npm/npm/issues/1862
     fs.moveSync(path.join(rootPath, "gitignore"), path.join(rootPath, ".gitignore"));
 };
+
+const updateTemplateContent = (rootPath) => {
+    const randomNamespace = `custom.${crypto.randomBytes(4).toString("hex")}`;
+
+    const filesToUpdate = [
+        path.join(rootPath, "app/layout.xml"),
+        path.join(rootPath, "src/index.ts"),
+    ];
+
+    for (const fileToUpdate of filesToUpdate) {
+        const contents = fs.readFileSync(fileToUpdate, { encoding: "utf8" });
+        const newContents = contents.replace(/custom\.foo/g, randomNamespace);
+        fs.writeFileSync(fileToUpdate, newContents);
+    }
+};
+
 const installNpmDeps = (rootPath) => {
     console.log(`Installing packages. This might take a couple minutes.\n`);
     const selfVersion = require(path.join(rootDir, "package.json")).version;
@@ -96,6 +113,7 @@ const printSuccess = () => {
 };
 
 copyTemplate(directoryPath);
+updateTemplateContent(directoryPath);
 installNpmDeps(directoryPath);
 gitInit(directoryPath);
 printSuccess();
