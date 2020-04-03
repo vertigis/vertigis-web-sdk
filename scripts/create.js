@@ -109,7 +109,10 @@ const printSuccess = () => {
     console.log("    Bundles the app into static files for production.\n");
     console.log("We suggest that you begin by typing:\n");
     console.log(chalk.cyan(`  cd ${directoryName}`));
-    console.log(chalk.cyan("  npm start"));
+    console.log(chalk.cyan("  npm start\n"));
+    console.log(
+        "You can learn more by visiting https://developers.geocortex.com/docs/web/overview"
+    );
 };
 
 copyTemplate(directoryPath);
