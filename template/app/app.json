@@ -1,4 +1,20 @@
 {
     "schemaVersion": "1.0",
-    "items": []
+    "items": [
+        {
+            "$type": "map-extension",
+            "id": "map-1",
+            "onClick": "points-of-interest.create"
+        },
+        {
+            "$type": "geocortex-web-viewer",
+            "id": "default",
+            "onInitialized": {
+                "name": "ui.display-notification",
+                "arguments": {
+                    "message": "Click anywhere on the map to add a new point of interest. You can move an existing one by dragging it."
+                }
+            }
+        }
+    ]
 }

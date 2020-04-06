@@ -1,17 +1,20 @@
-import Test, { TestModel } from "./components/Test";
+import PointsOfInterest, { PointsOfInterestModel } from "./components/PointsOfInterest";
+import { LibraryRegistry } from "@geocortex/web/config";
+import { ComponentType } from "react";
 
 const LAYOUT_NAMESPACE = "custom.foo";
 
-export default function(registry) {
+export default function (registry: LibraryRegistry) {
     registry.registerComponent({
-        name: "test",
+        name: "points-of-interest",
         namespace: LAYOUT_NAMESPACE,
-        getComponentType: () => Test,
-        itemType: "test-model",
-        title: "Test Component",
+        getComponentType: () => PointsOfInterest as ComponentType,
+        itemType: "points-of-interest-model",
+        title: "Points of Interest",
     });
     registry.registerModel({
-        getModelType: () => TestModel,
-        itemType: "test-model",
+        getModelType: () => PointsOfInterestModel,
+        itemType: "points-of-interest-model",
     });
+    registry.registerCommand("points-of-interest.create");
 }
