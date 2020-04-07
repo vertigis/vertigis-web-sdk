@@ -3,7 +3,7 @@
 -   Disable code splitting (if possible) and call it out in readme. Validate behavior of `import()`
 -   Flesh out README.md in template with additional info and validate hyperlinks
 -   Develop against an existing app use case - instead of using app/layout in template?
--   Switch to new web package and remove `cldr-data-urls-filter` properties in package.json files
+-   Switch to new `@vertigis/web` package when available
 -   Use Case that needs investigation (may run into issues):
     -   Develop library, upload to app via designer and push to prod
     -   Go to make changes to same library and test in designer (this functionality doesn't yet exist)
