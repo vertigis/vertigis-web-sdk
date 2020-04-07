@@ -31,7 +31,7 @@ const PointOfInterest: FC<PointOfInterestProps> = ({ model, onDelete, ...other }
     const [lon, lat] = xyToLngLat(geometry.x, geometry.y);
     return (
         <MenuItem {...other}>
-            <div className="poi-swatch" style={{ backgroundColor: color.toCss() }} />
+            <div className="PointOfInterest-swatch" style={{ backgroundColor: color.toCss() }} />
             <ListItemText
                 primary={title}
                 secondary={`Lat: ${formatLatLon(lat)}, Lon: ${formatLatLon(lon)}`}

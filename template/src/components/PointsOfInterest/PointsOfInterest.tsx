@@ -14,7 +14,7 @@ const PointsOfInterest: FC<LayoutElementProperties<PointsOfInterestModel>> = (pr
     // collection.
     useWatchCollectionAndRerender(model.pointsOfInterest);
     return (
-        <LayoutElement {...props} stretch={true} className="points-of-interest">
+        <LayoutElement {...props} stretch className="PointsOfInterest">
             <Typography variant="h2">Points of Interest</Typography>
             <MenuList>
                 {model.pointsOfInterest.toArray().map((poi) => (
