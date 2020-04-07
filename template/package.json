@@ -5,6 +5,7 @@
     "description": "",
     "license": "UNLICENSED",
     "author": "",
+    "cldr-data-urls-filter": "(cldr-core|cldr-numbers-modern)",
     "scripts": {
         "build": "vertigis-web-sdk build",
         "start": "vertigis-web-sdk start"
