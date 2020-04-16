@@ -7,7 +7,7 @@
             "onClick": "points-of-interest.create"
         },
         {
-            "$type": "geocortex-web-viewer",
+            "$type": "vertigis-web",
             "id": "default",
             "onInitialized": {
                 "name": "ui.display-notification",

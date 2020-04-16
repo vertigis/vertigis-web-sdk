@@ -1,6 +1,6 @@
 import Point from "esri/geometry/Point";
 import Color from "esri/Color";
-import { ModelBase, serializable } from "@geocortex/web/models";
+import { ModelBase, serializable } from "@vertigis/web/models";
 
 /**
  * A single point of interest on the map.

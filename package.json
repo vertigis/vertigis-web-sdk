@@ -1,7 +1,7 @@
 {
     "name": "@vertigis/web-sdk",
     "version": "0.1.0",
-    "description": "The SDK for extending Geocortex Web",
+    "description": "The SDK for extending VertiGIS Web",
     "engines": {
         "node": ">=12.13.1"
     },
@@ -48,7 +48,7 @@
         "webpack-dev-server": "^3.10.3"
     },
     "devDependencies": {
-        "@geocortex/web": "^5.6.0",
+        "@vertigis/web": "*",
         "@types/node": "^12.12.31",
         "cross-env": "^7.0.2",
         "husky": "^4.2.3",
