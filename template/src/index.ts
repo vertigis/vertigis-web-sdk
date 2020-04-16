@@ -1,5 +1,5 @@
 import PointsOfInterest, { PointsOfInterestModel } from "./components/PointsOfInterest";
-import { LibraryRegistry } from "@geocortex/web/config";
+import { LibraryRegistry } from "@vertigis/web/config";
 import { ComponentType } from "react";
 
 const LAYOUT_NAMESPACE = "custom.foo";
@@ -13,7 +13,7 @@ export default function (registry: LibraryRegistry) {
         title: "Points of Interest",
     });
     registry.registerModel({
-        getModelType: () => PointsOfInterestModel,
+        getModel: (config) => new PointsOfInterestModel(config),
         itemType: "points-of-interest-model",
     });
     registry.registerCommand("points-of-interest.create");

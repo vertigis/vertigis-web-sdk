@@ -3,12 +3,12 @@ import {
     serializable,
     ComponentModelProperties,
     importModel,
-} from "@geocortex/web/models";
-import { LocationMarkerEvent } from "@geocortex/viewer-framework/messaging/registry/location-marker";
-import { toColor } from "@geocortex/web/branding";
-import { GeometryResults } from "@geocortex/web/messaging";
-import { MapExtension } from "@geocortex/api/mapping/MapExtension";
-import { ChangeEvent } from "@geocortex/api/support/esri";
+} from "@vertigis/web/models";
+import { LocationMarkerEvent } from "@vertigis/viewer-spec/messaging/registry/location-marker";
+import { toColor } from "@vertigis/web/branding";
+import { GeometryResults } from "@vertigis/web/messaging";
+import { MapExtension } from "@vertigis/arcgis-extensions/mapping/MapExtension";
+import { ChangeEvent } from "@vertigis/arcgis-extensions/support/esri";
 import Collection from "esri/core/Collection";
 import Point from "esri/geometry/Point";
 
@@ -98,8 +98,9 @@ export default class PointsOfInterestModel extends ComponentModelBase {
         );
     }
 
-    destroy(): void {
-        super.destroy();
+    protected async _onDestroy(): Promise<void> {
+        // Always invoke the super implementation.
+        await super.destroy();
 
         // Clean up event handlers.
         this._handles.forEach((h) => h.remove());

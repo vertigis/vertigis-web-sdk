@@ -86,7 +86,7 @@ const installNpmDeps = (rootPath) => {
 
     // Add Web runtime types package.
     checkSpawnSyncResult(
-        spawn.sync("npm", ["install", "--save", "--save-exact", "@geocortex/web"], {
+        spawn.sync("npm", ["install", "--save", "--save-exact", "@vertigis/web"], {
             cwd: rootPath,
             stdio: "inherit",
         })
@@ -95,7 +95,7 @@ const installNpmDeps = (rootPath) => {
 
 // Initialize newly cloned directory as a git repo
 const gitInit = (rootPath) => {
-    console.log(`Initialising git in ${rootPath}\n`);
+    console.log(`Initializing git in ${rootPath}\n`);
 
     spawn.sync(`git init`, { cwd: rootPath }).status;
 };

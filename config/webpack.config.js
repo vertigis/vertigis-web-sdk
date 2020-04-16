@@ -25,14 +25,7 @@ module.exports = {
         extensions: paths.moduleFileExtensions,
     },
     entry: paths.projEntry,
-    externals: [
-        /^dojo\/.+$/,
-        /^esri\/.+$/,
-        /^@geocortex\/.+$/,
-        /^@vertigis\/.+$/,
-        "react",
-        "react-dom",
-    ],
+    externals: [/^dojo\/.+$/, /^esri\/.+$/, /^@vertigis\/.+$/, "react", "react-dom"],
     output: {
         // `library` will be automatically concatenated with `output.jsonpFunction`s value.
         // It's important to have a unique `jsonpFunction` value to allow multiple webpack

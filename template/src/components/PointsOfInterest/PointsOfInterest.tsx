@@ -1,7 +1,7 @@
-import { LayoutElement, LayoutElementProperties } from "@geocortex/web/components";
-import { useWatchCollectionAndRerender } from "@geocortex/web/ui";
-import MenuList from "@geocortex/web/ui/menu-list";
-import Typography from "@geocortex/web/ui/typography";
+import { LayoutElement, LayoutElementProperties } from "@vertigis/web/components";
+import { useWatchCollectionAndRerender } from "@vertigis/web/ui";
+import MenuList from "@vertigis/web/ui/MenuList";
+import Typography from "@vertigis/web/ui/Typography";
 import React, { FC } from "react";
 
 import PointsOfInterestModel from "./PointsOfInterestModel";
