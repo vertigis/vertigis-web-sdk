@@ -44,7 +44,8 @@ jobs:
                   persist-credentials: false
 
             # Pulls all tags (needed for semantic release to correctly version)
-            - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+            - name: Fetch git tags
+              run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
 
             - name: Use Node.js 12
               uses: actions/setup-node@v1
