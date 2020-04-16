@@ -2,6 +2,16 @@
     "name": "@vertigis/web-sdk",
     "version": "0.1.0",
     "description": "The SDK for extending Geocortex Web",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/geocortex/vertigis-web-sdk.git"
+    },
+    "author": "Ian Schmitz <ianschmitz@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/geocortex/vertigis-web-sdk/issues"
+    },
+    "homepage": "https://github.com/geocortex/vertigis-web-sdk#readme",
     "engines": {
         "node": ">=12.13.1"
     },
@@ -21,8 +31,6 @@
         "start": "cd template && npm link \"../\" --no-package-lock && npm run start",
         "test": "echo \"No tests yet. All clear!\""
     },
-    "author": "Ian Schmitz <ianschmitz@gmail.com>",
-    "license": "MIT",
     "dependencies": {
         "@typescript-eslint/eslint-plugin": "^2.27.0",
         "@typescript-eslint/parser": "^2.27.0",
@@ -57,7 +65,6 @@
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "semantic-release": "^17.0.4",
-        "semver": "^7.1.3",
         "typescript": "^3.8.3"
     },
     "cldr-data-urls-filter": "(cldr-core|cldr-numbers-modern)",
