@@ -6,7 +6,7 @@ import {
 } from "@vertigis/web/models";
 import { LocationMarkerEvent } from "@vertigis/viewer-spec/messaging/registry/location-marker";
 import { toColor } from "@vertigis/web/branding";
-import { GeometryResults } from "@vertigis/web/messaging";
+import { command, HasGeometry } from "@vertigis/web/messaging";
 import { MapExtension } from "@vertigis/arcgis-extensions/mapping/MapExtension";
 import { ChangeEvent } from "@vertigis/arcgis-extensions/support/esri";
 import Collection from "esri/core/Collection";
@@ -45,7 +45,8 @@ export default class PointsOfInterestModel extends ComponentModelBase {
     /**
      * Creates a new point of interest at the specified location.
      */
-    async createNew(location: GeometryResults): Promise<void> {
+    @command("points-of-interest.create")
+    async createNew(location: HasGeometry): Promise<void> {
         const id = this._nextId++;
 
         // Prompt the user for a name using the built-in ui.prompt operation.
@@ -84,15 +85,9 @@ export default class PointsOfInterestModel extends ComponentModelBase {
         // override a method.
         await super._onInitialize();
 
-        // Registration handles for event and command handlers should be saved
-        // and cleaned up when no longer needed.
+        // Registration handles for event handlers should be saved and cleaned
+        // up when no longer needed.
         this._handles.push(
-            // Register an implementation for our custom command. The map's
-            // onClick action is wired up to run this command in the sample
-            // app.json.
-            this.messages
-                .command<GeometryResults>("points-of-interest.create")
-                .register((location) => this.createNew(location)),
             this.messages.events.locationMarker.updated.subscribe(this._onMarkerUpdated),
             this.pointsOfInterest.on("change", this._onPointOfInterestsChange)
         );

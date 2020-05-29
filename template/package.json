@@ -12,6 +12,7 @@
     },
     "dependencies": {},
     "devDependencies": {
+        "@vertigis/web": "5.7.0-beta.96",
         "typescript": "^3.8.3"
     }
 }

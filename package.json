@@ -57,6 +57,7 @@
     },
     "devDependencies": {
         "@types/node": "^12.12.31",
+        "@vertigis/web": "5.7.0-beta.96",
         "cross-env": "^7.0.2",
         "husky": "^4.2.3",
         "prettier": "^2.0.2",
