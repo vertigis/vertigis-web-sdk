@@ -1,7 +1,7 @@
 {
     "name": "@vertigis/web-sdk",
     "version": "0.1.0",
-    "description": "The SDK for extending VertiGIS Web",
+    "description": "The SDK for extending Geocortex Web",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/geocortex/vertigis-web-sdk.git"

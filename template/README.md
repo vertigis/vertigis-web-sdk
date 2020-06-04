@@ -1,4 +1,4 @@
-This project was bootstrapped with the [VertiGIS Web SDK](https://github.com/geocortex/vertigis-web-sdk).
+This project was bootstrapped with the [Geocortex Web SDK](https://github.com/geocortex/vertigis-web-sdk).
 
 ## Available Scripts
 
