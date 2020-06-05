@@ -14,7 +14,7 @@ import Point from "esri/geometry/Point";
 
 import PointOfInterestModel from "./PointOfInterestModel";
 
-export type TestModelProperties = ComponentModelProperties;
+export type PointsOfInterestModelProperties = ComponentModelProperties;
 
 const colors = [
     "#0000ff",
@@ -30,7 +30,9 @@ const colors = [
 ];
 
 @serializable
-export default class PointsOfInterestModel extends ComponentModelBase {
+export default class PointsOfInterestModel extends ComponentModelBase<
+    PointsOfInterestModelProperties
+> {
     // Declares a dependency on the map component. The value of `map` is
     // automatically managed by the framework.
     @importModel("map-extension")
