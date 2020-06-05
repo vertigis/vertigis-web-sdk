@@ -5,6 +5,9 @@ const LAYOUT_NAMESPACE = "custom.foo";
 
 export default function (registry: LibraryRegistry) {
     registry.registerComponent({
+        // Show in the `map` category of the component toolbox.
+        category: "map",
+        iconId: "station-locator",
         name: "points-of-interest",
         namespace: LAYOUT_NAMESPACE,
         getComponentType: () => PointsOfInterest,
