@@ -31,8 +31,9 @@ module.exports = {
     entry: paths.projEntry,
     externals: [/^dojo\/.+$/, /^esri\/.+$/, /^@vertigis\/.+$/, "react", "react-dom"],
     output: {
-        // Technically this shouldn't be used as we restrict the library to one chunk,
-        // but we set this here just to be extra safe against collisions.
+        // Technically this shouldn't be needed as we restrict the library to
+        // one chunk, but we set this here just to be extra safe against
+        // collisions.
         jsonpFunction: libId,
         libraryTarget: "amd",
         // Use "/" in dev so hot updates are requested from server root instead
@@ -46,7 +47,6 @@ module.exports = {
         filename: "[name].js",
     },
     optimization: {
-        minimize: isEnvProduction,
         // This is only used in production mode
         minimizer: [
             // Minify JS output
@@ -76,10 +76,16 @@ module.exports = {
                         test: /\.css$/i,
                         sideEffects: true,
                         use: [
-                            "style-loader",
+                            {
+                                loader: "style-loader",
+                                options: {
+                                    esModule: true,
+                                },
+                            },
                             {
                                 loader: "css-loader",
                                 options: {
+                                    esModule: true,
                                     // How many loaders before "css-loader" should be applied to "@import"ed resources
                                     importLoaders: 1,
                                 },
@@ -94,6 +100,11 @@ module.exports = {
                                         [
                                             autoprefixer({
                                                 flexbox: "no-2009",
+                                                overrideBrowserslist: [
+                                                    "last 2 chrome versions",
+                                                    "last 2 firefox versions",
+                                                    "last 2 safari versions",
+                                                ],
                                             }),
                                             isEnvProduction && require("cssnano")(),
                                         ].filter(Boolean),
