@@ -40,3 +40,7 @@ See the [section about deployment](https://developers.geocortex.com/docs/web/sdk
 ## Documentation
 
 Find [further documentation on the SDK](https://developers.geocortex.com/docs/web/sdk-overview/) on the [Geocortex Developer Center](https://developers.geocortex.com/docs/web/overview/)
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contributing guidelines.
