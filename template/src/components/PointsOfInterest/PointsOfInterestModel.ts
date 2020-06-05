@@ -91,6 +91,7 @@ export default class PointsOfInterestModel extends ComponentModelBase<
         // up when no longer needed.
         this._handles.push(
             this.messages.events.locationMarker.updated.subscribe(this._onMarkerUpdated),
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             this.pointsOfInterest.on("change", this._onPointOfInterestsChange)
         );
     }
