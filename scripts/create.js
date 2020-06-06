@@ -65,7 +65,7 @@ const installNpmDeps = (rootPath) => {
         })
     );
 
-    // Add SDK package.
+    // Add SDK and Web runtime packages.
     checkSpawnSyncResult(
         spawn.sync(
             "npm",
@@ -76,20 +76,13 @@ const installNpmDeps = (rootPath) => {
                 process.env.SDK_LOCAL_DEV === "true"
                     ? process.cwd()
                     : `@vertigis/web-sdk@${selfVersion}`,
+                "@vertigis/web",
             ],
             {
                 cwd: rootPath,
                 stdio: "inherit",
             }
         )
-    );
-
-    // Add Web runtime types package.
-    checkSpawnSyncResult(
-        spawn.sync("npm", ["install", "--save", "--save-exact", "@vertigis/web"], {
-            cwd: rootPath,
-            stdio: "inherit",
-        })
     );
 };
 
