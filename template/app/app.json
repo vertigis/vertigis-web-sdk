@@ -2,6 +2,12 @@
     "schemaVersion": "1.0",
     "items": [
         {
+            "$type": "points-of-interest-model",
+            "id": "points-of-interest-1",
+            "icon": "station-locator",
+            "title": "Points of Interest"
+        },
+        {
             "$type": "map-extension",
             "id": "map-1",
             "onClick": "points-of-interest.create"
