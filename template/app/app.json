@@ -15,6 +15,12 @@
                     "message": "Click anywhere on the map to add a new point of interest. You can move an existing one by dragging it."
                 }
             }
+        },
+        {
+            "$type": "layout",
+            "id": "default",
+            "title": "Default",
+            "url": "./layout.xml"
         }
     ]
 }
