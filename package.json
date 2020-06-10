@@ -12,9 +12,6 @@
         "url": "https://github.com/geocortex/vertigis-web-sdk/issues"
     },
     "homepage": "https://github.com/geocortex/vertigis-web-sdk#readme",
-    "engines": {
-        "node": ">=12.13.1"
-    },
     "files": [
         "bin",
         "config",
