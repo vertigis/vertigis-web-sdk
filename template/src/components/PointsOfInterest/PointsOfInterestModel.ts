@@ -98,7 +98,7 @@ export default class PointsOfInterestModel extends ComponentModelBase<
 
     protected async _onDestroy(): Promise<void> {
         // Always invoke the super implementation.
-        await super.destroy();
+        await super._onDestroy();
 
         // Clean up event handlers.
         this._handles.forEach((h) => h.remove());
