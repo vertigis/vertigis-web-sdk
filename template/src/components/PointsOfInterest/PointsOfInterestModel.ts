@@ -91,6 +91,10 @@ export default class PointsOfInterestModel extends ComponentModelBase<
         // up when no longer needed.
         this._handles.push(
             this.messages.events.locationMarker.updated.subscribe(this._onMarkerUpdated),
+            // Event handlers registered via `on()` are invoked asynchronously,
+            // but are typed as accepting a function that returns `void`. In
+            // this case, our function returns `Promise<void>`, so we need to
+            // disable the linting rule that warns about the type difference.
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
             this.pointsOfInterest.on("change", this._onPointOfInterestsChange)
         );

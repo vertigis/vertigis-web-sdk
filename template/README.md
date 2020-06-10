@@ -12,7 +12,7 @@ The page will automatically reload if you make changes to the code. You will see
 
 ### `npm run build`
 
-Builds the library for production to the `build` folder.It optimizes the build for the best performance.
+Builds the library for production to the `build` folder. It optimizes the build for the best performance.
 
 Your custom library is now ready to be deployed!
 
