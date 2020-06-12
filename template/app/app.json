@@ -2,6 +2,12 @@
     "schemaVersion": "1.0",
     "items": [
         {
+            "$type": "points-of-interest-model",
+            "id": "points-of-interest-1",
+            "icon": "station-locator",
+            "title": "Points of Interest"
+        },
+        {
             "$type": "map-extension",
             "id": "map-1",
             "onClick": "points-of-interest.create"
@@ -15,6 +21,12 @@
                     "message": "Click anywhere on the map to add a new point of interest. You can move an existing one by dragging it."
                 }
             }
+        },
+        {
+            "$type": "layout",
+            "id": "default",
+            "title": "Default",
+            "url": "./layout.xml"
         }
     ]
 }

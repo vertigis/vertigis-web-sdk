@@ -1,7 +1,7 @@
 {
     "name": "@vertigis/web-sdk",
-    "version": "0.1.0",
-    "description": "The SDK for extending VertiGIS Web",
+    "version": "0.0.0-semantically-released",
+    "description": "The SDK for extending Geocortex Web",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/geocortex/vertigis-web-sdk.git"
@@ -12,9 +12,6 @@
         "url": "https://github.com/geocortex/vertigis-web-sdk/issues"
     },
     "homepage": "https://github.com/geocortex/vertigis-web-sdk#readme",
-    "engines": {
-        "node": ">=12.13.1"
-    },
     "files": [
         "bin",
         "config",
@@ -32,40 +29,40 @@
         "test": "echo \"No tests yet. All clear!\""
     },
     "dependencies": {
-        "@typescript-eslint/eslint-plugin": "^2.27.0",
-        "@typescript-eslint/parser": "^2.27.0",
-        "autoprefixer": "^9.7.6",
+        "@typescript-eslint/eslint-plugin": "^3.1.0",
+        "@typescript-eslint/parser": "^3.1.0",
+        "autoprefixer": "^9.8.0",
         "chalk": "^4.0.0",
         "clean-webpack-plugin": "^3.0.0",
-        "cross-spawn": "^7.0.2",
-        "css-loader": "^3.5.1",
+        "cross-spawn": "^7.0.3",
+        "css-loader": "^3.5.3",
         "cssnano": "^4.1.10",
-        "eslint": "^6.8.0",
-        "eslint-config-prettier": "^6.10.1",
+        "eslint": "^7.2.0",
+        "eslint-config-prettier": "^6.11.0",
         "eslint-plugin-react": "^7.19.0",
-        "eslint-plugin-react-hooks": "^3.0.0",
-        "fork-ts-checker-webpack-plugin": "^4.1.2",
-        "fs-extra": "^9.0.0",
-        "html-webpack-plugin": "^4.0.4",
+        "eslint-plugin-react-hooks": "^4.0.4",
+        "fork-ts-checker-webpack-plugin": "^4.1.6",
+        "fs-extra": "^9.0.1",
+        "html-webpack-plugin": "^4.3.0",
         "postcss-loader": "^3.0.0",
         "react-dev-utils": "^10.2.1",
-        "style-loader": "^1.1.3",
-        "terser-webpack-plugin": "^2.3.5",
-        "ts-loader": "^6.2.2",
-        "webpack": "^4.42.1",
-        "webpack-dev-server": "^3.10.3"
+        "style-loader": "^1.2.1",
+        "terser-webpack-plugin": "^3.0.3",
+        "ts-loader": "^7.0.5",
+        "webpack": "^4.43.0",
+        "webpack-dev-server": "^3.11.0"
     },
     "devDependencies": {
         "@types/node": "^12.12.31",
-        "@vertigis/web": "5.7.0-beta.96",
+        "@vertigis/web": "5.7.0",
         "cross-env": "^7.0.2",
-        "husky": "^4.2.3",
-        "prettier": "^2.0.2",
+        "husky": "^4.2.5",
+        "prettier": "^2.0.5",
         "pretty-quick": "^2.0.1",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
-        "semantic-release": "^17.0.4",
-        "typescript": "^3.8.3"
+        "semantic-release": "^17.0.8",
+        "typescript": "^3.9.5"
     },
     "cldr-data-urls-filter": "(cldr-core|cldr-numbers-modern)",
     "husky": {

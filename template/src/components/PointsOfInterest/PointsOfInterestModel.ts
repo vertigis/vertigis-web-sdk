@@ -14,7 +14,7 @@ import Point from "esri/geometry/Point";
 
 import PointOfInterestModel from "./PointOfInterestModel";
 
-export type TestModelProperties = ComponentModelProperties;
+export type PointsOfInterestModelProperties = ComponentModelProperties;
 
 const colors = [
     "#0000ff",
@@ -30,7 +30,9 @@ const colors = [
 ];
 
 @serializable
-export default class PointsOfInterestModel extends ComponentModelBase {
+export default class PointsOfInterestModel extends ComponentModelBase<
+    PointsOfInterestModelProperties
+> {
     // Declares a dependency on the map component. The value of `map` is
     // automatically managed by the framework.
     @importModel("map-extension")
@@ -89,13 +91,18 @@ export default class PointsOfInterestModel extends ComponentModelBase {
         // up when no longer needed.
         this._handles.push(
             this.messages.events.locationMarker.updated.subscribe(this._onMarkerUpdated),
+            // Event handlers registered via `on()` are invoked asynchronously,
+            // but are typed as accepting a function that returns `void`. In
+            // this case, our function returns `Promise<void>`, so we need to
+            // disable the linting rule that warns about the type difference.
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             this.pointsOfInterest.on("change", this._onPointOfInterestsChange)
         );
     }
 
     protected async _onDestroy(): Promise<void> {
         // Always invoke the super implementation.
-        await super.destroy();
+        await super._onDestroy();
 
         // Clean up event handlers.
         this._handles.forEach((h) => h.remove());

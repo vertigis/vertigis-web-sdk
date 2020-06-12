@@ -14,7 +14,11 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 const isEnvDevelopment = process.env.NODE_ENV === "development";
 const isEnvProduction = process.env.NODE_ENV === "production";
-const libraryName = require(path.join(paths.projRoot, "package.json")).name || "custom-library";
+
+// Generate random identifier to ensure uniqueness in the application. This is
+// especially important to avoid collisions when multiple webpack runtimes are
+// in the same document, such as Web's runtime and this library's runtime.
+const libId = require("crypto").randomBytes(8).toString("hex");
 
 module.exports = {
     mode: isEnvProduction ? "production" : "development",
@@ -27,10 +31,10 @@ module.exports = {
     entry: paths.projEntry,
     externals: [/^dojo\/.+$/, /^esri\/.+$/, /^@vertigis\/.+$/, "react", "react-dom"],
     output: {
-        // `library` will be automatically concatenated with `output.jsonpFunction`s value.
-        // It's important to have a unique `jsonpFunction` value to allow multiple webpack
-        // runtimes on the same page.
-        // library: libraryName,
+        // Technically this shouldn't be needed as we restrict the library to
+        // one chunk, but we set this here just to be extra safe against
+        // collisions.
+        jsonpFunction: libId,
         libraryTarget: "amd",
         // Use "/" in dev so hot updates are requested from server root instead
         // of from "viewer" relative path.
@@ -43,7 +47,6 @@ module.exports = {
         filename: "[name].js",
     },
     optimization: {
-        minimize: isEnvProduction,
         // This is only used in production mode
         minimizer: [
             // Minify JS output
@@ -73,10 +76,16 @@ module.exports = {
                         test: /\.css$/i,
                         sideEffects: true,
                         use: [
-                            "style-loader",
+                            {
+                                loader: "style-loader",
+                                options: {
+                                    esModule: true,
+                                },
+                            },
                             {
                                 loader: "css-loader",
                                 options: {
+                                    esModule: true,
                                     // How many loaders before "css-loader" should be applied to "@import"ed resources
                                     importLoaders: 1,
                                 },
@@ -91,6 +100,11 @@ module.exports = {
                                         [
                                             autoprefixer({
                                                 flexbox: "no-2009",
+                                                overrideBrowserslist: [
+                                                    "last 2 chrome versions",
+                                                    "last 2 firefox versions",
+                                                    "last 2 safari versions",
+                                                ],
                                             }),
                                             isEnvProduction && require("cssnano")(),
                                         ].filter(Boolean),
@@ -108,7 +122,6 @@ module.exports = {
             new HtmlWebPackPlugin({
                 inject: false,
                 template: path.resolve(paths.ownPath, "lib", "index.ejs"),
-                libraryName,
             }),
 
         new ForkTsCheckerWebpackPlugin({

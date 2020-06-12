@@ -6,6 +6,7 @@ module.exports = {
             jsx: true,
         },
         ecmaVersion: 2018,
+        project: "./tsconfig.json",
         sourceType: "module",
     },
     plugins: ["@typescript-eslint", "react", "react-hooks"],
@@ -13,7 +14,6 @@ module.exports = {
         browser: true,
         commonjs: true,
         node: true,
-        jest: true,
     },
     settings: {
         react: {
@@ -24,6 +24,7 @@ module.exports = {
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "plugin:react/recommended",
         "prettier",
         "prettier/@typescript-eslint",
