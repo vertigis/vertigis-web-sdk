@@ -65,7 +65,7 @@ const installNpmDeps = (rootPath) => {
         })
     );
 
-    // Add SDK package.
+    // Add SDK and Web runtime packages.
     checkSpawnSyncResult(
         spawn.sync(
             "npm",
@@ -76,6 +76,7 @@ const installNpmDeps = (rootPath) => {
                 process.env.SDK_LOCAL_DEV === "true"
                     ? process.cwd()
                     : `@vertigis/web-sdk@${selfVersion}`,
+                "@vertigis/web",
             ],
             {
                 cwd: rootPath,
@@ -83,19 +84,11 @@ const installNpmDeps = (rootPath) => {
             }
         )
     );
-
-    // Add Web runtime types package.
-    checkSpawnSyncResult(
-        spawn.sync("npm", ["install", "--save", "--save-exact", "@geocortex/web"], {
-            cwd: rootPath,
-            stdio: "inherit",
-        })
-    );
 };
 
 // Initialize newly cloned directory as a git repo
 const gitInit = (rootPath) => {
-    console.log(`Initialising git in ${rootPath}\n`);
+    console.log(`Initializing git in ${rootPath}\n`);
 
     spawn.sync(`git init`, { cwd: rootPath }).status;
 };

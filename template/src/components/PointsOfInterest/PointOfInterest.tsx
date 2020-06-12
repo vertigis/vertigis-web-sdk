@@ -1,11 +1,11 @@
 import { xyToLngLat } from "esri/geometry/support/webMercatorUtils";
-import { format as formatNumber } from "@geocortex/api/utilities/number";
-import { useWatchAndRerender } from "@geocortex/web/ui";
-import DynamicIcon from "@geocortex/web/ui/icon/DynamicIcon";
-import IconButton from "@geocortex/web/ui/icon-button";
-import ListItemText from "@geocortex/web/ui/list-item-text";
-import MenuItem, { MenuItemProps } from "@geocortex/web/ui/menu-item";
-import MenuItemSecondaryAction from "@geocortex/web/ui/menu-list-item-secondary-action";
+import { format as formatNumber } from "@vertigis/arcgis-extensions/utilities/number";
+import { useWatchAndRerender } from "@vertigis/web/ui";
+import DynamicIcon from "@vertigis/web/ui/DynamicIcon";
+import IconButton from "@vertigis/web/ui/IconButton";
+import ListItemText from "@vertigis/web/ui/ListItemText";
+import MenuItem, { MenuItemProps } from "@vertigis/web/ui/MenuItem";
+import MenuItemSecondaryAction from "@vertigis/web/ui/MenuItemSecondaryAction";
 import React, { FC } from "react";
 
 import PointOfInterestModel from "./PointOfInterestModel";

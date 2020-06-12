@@ -3,18 +3,18 @@ import {
     serializable,
     ComponentModelProperties,
     importModel,
-} from "@geocortex/web/models";
-import { LocationMarkerEvent } from "@geocortex/viewer-framework/messaging/registry/location-marker";
-import { toColor } from "@geocortex/web/branding";
-import { GeometryResults } from "@geocortex/web/messaging";
-import { MapExtension } from "@geocortex/api/mapping/MapExtension";
-import { ChangeEvent } from "@geocortex/api/support/esri";
+} from "@vertigis/web/models";
+import { LocationMarkerEvent } from "@vertigis/viewer-spec/messaging/registry/location-marker";
+import { toColor } from "@vertigis/web/branding";
+import { command, HasGeometry } from "@vertigis/web/messaging";
+import { MapExtension } from "@vertigis/arcgis-extensions/mapping/MapExtension";
+import { ChangeEvent } from "@vertigis/arcgis-extensions/support/esri";
 import Collection from "esri/core/Collection";
 import Point from "esri/geometry/Point";
 
 import PointOfInterestModel from "./PointOfInterestModel";
 
-export type TestModelProperties = ComponentModelProperties;
+export type PointsOfInterestModelProperties = ComponentModelProperties;
 
 const colors = [
     "#0000ff",
@@ -30,7 +30,9 @@ const colors = [
 ];
 
 @serializable
-export default class PointsOfInterestModel extends ComponentModelBase {
+export default class PointsOfInterestModel extends ComponentModelBase<
+    PointsOfInterestModelProperties
+> {
     // Declares a dependency on the map component. The value of `map` is
     // automatically managed by the framework.
     @importModel("map-extension")
@@ -45,7 +47,8 @@ export default class PointsOfInterestModel extends ComponentModelBase {
     /**
      * Creates a new point of interest at the specified location.
      */
-    async createNew(location: GeometryResults): Promise<void> {
+    @command("points-of-interest.create")
+    async createNew(location: HasGeometry): Promise<void> {
         const id = this._nextId++;
 
         // Prompt the user for a name using the built-in ui.prompt operation.
@@ -84,22 +87,22 @@ export default class PointsOfInterestModel extends ComponentModelBase {
         // override a method.
         await super._onInitialize();
 
-        // Registration handles for event and command handlers should be saved
-        // and cleaned up when no longer needed.
+        // Registration handles for event handlers should be saved and cleaned
+        // up when no longer needed.
         this._handles.push(
-            // Register an implementation for our custom command. The map's
-            // onClick action is wired up to run this command in the sample
-            // app.json.
-            this.messages
-                .command<GeometryResults>("points-of-interest.create")
-                .register((location) => this.createNew(location)),
             this.messages.events.locationMarker.updated.subscribe(this._onMarkerUpdated),
+            // Event handlers registered via `on()` are invoked asynchronously,
+            // but are typed as accepting a function that returns `void`. In
+            // this case, our function returns `Promise<void>`, so we need to
+            // disable the linting rule that warns about the type difference.
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             this.pointsOfInterest.on("change", this._onPointOfInterestsChange)
         );
     }
 
-    destroy(): void {
-        super.destroy();
+    protected async _onDestroy(): Promise<void> {
+        // Always invoke the super implementation.
+        await super._onDestroy();
 
         // Clean up event handlers.
         this._handles.forEach((h) => h.remove());
