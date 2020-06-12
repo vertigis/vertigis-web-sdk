@@ -8,7 +8,7 @@ process.env.NODE_ENV = "production";
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
-process.on("unhandledRejection", err => {
+process.on("unhandledRejection", (err) => {
     throw err;
 });
 
@@ -82,7 +82,7 @@ const build = () => {
                 // TODO: Update link when available
                 console.log(
                     `You can learn more about deploying your custom code at ${chalk.cyan(
-                        "https://geocortex.github.io/dev-center/docs/web/overview"
+                        "https://developers.geocortex.com/docs/web/overview"
                     )}`
                 );
             }

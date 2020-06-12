@@ -6,6 +6,7 @@ const path = require("path");
 const paths = require("./paths");
 const webpack = require("webpack");
 
+const autoprefixer = require("autoprefixer");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
@@ -13,35 +14,27 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 const isEnvDevelopment = process.env.NODE_ENV === "development";
 const isEnvProduction = process.env.NODE_ENV === "production";
-const libraryName = require(path.join(paths.projPath, "package.json")).name || "custom-library";
 
-// TODO: Enforce single bundle - to load via portal we need a singular request as they don't support .js,
-// etc. file extensions.
-// - No code splitting
-// - CSS should be embedded
+// Generate random identifier to ensure uniqueness in the application. This is
+// especially important to avoid collisions when multiple webpack runtimes are
+// in the same document, such as Web's runtime and this library's runtime.
+const libId = require("crypto").randomBytes(8).toString("hex");
 
 module.exports = {
     mode: isEnvProduction ? "production" : "development",
-    context: paths.projPath,
+    context: paths.projRoot,
     devtool: isEnvProduction ? false : "eval",
     stats: "minimal",
     resolve: {
         extensions: paths.moduleFileExtensions,
     },
     entry: paths.projEntry,
-    externals: [
-        /^dojo\/.+$/,
-        /^esri\/.+$/,
-        /^@geocortex\/.+$/,
-        /^@vertigis\/.+$/,
-        "react",
-        "react-dom",
-    ],
+    externals: [/^dojo\/.+$/, /^esri\/.+$/, /^@vertigis\/.+$/, "react", "react-dom"],
     output: {
-        // `library` will be automatically concatenated with `output.jsonpFunction`s value.
-        // It's important to have a unique `jsonpFunction` value to allow multiple webpack
-        // runtimes on the same page.
-        // library: libraryName,
+        // Technically this shouldn't be needed as we restrict the library to
+        // one chunk, but we set this here just to be extra safe against
+        // collisions.
+        jsonpFunction: libId,
         libraryTarget: "amd",
         // Use "/" in dev so hot updates are requested from server root instead
         // of from "viewer" relative path.
@@ -51,10 +44,9 @@ module.exports = {
         futureEmitAssets: true,
         // There will be one main bundle, and one file per asynchronous chunk.
         // In development, it does not produce real files.
-        filename: isEnvProduction ? "static/js/[name].[contenthash:8].js" : "static/js/[name].js",
+        filename: "[name].js",
     },
     optimization: {
-        minimize: isEnvProduction,
         // This is only used in production mode
         minimizer: [
             // Minify JS output
@@ -72,18 +64,53 @@ module.exports = {
                     // Process application JS with Babel.
                     // The preset includes JSX, Flow, TypeScript, and some ESnext features.
                     {
-                        test: /\.(js|jsx|ts|tsx)$/,
+                        test: /\.(js|jsx|ts|tsx)$/i,
                         include: paths.projSrc,
-                        loader: require.resolve("babel-loader"),
+                        loader: require.resolve("ts-loader"),
                         options: {
-                            babelrc: false,
-                            configFile: require.resolve("./babel.config.js"),
-                            // This is a feature of `babel-loader` for webpack (not Babel itself).
-                            // It enables caching results in ./node_modules/.cache/babel-loader/
-                            // directory for faster rebuilds.
-                            cacheDirectory: true,
-                            cacheCompression: isEnvProduction,
+                            context: paths.projRoot,
+                            transpileOnly: true,
                         },
+                    },
+                    {
+                        test: /\.css$/i,
+                        sideEffects: true,
+                        use: [
+                            {
+                                loader: "style-loader",
+                                options: {
+                                    esModule: true,
+                                },
+                            },
+                            {
+                                loader: "css-loader",
+                                options: {
+                                    esModule: true,
+                                    // How many loaders before "css-loader" should be applied to "@import"ed resources
+                                    importLoaders: 1,
+                                },
+                            },
+                            {
+                                // Adds vendor prefixing based on your specified browser support in
+                                // package.json
+                                loader: "postcss-loader",
+                                options: {
+                                    ident: "postcss",
+                                    plugins: () =>
+                                        [
+                                            autoprefixer({
+                                                flexbox: "no-2009",
+                                                overrideBrowserslist: [
+                                                    "last 2 chrome versions",
+                                                    "last 2 firefox versions",
+                                                    "last 2 safari versions",
+                                                ],
+                                            }),
+                                            isEnvProduction && require("cssnano")(),
+                                        ].filter(Boolean),
+                                },
+                            },
+                        ],
                     },
                 ],
             },
@@ -95,14 +122,12 @@ module.exports = {
             new HtmlWebPackPlugin({
                 inject: false,
                 template: path.resolve(paths.ownPath, "lib", "index.ejs"),
-                libraryName,
             }),
 
         new ForkTsCheckerWebpackPlugin({
             async: isEnvProduction ? false : true,
             eslint: true,
             eslintOptions: {
-                cache: true,
                 resolvePluginsRelativeTo: __dirname,
             },
             formatter: "codeframe",
