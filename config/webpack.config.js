@@ -77,13 +77,13 @@ module.exports = {
                         sideEffects: true,
                         use: [
                             {
-                                loader: "style-loader",
+                                loader: require.resolve("style-loader"),
                                 options: {
                                     esModule: true,
                                 },
                             },
                             {
-                                loader: "css-loader",
+                                loader: require.resolve("css-loader"),
                                 options: {
                                     esModule: true,
                                     // How many loaders before "css-loader" should be applied to "@import"ed resources
@@ -93,7 +93,7 @@ module.exports = {
                             {
                                 // Adds vendor prefixing based on your specified browser support in
                                 // package.json
-                                loader: "postcss-loader",
+                                loader: require.resolve("postcss-loader"),
                                 options: {
                                     ident: "postcss",
                                     plugins: () =>
