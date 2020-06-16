@@ -29,7 +29,13 @@ module.exports = {
         extensions: paths.moduleFileExtensions,
     },
     entry: paths.projEntry,
-    externals: [/^dojo\/.+$/, /^esri\/.+$/, /^@vertigis\/.+$/, "react", "react-dom"],
+    externals: [
+        /^dojo\/.+$/,
+        /^esri\/.+$/,
+        /^@vertigis\/.+$/,
+        "react",
+        "react-dom",
+    ],
     output: {
         // Technically this shouldn't be needed as we restrict the library to
         // one chunk, but we set this here just to be extra safe against
@@ -106,7 +112,8 @@ module.exports = {
                                                     "last 2 safari versions",
                                                 ],
                                             }),
-                                            isEnvProduction && require("cssnano")(),
+                                            isEnvProduction &&
+                                                require("cssnano")(),
                                         ].filter(Boolean),
                                 },
                             },

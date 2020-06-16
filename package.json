@@ -26,7 +26,7 @@
         "build": "cd template && npm link \"../\" --no-package-lock && npm run build",
         "create": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-web-sdk.js create",
         "start": "cd template && npm link \"../\" --no-package-lock && npm run start",
-        "test": "echo \"No tests yet. All clear!\""
+        "test": "node ./test/index.js"
     },
     "dependencies": {
         "@typescript-eslint/eslint-plugin": "^3.1.0",
@@ -34,7 +34,6 @@
         "autoprefixer": "^9.8.0",
         "chalk": "^4.0.0",
         "clean-webpack-plugin": "^3.0.0",
-        "cross-spawn": "^7.0.3",
         "css-loader": "^3.5.3",
         "cssnano": "^4.1.10",
         "eslint": "^7.2.0",
@@ -57,7 +56,10 @@
         "@vertigis/web": "5.7.0",
         "conventional-changelog-conventionalcommits": "^4.3.0",
         "cross-env": "^7.0.2",
+        "execa": "^4.0.2",
         "husky": "^4.2.5",
+        "p-retry": "^4.2.0",
+        "playwright-chromium": "^1.1.1",
         "prettier": "^2.0.5",
         "pretty-quick": "^2.0.1",
         "react": "^16.13.1",
