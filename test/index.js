@@ -29,10 +29,9 @@ function runNpmScript(args, opts) {
         opts
     );
 
-    // pipe process output to current process output so it is visible in the
+    // Pipe process output to current process output so it is visible in the
     // console, but still allows us to examine the subprocess stdout/stderr
     // variables.
-
     scriptProcess.stdout.pipe(process.stdout);
     scriptProcess.stderr.pipe(process.stderr);
 
