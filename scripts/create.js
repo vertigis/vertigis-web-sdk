@@ -8,7 +8,7 @@ const fs = require("fs-extra");
 const path = require("path");
 
 const rootDir = path.join(__dirname, "..");
-const directoryName = process.argv[2];
+const directoryName = process.argv[3];
 const directoryPath = path.resolve(directoryName);
 
 const checkSpawnSyncResult = (syncResult) => {
@@ -21,7 +21,9 @@ const copyTemplate = (rootPath) => {
     if (fs.existsSync(rootPath) && fs.readdirSync(rootPath).length > 0) {
         console.error(
             chalk.red(
-                `Cannot create new project at ${chalk.green(rootPath)} as it already exists.\n`
+                `Cannot create new project at ${chalk.green(
+                    rootPath
+                )} as it already exists.\n`
             )
         );
         process.exit(1);
@@ -35,7 +37,10 @@ const copyTemplate = (rootPath) => {
     });
     // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
     // See: https://github.com/npm/npm/issues/1862
-    fs.moveSync(path.join(rootPath, "gitignore"), path.join(rootPath, ".gitignore"));
+    fs.moveSync(
+        path.join(rootPath, "gitignore"),
+        path.join(rootPath, ".gitignore")
+    );
 };
 
 const updateTemplateContent = (rootPath) => {
@@ -94,7 +99,11 @@ const gitInit = (rootPath) => {
 };
 
 const printSuccess = () => {
-    console.log(`${chalk.green("Success!")} Created ${directoryName} at ${directoryPath}\n`);
+    console.log(
+        `${chalk.green(
+            "Success!"
+        )} Created ${directoryName} at ${directoryPath}\n`
+    );
     console.log("Inside that directory, you can run several commands:\n");
     console.log(chalk.cyan(`  npm start`));
     console.log("    Starts the development server.\n");

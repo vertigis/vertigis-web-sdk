@@ -22,7 +22,8 @@ const webpackConfig = require("../config/webpack.config");
 const httpAgent = new http.Agent({ keepAlive: true });
 const httpsAgent = new https.Agent({ keepAlive: true });
 
-const viewerTarget = process.env.VIEWER_URL || "https://apps.geocortex.com/webviewer";
+const viewerTarget =
+    process.env.VIEWER_URL || "https://apps.geocortex.com/webviewer";
 const port = process.env.PORT || 3000;
 
 const compiler = webpack(webpackConfig);
@@ -37,7 +38,7 @@ const serverConfig = {
     // Allow binding to any host (localhost, jdoe-pc.latitudegeo.com, etc).
     host: "0.0.0.0",
     hot: true,
-    open: true,
+    open: process.env.OPEN_BROWSER !== "false",
     port,
     proxy: {
         "/viewer": {
@@ -61,7 +62,8 @@ const serverConfig = {
 const devServer = new WebpackDevServer(compiler, serverConfig);
 devServer.listen(serverConfig.port, serverConfig.host, (err) => {
     if (err) {
-        throw err;
+        console.error(err);
+        process.exit(1);
     }
 });
 
