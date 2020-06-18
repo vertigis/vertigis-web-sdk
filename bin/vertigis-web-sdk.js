@@ -10,7 +10,7 @@ const scriptIndex = args.findIndex(
 const script = scriptIndex === -1 ? args[0] : args[scriptIndex];
 
 if (["build", "create", "start"].includes(script)) {
-    require(require.resolve(`../scripts/${script}`));
+    require(`../scripts/${script}`);
 } else {
     console.log('Unknown script "' + script + '".');
 }
