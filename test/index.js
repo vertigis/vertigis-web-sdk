@@ -84,13 +84,10 @@ async function testStartProject() {
         });
         const frame = page.frame("viewer");
         await frame.waitForSelector("text=Points of Interest");
-    } catch (e) {
+    } finally {
         await browser.close();
-        throw e;
+        killSubprocess();
     }
-
-    await browser.close();
-    killSubprocess();
 }
 
 function rmdir(path) {
