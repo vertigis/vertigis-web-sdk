@@ -16,7 +16,7 @@ Builds the library for production to the `build` folder. It optimizes the build 
 
 Your custom library is now ready to be deployed!
 
-See the [section about deployment](https://developers.geocortex.com/docs/web/sdk-deployment) in the [Developer Center](https://developers.geocortex.com/docs/web/overview) for more information.
+See the [section about deployment](https://developers.geocortex.com/docs/web/sdk-deployment/) in the [Developer Center](https://developers.geocortex.com/docs/web/overview/) for more information.
 
 ## Learn More
 
