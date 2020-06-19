@@ -144,7 +144,7 @@ module.exports = {
 
         // Define process.env variables that should be made available in source code.
         new webpack.DefinePlugin({
-            "process.env.NODE_ENV": process.env.NODE_ENV,
+            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
         }),
 
         new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
