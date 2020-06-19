@@ -132,17 +132,19 @@ module.exports = {
             }),
 
         new ForkTsCheckerWebpackPlugin({
-            async: isEnvProduction ? false : true,
-            eslint: true,
-            eslintOptions: {
-                resolvePluginsRelativeTo: __dirname,
+            eslint: {
+                enabled: true,
+                files: "./src/**/*.{js,jsx,ts,tsx}",
+                options: {
+                    resolvePluginsRelativeTo: __dirname,
+                },
             },
             formatter: "codeframe",
         }),
 
         // Define process.env variables that should be made available in source code.
         new webpack.DefinePlugin({
-            "process.env.NODE_ENV": process.env.NODE_ENV,
+            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
         }),
 
         new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),

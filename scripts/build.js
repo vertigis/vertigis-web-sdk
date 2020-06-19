@@ -13,7 +13,6 @@ process.on("unhandledRejection", (err) => {
 });
 
 const chalk = require("chalk");
-const formatWebpackMessages = require("react-dev-utils/formatWebpackMessages");
 const webpack = require("webpack");
 
 const webpackConfig = require("../config/webpack.config");
@@ -23,44 +22,22 @@ const build = () => {
 
     const compiler = webpack(webpackConfig);
     return new Promise((resolve, reject) => {
-        // TODO: Validate that this formatting is actually working as expected.
-        // We may need to turn off webpack stats completely if we're going to handle formatting ourselves?
         compiler.run((err, stats) => {
-            let messages;
             if (err) {
-                if (!err.message) {
-                    return reject(err);
-                }
-
-                let errMessage = err.message;
-
-                // Add additional information for postcss errors
-                if (Object.prototype.hasOwnProperty.call(err, "postcssNode")) {
-                    errMessage +=
-                        "\nCompileError: Begins at CSS selector " + err["postcssNode"].selector;
-                }
-
-                messages = formatWebpackMessages({
-                    errors: [errMessage],
-                    warnings: [],
-                });
-            } else {
-                messages = formatWebpackMessages(
-                    stats.toJson({ all: false, warnings: true, errors: true })
-                );
+                return reject(err);
             }
-            if (messages.errors.length) {
-                // Only keep the first error. Others are often indicative
-                // of the same problem, but confuse the reader with noise.
-                if (messages.errors.length > 1) {
-                    messages.errors.length = 1;
-                }
-                return reject(new Error(messages.errors.join("\n\n")));
+
+            console.log(stats.toString("minimal"));
+
+            if (stats.hasErrors()) {
+                return reject();
             }
+
             if (
                 process.env.CI &&
-                (typeof process.env.CI !== "string" || process.env.CI.toLowerCase() !== "false") &&
-                messages.warnings.length
+                (typeof process.env.CI !== "string" ||
+                    process.env.CI.toLowerCase() !== "false") &&
+                stats.hasWarnings()
             ) {
                 console.log(
                     chalk.yellow(
@@ -68,21 +45,21 @@ const build = () => {
                             "Most CI servers set it automatically.\n"
                     )
                 );
-                return reject(new Error(messages.warnings.join("\n\n")));
+                return reject();
             }
 
-            if (messages.warnings.length) {
+            if (stats.hasWarnings()) {
                 console.log(chalk.yellow("Compiled with warnings.\n"));
-                console.log(messages.warnings.join("\n\n"));
             } else {
                 console.log(chalk.green("Compiled successfully.\n"));
                 console.log(
-                    `Your production build was created inside the ${chalk.cyan("build")} folder.`
+                    `Your production build was created inside the ${chalk.cyan(
+                        "build"
+                    )} folder.`
                 );
-                // TODO: Update link when available
                 console.log(
                     `You can learn more about deploying your custom code at ${chalk.cyan(
-                        "https://developers.geocortex.com/docs/web/overview"
+                        "https://developers.geocortex.com/docs/web/overview/"
                     )}`
                 );
             }
