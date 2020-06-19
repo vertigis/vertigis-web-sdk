@@ -61,6 +61,12 @@ const serverConfig = {
     sockPort: process.env.SOCK_PORT || undefined,
     stats: "minimal",
     watchContentBase: true,
+    watchOptions: {
+        // Don't bother watching node_modules files for changes. This reduces
+        // CPU/mem overhead, but means that changes from `npm install` while the
+        // dev server is running won't take effect until restarted.
+        ignored: /node_modules/,
+    },
 };
 
 const devServer = new WebpackDevServer(compiler, serverConfig);
