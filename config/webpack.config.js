@@ -132,10 +132,12 @@ module.exports = {
             }),
 
         new ForkTsCheckerWebpackPlugin({
-            async: isEnvProduction ? false : true,
-            eslint: true,
-            eslintOptions: {
-                resolvePluginsRelativeTo: __dirname,
+            eslint: {
+                enabled: true,
+                files: "./src/**/*.{js,jsx,ts,tsx}",
+                options: {
+                    resolvePluginsRelativeTo: __dirname,
+                },
             },
             formatter: "codeframe",
         }),
