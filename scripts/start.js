@@ -14,6 +14,7 @@ process.on("unhandledRejection", (err) => {
 
 const http = require("http");
 const https = require("https");
+const open = require("open");
 const webpack = require("webpack");
 const WebpackDevServer = require("webpack-dev-server");
 const paths = require("../config/paths");
@@ -28,6 +29,11 @@ const port = process.env.PORT || 3000;
 
 const compiler = webpack(webpackConfig);
 const serverConfig = {
+    after: function () {
+        if (process.env.OPEN_BROWSER !== "false") {
+            open(`http://localhost:${port}`);
+        }
+    },
     clientLogLevel: "silent",
     compress: true,
     contentBase: paths.projPublicDir,
@@ -38,7 +44,6 @@ const serverConfig = {
     // Allow binding to any host (localhost, jdoe-pc.latitudegeo.com, etc).
     host: "0.0.0.0",
     hot: true,
-    open: process.env.OPEN_BROWSER !== "false",
     port,
     proxy: {
         "/viewer": {
@@ -53,10 +58,15 @@ const serverConfig = {
             },
         },
     },
-    // The URL to open in the browser
-    public: `http://localhost:${port}`,
+    sockPort: process.env.SOCK_PORT || undefined,
     stats: "minimal",
     watchContentBase: true,
+    watchOptions: {
+        // Don't bother watching node_modules files for changes. This reduces
+        // CPU/mem overhead, but means that changes from `npm install` while the
+        // dev server is running won't take effect until restarted.
+        ignored: /node_modules/,
+    },
 };
 
 const devServer = new WebpackDevServer(compiler, serverConfig);
