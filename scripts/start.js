@@ -31,7 +31,7 @@ const compiler = webpack(webpackConfig);
 const serverConfig = {
     after: function () {
         if (process.env.OPEN_BROWSER !== "false") {
-            open(`http://localhost:${port}`);
+            open(`http://localhost:${port}${process.env.OPEN_PAGE || ""}`);
         }
     },
     clientLogLevel: "silent",
@@ -72,8 +72,7 @@ const serverConfig = {
 const devServer = new WebpackDevServer(compiler, serverConfig);
 devServer.listen(serverConfig.port, serverConfig.host, (err) => {
     if (err) {
-        console.error(err);
-        process.exit(1);
+        throw err;
     }
 });
 
