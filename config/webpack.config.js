@@ -67,6 +67,15 @@ module.exports = {
                 // match the requirements. When no loader matches it will fall
                 // back to the "file" loader at the end of the loader list.
                 oneOf: [
+                    // Embeds assets smaller than the specified limit (Infinity
+                    // in our case) as data URLs.
+                    {
+                        test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+                        loader: require.resolve("url-loader"),
+                        options: {
+                            esModule: true,
+                        },
+                    },
                     // Process application JS with Babel.
                     // The preset includes JSX, Flow, TypeScript, and some ESnext features.
                     {
