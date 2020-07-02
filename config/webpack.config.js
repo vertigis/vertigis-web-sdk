@@ -24,6 +24,9 @@ module.exports = {
     mode: isEnvProduction ? "production" : "development",
     context: paths.projRoot,
     devtool: isEnvProduction ? false : "eval",
+    // Disable perf hints as it's mostly out of the developer's control as we
+    // only allow one chunk.
+    performance: false,
     stats: "minimal",
     resolve: {
         extensions: paths.moduleFileExtensions,

@@ -18,7 +18,7 @@ const webpack = require("webpack");
 const webpackConfig = require("../config/webpack.config");
 
 const build = () => {
-    console.log("Creating an optimized production build...");
+    console.log("Creating an optimized production build...\n");
 
     const compiler = webpack(webpackConfig);
     return new Promise((resolve, reject) => {
@@ -27,7 +27,20 @@ const build = () => {
                 return reject(err);
             }
 
-            console.log(stats.toString("minimal"));
+            console.log(
+                stats.toString({
+                    // TODO: Use "preset" property instead when webpack 5 is released.
+                    // Copied from `minimal` preset.
+                    all: false,
+                    modules: true,
+                    maxModules: 0,
+                    errors: true,
+                    warnings: true,
+
+                    // Add in assets output to see chunk size.
+                    assets: true,
+                })
+            );
 
             if (stats.hasErrors()) {
                 return reject();
@@ -49,9 +62,9 @@ const build = () => {
             }
 
             if (stats.hasWarnings()) {
-                console.log(chalk.yellow("Compiled with warnings.\n"));
+                console.log(chalk.yellow("\nCompiled with warnings.\n"));
             } else {
-                console.log(chalk.green("Compiled successfully.\n"));
+                console.log(chalk.green("\nCompiled successfully.\n"));
                 console.log(
                     `Your production build was created inside the ${chalk.cyan(
                         "build"
