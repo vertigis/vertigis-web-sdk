@@ -103,7 +103,6 @@ module.exports = {
                             {
                                 loader: require.resolve("css-loader"),
                                 options: {
-                                    esModule: true,
                                     // How many loaders before "css-loader" should be applied to "@import"ed resources
                                     importLoaders: 1,
                                 },
