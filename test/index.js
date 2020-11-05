@@ -23,9 +23,9 @@ let subprocess;
  */
 function runNpmScript(args, opts) {
     console.log(`Executing CLI script: ${args.join(" ")}`);
-    const scriptProcess = execa(
-        "node",
-        [path.join(rootDir, "bin/vertigis-web-sdk.js"), ...args],
+    const scriptProcess = execa.node(
+        path.join(rootDir, "bin/vertigis-web-sdk.js"),
+        args,
         opts
     );
 
@@ -41,6 +41,7 @@ function runNpmScript(args, opts) {
 function killSubprocess() {
     if (subprocess && !subprocess.killed) {
         subprocess.kill();
+        subprocess = undefined;
     }
 }
 
