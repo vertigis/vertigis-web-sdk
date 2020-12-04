@@ -7,7 +7,7 @@ import {
 import { LocationMarkerEvent } from "@vertigis/viewer-spec/messaging/registry/location-marker";
 import { toColor } from "@vertigis/web/branding";
 import { command, HasGeometry } from "@vertigis/web/messaging";
-import { MapExtension } from "@vertigis/arcgis-extensions/mapping/MapExtension";
+import { MapModel } from "@vertigis/web/mapping";
 import { ChangeEvent } from "@vertigis/arcgis-extensions/support/esri";
 import Collection from "esri/core/Collection";
 import Point from "esri/geometry/Point";
@@ -36,7 +36,7 @@ export default class PointsOfInterestModel extends ComponentModelBase<
     // Declares a dependency on the map component. The value of `map` is
     // automatically managed by the framework.
     @importModel("map-extension")
-    map: MapExtension;
+    map: MapModel;
 
     // Using an esri Collection instead of an array allows us to watch for
     // changes.
@@ -90,7 +90,9 @@ export default class PointsOfInterestModel extends ComponentModelBase<
         // Registration handles for event handlers should be saved and cleaned
         // up when no longer needed.
         this._handles.push(
-            this.messages.events.locationMarker.updated.subscribe(this._onMarkerUpdated),
+            this.messages.events.locationMarker.updated.subscribe(
+                this._onMarkerUpdated
+            ),
             // Event handlers registered via `on()` are invoked asynchronously,
             // but are typed as accepting a function that returns `void`. In
             // this case, our function returns `Promise<void>`, so we need to
@@ -109,7 +111,9 @@ export default class PointsOfInterestModel extends ComponentModelBase<
     }
 
     private readonly _onMarkerUpdated = (e: LocationMarkerEvent): void => {
-        const matchingPoi = this.pointsOfInterest.find((poi) => poi.id === e.id);
+        const matchingPoi = this.pointsOfInterest.find(
+            (poi) => poi.id === e.id
+        );
         if (matchingPoi) {
             matchingPoi.geometry = e.geometry as Point;
         }

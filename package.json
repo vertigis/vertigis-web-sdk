@@ -54,7 +54,7 @@
     },
     "devDependencies": {
         "@types/node": "^12.12.31",
-        "@vertigis/web": "5.8.0",
+        "@vertigis/web": "5.10.0",
         "conventional-changelog-conventionalcommits": "^4.4.0",
         "cross-env": "^7.0.2",
         "execa": "^4.0.3",
