@@ -13,14 +13,10 @@
             "onClick": "points-of-interest.create"
         },
         {
-            "$type": "vertigis-web",
-            "id": "default",
-            "onInitialized": {
-                "name": "ui.display-notification",
-                "arguments": {
-                    "message": "Click anywhere on the map to add a new point of interest. You can move an existing one by dragging it."
-                }
-            }
+            "id": "text-1",
+            "icon": "text",
+            "text": "Click anywhere on the map to add a new point of interest. You can move an existing one by dragging it.",
+            "$type": "text"
         },
         {
             "$type": "layout",

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layout xmlns="https://geocortex.com/layout/v1" xmlns:custom="custom.foo">
     <map config="map-1">
-        <custom:points-of-interest config="points-of-interest-1" slot="top-left" width="22" />
+        <text config="text-1" slot="top-left" width="22"/>
+        <custom:points-of-interest config="points-of-interest-1" slot="top-right" width="22" />
     </map>
 </layout>
