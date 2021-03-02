@@ -10,7 +10,8 @@
         {
             "$type": "map-extension",
             "id": "map-1",
-            "onClick": "points-of-interest.create"
+            "onClick": "points-of-interest.create",
+            "webMap": "https://www.arcgis.com/home/item.html?id=97e38e28b80444b38fde3a5c6c8f8360"
         },
         {
             "id": "text-1",
