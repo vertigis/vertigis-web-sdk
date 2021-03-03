@@ -34,7 +34,7 @@ const PointOfInterest: FC<PointOfInterestProps> = ({
     useWatchAndRerender(model, ["title", "geometry.x", "geometry.y", "color"]);
     const [lon, lat] = xyToLngLat(geometry.x, geometry.y);
     return (
-        <MenuItem button={true} {...other}>
+        <MenuItem button {...other}>
             <div
                 className="PointOfInterest-swatch"
                 style={{ backgroundColor: color.toCss() }}
