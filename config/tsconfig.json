@@ -16,6 +16,7 @@
         "skipLibCheck": true,
         "strict": true,
         "strictNullChecks": false,
+        "strictFunctionTypes": false,
         "suppressImplicitAnyIndexErrors": true
     }
 }

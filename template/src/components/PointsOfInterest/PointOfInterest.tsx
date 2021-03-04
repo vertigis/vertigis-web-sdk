@@ -21,7 +21,11 @@ export interface PointOfInterestProps extends MenuItemProps {
     onDelete?: () => void;
 }
 
-const PointOfInterest: FC<PointOfInterestProps> = ({ model, onDelete, ...other }) => {
+const PointOfInterest: FC<PointOfInterestProps> = ({
+    model,
+    onDelete,
+    ...other
+}) => {
     const { title, geometry, color } = model;
 
     // Re-render whenever any of these properties change. Notice how you can
@@ -31,10 +35,15 @@ const PointOfInterest: FC<PointOfInterestProps> = ({ model, onDelete, ...other }
     const [lon, lat] = xyToLngLat(geometry.x, geometry.y);
     return (
         <MenuItem {...other}>
-            <div className="PointOfInterest-swatch" style={{ backgroundColor: color.toCss() }} />
+            <div
+                className="PointOfInterest-swatch"
+                style={{ backgroundColor: color.toCss() }}
+            />
             <ListItemText
                 primary={title}
-                secondary={`Lat: ${formatLatLon(lat)}, Lon: ${formatLatLon(lon)}`}
+                secondary={`Lat: ${formatLatLon(lat)}, Lon: ${formatLatLon(
+                    lon
+                )}`}
             />
             <MenuItemSecondaryAction>
                 <IconButton onClick={onDelete} title="Delete">
