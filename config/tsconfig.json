@@ -4,6 +4,8 @@
         "target": "es2019",
         "lib": ["es2019", "dom", "dom.iterable"],
         "allowJs": true,
+        // Assumes <projectdir>/node_modules/@vertigis/web-sdk/config
+        "baseUrl": "../../../../",
         "esModuleInterop": true,
         "experimentalDecorators": true,
         "forceConsistentCasingInFileNames": true,
@@ -12,6 +14,9 @@
         "moduleResolution": "node",
         "noEmit": true,
         "noImplicitAny": false,
+        "paths": {
+            "esri/*": ["./node_modules/@arcgis/core/*"]
+        },
         "resolveJsonModule": true,
         "skipLibCheck": true,
         "strict": true,
