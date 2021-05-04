@@ -9,8 +9,8 @@ import { toColor } from "@vertigis/web/branding";
 import { command, HasGeometry } from "@vertigis/web/messaging";
 import { MapModel } from "@vertigis/web/mapping";
 import { ChangeEvent } from "@vertigis/arcgis-extensions/support/esri";
-import Collection from "esri/core/Collection";
-import Point from "esri/geometry/Point";
+import Collection from "@arcgis/core/core/Collection";
+import Point from "@arcgis/core/geometry/Point";
 
 import PointOfInterestModel from "./PointOfInterestModel";
 
@@ -30,9 +30,7 @@ const colors = [
 ];
 
 @serializable
-export default class PointsOfInterestModel extends ComponentModelBase<
-    PointsOfInterestModelProperties
-> {
+export default class PointsOfInterestModel extends ComponentModelBase<PointsOfInterestModelProperties> {
     // Declares a dependency on the map component. The value of `map` is
     // automatically managed by the framework.
     @importModel("map-extension")
