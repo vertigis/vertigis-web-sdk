@@ -27,8 +27,6 @@ module.exports = {
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "plugin:react/recommended",
         "prettier",
-        "prettier/@typescript-eslint",
-        "prettier/react",
     ],
     rules: {
         "@typescript-eslint/explicit-function-return-type": "off",
