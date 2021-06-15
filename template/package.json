@@ -9,9 +9,7 @@
         "build": "vertigis-web-sdk build",
         "start": "vertigis-web-sdk start"
     },
-    "dependencies": {
-        "@vertigis/web-sdk": "file:.."
-    },
+    "dependencies": {},
     "devDependencies": {
         "typescript": "^4.3.2"
     }
