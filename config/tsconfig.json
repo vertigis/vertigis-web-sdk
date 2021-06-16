@@ -1,17 +1,22 @@
 {
     "compilerOptions": {
         "module": "esnext",
-        "target": "es2018",
-        "lib": ["es2018", "dom", "dom.iterable"],
+        "target": "es2019",
+        "lib": ["es2019", "dom", "dom.iterable"],
         "allowJs": true,
+        // Assumes <projectdir>/node_modules/@vertigis/web-sdk/config
+        "baseUrl": "../../../../",
         "esModuleInterop": true,
         "experimentalDecorators": true,
         "forceConsistentCasingInFileNames": true,
         "isolatedModules": true,
-        "jsx": "react",
+        "jsx": "react-jsx",
         "moduleResolution": "node",
         "noEmit": true,
         "noImplicitAny": false,
+        "paths": {
+            "esri/*": ["./node_modules/@arcgis/core/*"]
+        },
         "resolveJsonModule": true,
         "skipLibCheck": true,
         "strict": true,
