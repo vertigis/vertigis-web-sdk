@@ -1,7 +1,7 @@
 {
     "name": "@vertigis/web-sdk",
     "version": "0.0.0-semantically-released",
-    "description": "The SDK for extending Geocortex Web",
+    "description": "The SDK for extending VertiGIS Studio Web",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/geocortex/vertigis-web-sdk.git"
@@ -54,7 +54,7 @@
     },
     "devDependencies": {
         "@types/node": "^14.14.13",
-        "@vertigis/web": "^5.13.0",
+        "@vertigis/web": "^5.16.0",
         "conventional-changelog-conventionalcommits": "^4.5.0",
         "cross-env": "^7.0.3",
         "execa": "^5.1.1",

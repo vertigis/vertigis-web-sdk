@@ -1,4 +1,4 @@
-This project was bootstrapped with the [Geocortex Web SDK](https://github.com/geocortex/vertigis-web-sdk).
+This project was bootstrapped with the [VertiGIS Studio Web SDK](https://github.com/geocortex/vertigis-web-sdk).
 
 ## Available Scripts
 
@@ -20,4 +20,4 @@ See the [section about deployment](https://developers.geocortex.com/docs/web/sdk
 
 ## Learn More
 
-Find [further documentation on the SDK](https://developers.geocortex.com/docs/web/sdk-overview/) on the [Geocortex Developer Center](https://developers.geocortex.com/docs/web/overview/)
+Find [further documentation on the SDK](https://developers.geocortex.com/docs/web/sdk-overview/) on the [VertiGIS Studio Developer Center](https://developers.geocortex.com/docs/web/overview/)
