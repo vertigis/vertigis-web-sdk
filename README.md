@@ -29,6 +29,10 @@ Runs the project in development mode. Open [http://localhost:3000](http://localh
 
 The page will automatically reload if you make changes to the code. You will see build errors and warnings in the console.
 
+### `npm run upgrade`
+
+Upgrades the library's dependencies to point to the latest versions of VertiGIS Studio Web and the VertiGIS Studio Web SDK.
+
 ### `npm run build`
 
 Builds the library for production to the `build` folder. It optimizes the build for the best performance.
