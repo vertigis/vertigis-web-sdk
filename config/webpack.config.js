@@ -21,7 +21,9 @@ const libId = require("crypto").randomBytes(8).toString("hex");
 module.exports = {
     mode: isEnvProduction ? "production" : "development",
     context: paths.projRoot,
-    devtool: isEnvProduction ? false : "eval-source-map",
+    devtool: isEnvProduction
+        ? false
+        : process.env.DEV_TOOL || "inline-source-map",
     // Disable perf hints as it's mostly out of the developer's control as we
     // only allow one chunk.
     performance: false,
@@ -136,4 +138,10 @@ module.exports = {
 
         isEnvProduction && new CleanWebpackPlugin(),
     ].filter(Boolean),
+    watchOptions: {
+        // Don't bother watching node_modules files for changes. This reduces
+        // CPU/mem overhead, but means that changes from `npm install` while the
+        // dev server is running won't take effect until restarted.
+        ignored: /node_modules/,
+    },
 };

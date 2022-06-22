@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
         "module": "esnext",
-        "target": "es2019",
-        "lib": ["es2019", "dom", "dom.iterable"],
+        "target": "es2021",
+        "lib": ["es2021", "dom", "dom.iterable"],
         "allowJs": true,
         // Assumes <projectdir>/node_modules/@vertigis/web-sdk/config
         "baseUrl": "../../../../",
@@ -19,6 +19,7 @@
         },
         "resolveJsonModule": true,
         "skipLibCheck": true,
+        "sourceMap": true,
         "strict": true,
         "strictNullChecks": false,
         "strictFunctionTypes": false,

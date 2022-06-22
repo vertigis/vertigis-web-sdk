@@ -14,7 +14,6 @@ process.on("unhandledRejection", (err) => {
 
 const http = require("http");
 const https = require("https");
-const open = require("open");
 const webpack = require("webpack");
 const WebpackDevServer = require("webpack-dev-server");
 const paths = require("../config/paths");
@@ -29,21 +28,23 @@ const port = process.env.PORT || 3000;
 
 const compiler = webpack(webpackConfig);
 const serverConfig = {
-    after: function () {
-        if (process.env.OPEN_BROWSER !== "false") {
-            open(`http://localhost:${port}${process.env.OPEN_PAGE || ""}`);
-        }
+    allowedHosts: "all",
+    client: {
+        logging: "none",
+        webSocketURL: {
+            port: process.env.SOCK_PORT || undefined,
+        },
     },
-    clientLogLevel: "silent",
     compress: true,
-    contentBase: paths.projPublicDir,
-    disableHostCheck: true,
     headers: {
         "Access-Control-Allow-Origin": "*",
     },
     // Allow binding to any host (localhost, jdoe-pc.latitudegeo.com, etc).
     host: "0.0.0.0",
     hot: true,
+    open:
+        process.env.OPEN_BROWSER !== "false" &&
+        `http://localhost:${port}${process.env.OPEN_PAGE || ""}`,
     port,
     proxy: {
         "/viewer": {
@@ -58,28 +59,10 @@ const serverConfig = {
             },
         },
     },
-    sockPort: process.env.SOCK_PORT || undefined,
-    stats: "minimal",
-    watchContentBase: true,
-    watchOptions: {
-        // Don't bother watching node_modules files for changes. This reduces
-        // CPU/mem overhead, but means that changes from `npm install` while the
-        // dev server is running won't take effect until restarted.
-        ignored: /node_modules/,
+    static: {
+        directory: paths.projPublicDir,
     },
 };
 
-const devServer = new WebpackDevServer(compiler, serverConfig);
-devServer.listen(serverConfig.port, serverConfig.host, (err) => {
-    if (err) {
-        throw err;
-    }
-});
-
-["SIGINT", "SIGTERM"].forEach((signal) => {
-    process.on(signal, () => {
-        devServer.close(() => {
-            process.exit();
-        });
-    });
-});
+const devServer = new WebpackDevServer(serverConfig, compiler);
+devServer.start();
