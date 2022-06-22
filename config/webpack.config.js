@@ -27,10 +27,13 @@ module.exports = {
     performance: false,
     resolve: {
         extensions: paths.moduleFileExtensions,
+        alias: {
+            esri: "@arcgis/core",
+        },
     },
     entry: paths.projEntry,
     externals: [
-        /^dojo\/.+$/,
+        /^@arcgis\/core\/.+$/,
         /^esri\/.+$/,
         /^@vertigis\/.+$/,
         "react",

@@ -24,7 +24,7 @@ const httpAgent = new http.Agent({ keepAlive: true });
 const httpsAgent = new https.Agent({ keepAlive: true });
 
 const viewerTarget =
-    process.env.VIEWER_URL || "https://apps.geocortex.com/webviewer";
+    process.env.VIEWER_URL || "https://apps.vertigisstudio.com/web";
 const port = process.env.PORT || 3000;
 
 const compiler = webpack(webpackConfig);
@@ -53,7 +53,7 @@ const serverConfig = {
             logLevel: "warn",
             pathRewrite: {
                 // Strip /viewer from path so it isn't forwarded to the target
-                // /viewer/index.html => /index.html => https://apps.geocortex.com/webviewer/index.html
+                // /viewer/index.html => /index.html => https://apps.vertigisstudio.com/web/index.html
                 "^/viewer": "",
             },
         },

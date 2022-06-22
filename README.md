@@ -1,8 +1,8 @@
-# Geocortex Web SDK
+# VertiGIS Studio Web SDK
 
 ![CI/CD](https://github.com/geocortex/vertigis-web-sdk/workflows/CI/CD/badge.svg)
 
-This SDK makes it easy to create custom libraries for [Geocortex Web](https://www.geocortex.com/products/gxw/).
+This SDK makes it easy to create custom libraries for [VertiGIS Studio Web](https://vertigisstudio.com/products/vertigis-studio-web/).
 
 ## Requirements
 
@@ -17,7 +17,7 @@ To create a project called _web-library_ run this command:
 npx @vertigis/web-sdk create web-library
 ```
 
-This will bootstrap a new project in the specified directory to quickly get you up and running with the Geocortex Web SDK.
+This will bootstrap a new project in the specified directory to quickly get you up and running with the VertiGIS Studio Web SDK.
 
 ## Available Scripts
 
@@ -29,6 +29,10 @@ Runs the project in development mode. Open [http://localhost:3000](http://localh
 
 The page will automatically reload if you make changes to the code. You will see build errors and warnings in the console.
 
+### `npm run upgrade`
+
+Upgrades the library's dependencies to point to the latest versions of VertiGIS Studio Web and the VertiGIS Studio Web SDK.
+
 ### `npm run build`
 
 Builds the library for production to the `build` folder. It optimizes the build for the best performance.
@@ -39,7 +43,7 @@ See the [section about deployment](https://developers.geocortex.com/docs/web/sdk
 
 ## Documentation
 
-Find [further documentation on the SDK](https://developers.geocortex.com/docs/web/sdk-overview/) on the [Geocortex Developer Center](https://developers.geocortex.com/docs/web/overview/)
+Find [further documentation on the SDK](https://developers.geocortex.com/docs/web/sdk-overview/) on the [VertiGIS Studio Developer Center](https://developers.geocortex.com/docs/web/overview/)
 
 ## Contributing
 

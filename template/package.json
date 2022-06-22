@@ -1,17 +1,17 @@
 {
-    "name": "geocortex-web-project",
+    "name": "vertigis-studio-web-project",
     "private": true,
     "version": "1.0.0",
     "description": "",
     "license": "UNLICENSED",
     "author": "",
-    "cldr-data-urls-filter": "(cldr-core|cldr-numbers-modern)",
     "scripts": {
         "build": "vertigis-web-sdk build",
-        "start": "vertigis-web-sdk start"
+        "start": "vertigis-web-sdk start",
+        "upgrade": "vertigis-web-sdk upgrade"
     },
     "dependencies": {},
     "devDependencies": {
-        "typescript": "^4.0.2"
+        "typescript": "^4.5.5"
     }
 }

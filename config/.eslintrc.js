@@ -27,8 +27,6 @@ module.exports = {
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "plugin:react/recommended",
         "prettier",
-        "prettier/@typescript-eslint",
-        "prettier/react",
     ],
     rules: {
         "@typescript-eslint/explicit-function-return-type": "off",
@@ -38,6 +36,7 @@ module.exports = {
         "@typescript-eslint/no-unsafe-call": "off",
         "@typescript-eslint/no-unsafe-return": "off",
         "react/prop-types": "off",
+        "react/react-in-jsx-scope": "off",
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
     },
