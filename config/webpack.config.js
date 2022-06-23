@@ -6,11 +6,9 @@ const path = require("path");
 const paths = require("./paths");
 const webpack = require("webpack");
 
-const autoprefixer = require("autoprefixer");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
 
 const isEnvDevelopment = process.env.NODE_ENV === "development";
 const isEnvProduction = process.env.NODE_ENV === "production";
@@ -23,11 +21,12 @@ const libId = require("crypto").randomBytes(8).toString("hex");
 module.exports = {
     mode: isEnvProduction ? "production" : "development",
     context: paths.projRoot,
-    devtool: isEnvProduction ? false : "eval",
+    devtool: isEnvProduction
+        ? false
+        : process.env.DEV_TOOL || "inline-source-map",
     // Disable perf hints as it's mostly out of the developer's control as we
     // only allow one chunk.
     performance: false,
-    stats: "minimal",
     resolve: {
         extensions: paths.moduleFileExtensions,
         alias: {
@@ -46,24 +45,15 @@ module.exports = {
         // Technically this shouldn't be needed as we restrict the library to
         // one chunk, but we set this here just to be extra safe against
         // collisions.
-        jsonpFunction: libId,
+        chunkLoadingGlobal: libId,
         libraryTarget: "amd",
         // Use "/" in dev so hot updates are requested from server root instead
         // of from "viewer" relative path.
         publicPath: isEnvProduction ? "." : "/",
         path: isEnvProduction ? paths.projBuild : undefined,
-        // TODO: remove this when upgrading to webpack 5
-        futureEmitAssets: true,
         // There will be one main bundle, and one file per asynchronous chunk.
         // In development, it does not produce real files.
         filename: "[name].js",
-    },
-    optimization: {
-        // This is only used in production mode
-        minimizer: [
-            // Minify JS output
-            new TerserPlugin(),
-        ],
     },
     module: {
         strictExportPresence: true,
@@ -78,9 +68,6 @@ module.exports = {
                     {
                         test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
                         loader: require.resolve("url-loader"),
-                        options: {
-                            esModule: true,
-                        },
                     },
                     // Process application JS with Babel.
                     // The preset includes JSX, Flow, TypeScript, and some ESnext features.
@@ -99,9 +86,6 @@ module.exports = {
                         use: [
                             {
                                 loader: require.resolve("style-loader"),
-                                options: {
-                                    esModule: true,
-                                },
                             },
                             {
                                 loader: require.resolve("css-loader"),
@@ -115,20 +99,9 @@ module.exports = {
                                 // package.json
                                 loader: require.resolve("postcss-loader"),
                                 options: {
-                                    ident: "postcss",
-                                    plugins: () =>
-                                        [
-                                            autoprefixer({
-                                                flexbox: "no-2009",
-                                                overrideBrowserslist: [
-                                                    "last 2 chrome versions",
-                                                    "last 2 firefox versions",
-                                                    "last 2 safari versions",
-                                                ],
-                                            }),
-                                            isEnvProduction &&
-                                                require("cssnano")(),
-                                        ].filter(Boolean),
+                                    postcssOptions: {
+                                        plugins: ["postcss-preset-env"],
+                                    },
                                 },
                             },
                         ],
@@ -165,12 +138,10 @@ module.exports = {
 
         isEnvProduction && new CleanWebpackPlugin(),
     ].filter(Boolean),
-    node: {
-        dgram: "empty",
-        fs: "empty",
-        net: "empty",
-        tls: "empty",
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        child_process: "empty",
+    watchOptions: {
+        // Don't bother watching node_modules files for changes. This reduces
+        // CPU/mem overhead, but means that changes from `npm install` while the
+        // dev server is running won't take effect until restarted.
+        ignored: /node_modules/,
     },
 };

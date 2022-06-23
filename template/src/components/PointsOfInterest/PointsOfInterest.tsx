@@ -26,8 +26,18 @@ const PointsOfInterest: FC<LayoutElementProperties<PointsOfInterestModel>> = (
                     <PointOfInterest
                         key={poi.id}
                         model={poi}
-                        onClick={() => model.goto(poi)}
-                        onDelete={() => model.pointsOfInterest.remove(poi)}
+                        onClick={() => {
+                            // This function returns `Promise<void>` which
+                            // resolves when the map is done zooming, but in
+                            // this case we only need to kick it off and don't
+                            // need to wait for it to finish.
+                            //
+                            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+                            model.goto(poi);
+                        }}
+                        onDelete={() => {
+                            model.pointsOfInterest.remove(poi);
+                        }}
                     />
                 ))}
             </MenuList>

@@ -23,7 +23,8 @@ const resolveModule = (resolveFn, filePath) => {
 };
 const resolveProj = (relativePath) => path.resolve(projRoot, relativePath);
 // Up 1 from "config/"
-const resolveOwn = (relativePath) => path.resolve(__dirname, "..", relativePath);
+const resolveOwn = (relativePath) =>
+    path.resolve(__dirname, "..", relativePath);
 
 module.exports = {
     projBuild: resolveProj("build"),
