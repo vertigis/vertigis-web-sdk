@@ -28,7 +28,7 @@ const resolveOwn = (relativePath) =>
 
 module.exports = {
     projBuild: resolveProj("build"),
-    projEntry: resolveModule(resolveProj, "src/index"),
+    projEntry: resolveModule(resolveProj, process.env.BUILD_ENTRY_POINT || "src/index"),
     projPublicDir: resolveProj(process.env.PUBLIC_DIR || "app"),
     projRoot: resolveProj("."),
     projSrc: resolveProj("src"),
