@@ -1,29 +1,35 @@
 // @ts-check
 "use strict";
 
-const chalk = require("chalk");
-const crypto = require("crypto");
-const spawn = require("cross-spawn");
-const fs = require("fs-extra");
-const path = require("path");
+import chalk from "chalk";
+import * as crypto from "crypto";
+import * as spawn from "cross-spawn";
+import * as fs from "fs";
+import fsExtra from "fs-extra";
+import * as path from "path";
+import { fileURLToPath } from "url";
 
-const rootDir = path.join(__dirname, "..");
-const directoryName = process.argv[3];
+const { copySync, moveSync } = fsExtra;
+const dirName = path.dirname(fileURLToPath(import.meta.url));
+const rootDir = path.join(dirName, "..");
+const createIndex = process.argv.findIndex(s => s.includes("create"));
+const directoryName = process.argv[createIndex + 1];
 const directoryPath = path.resolve(directoryName);
 
-const checkSpawnSyncResult = (syncResult) => {
+const checkSpawnSyncResult = syncResult => {
     if (syncResult.status !== 0) {
         process.exit(1);
     }
 };
 
-const copyTemplate = (rootPath) => {
+/**
+ * @param {string} rootPath
+ */
+const copyTemplate = rootPath => {
     if (fs.existsSync(rootPath) && fs.readdirSync(rootPath).length > 0) {
         console.error(
             chalk.red(
-                `Cannot create new project at ${chalk.green(
-                    rootPath
-                )} as it already exists.\n`
+                `Cannot create new project at ${chalk.green(rootPath)} as it already exists.\n`
             )
         );
         process.exit(1);
@@ -31,19 +37,19 @@ const copyTemplate = (rootPath) => {
 
     console.log(`Creating new project at ${chalk.green(rootPath)}`);
 
-    fs.copySync(path.join(rootDir, "template"), rootPath, {
+    copySync(path.join(rootDir, "template"), rootPath, {
         errorOnExist: true,
         overwrite: false,
     });
     // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
     // See: https://github.com/npm/npm/issues/1862
-    fs.moveSync(
-        path.join(rootPath, "gitignore"),
-        path.join(rootPath, ".gitignore")
-    );
+    moveSync(path.join(rootPath, "gitignore"), path.join(rootPath, ".gitignore"));
 };
 
-const updateTemplateContent = (rootPath) => {
+/**
+ * @param {string} rootPath
+ */
+const updateTemplateContent = rootPath => {
     const randomNamespace = `custom.${crypto.randomBytes(4).toString("hex")}`;
 
     const filesToUpdate = [
@@ -58,9 +64,16 @@ const updateTemplateContent = (rootPath) => {
     }
 };
 
-const installNpmDeps = (rootPath) => {
+const installNpmDeps = rootPath => {
     console.log(`Installing packages. This might take a couple minutes.\n`);
-    const selfVersion = require(path.join(rootDir, "package.json")).version;
+    /**
+     * @type {string}
+     */
+    const selfVersion = JSON.parse(
+        fs.readFileSync(path.join(rootDir, "package.json"), {
+            encoding: "utf-8",
+        })
+    ).version;
 
     // First install existing deps.
     checkSpawnSyncResult(
@@ -91,19 +104,19 @@ const installNpmDeps = (rootPath) => {
     );
 };
 
-// Initialize newly cloned directory as a git repo
-const gitInit = (rootPath) => {
+/**
+ * Initialize newly cloned directory as a git repo.
+ *
+ * @param {string} rootPath
+ */
+const gitInit = rootPath => {
     console.log(`Initializing git in ${rootPath}\n`);
 
     spawn.sync(`git init`, { cwd: rootPath }).status;
 };
 
 const printSuccess = () => {
-    console.log(
-        `${chalk.green(
-            "Success!"
-        )} Created ${directoryName} at ${directoryPath}\n`
-    );
+    console.log(`${chalk.green("Success!")} Created ${directoryName} at ${directoryPath}\n`);
     console.log("Inside that directory, you can run several commands:\n");
     console.log(chalk.cyan(`  npm start`));
     console.log("    Starts the development server.\n");

@@ -1,17 +1,23 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 // @ts-check
 "use strict";
 
-const fs = require("fs");
-const path = require("path");
+import * as fs from "fs";
+import * as path from "path";
+import { fileURLToPath } from "url";
 
+const dirName = path.dirname(fileURLToPath(import.meta.url));
 const moduleFileExtensions = [".tsx", ".ts", ".jsx", ".js", ".json"];
 // This assumes that commands are always run from project root.
 const projRoot = process.cwd();
 
-// Resolve file paths in the same order as webpack
+/**
+ * Resolve file paths in the same order as webpack.
+ *
+ * @param { (p: fs.PathLike) => string } resolveFn
+ * @param { string } filePath
+ */
 const resolveModule = (resolveFn, filePath) => {
-    const extension = moduleFileExtensions.find((extension) =>
+    const extension = moduleFileExtensions.find(extension =>
         fs.existsSync(resolveFn(`${filePath}${extension}`))
     );
 
@@ -21,18 +27,22 @@ const resolveModule = (resolveFn, filePath) => {
 
     return resolveFn(`${filePath}.js`);
 };
-const resolveProj = (relativePath) => path.resolve(projRoot, relativePath);
+/**
+ * @param { string } relativePath
+ */
+const resolveProj = relativePath => path.resolve(projRoot, relativePath);
 // Up 1 from "config/"
-const resolveOwn = (relativePath) =>
-    path.resolve(__dirname, "..", relativePath);
+/**
+ * @param { string } relativePath
+ */
+const resolveOwn = relativePath => path.resolve(dirName, "..", relativePath);
 
-module.exports = {
+export default {
     projBuild: resolveProj("build"),
     projEntry: resolveModule(resolveProj, process.env.BUILD_ENTRY_POINT || "src/index"),
     projPublicDir: resolveProj(process.env.PUBLIC_DIR || "app"),
     projRoot: resolveProj("."),
     projSrc: resolveProj("src"),
     ownPath: resolveOwn("."),
+    moduleFileExtensions,
 };
-
-module.exports.moduleFileExtensions = moduleFileExtensions;

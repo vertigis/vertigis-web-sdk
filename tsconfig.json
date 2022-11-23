@@ -1,0 +1,13 @@
+{
+    // This project does not contain any TS files, so the outDir is irrelevant.
+    // This config is only used for checking .js files.
+    "compilerOptions": {
+        "allowJs": true,
+        "esModuleInterop": true,
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "outDir": "bogus",
+        "target": "ESNext"
+    },
+    "include": [".eslintrc.cjs", "bin", "config", "lib", "scripts", "test"]
+}

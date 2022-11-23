@@ -1,50 +1,47 @@
 // @ts-check
-"use strict";
-
-// Do this as the first thing so that any code reading it knows the right env.
-process.env.BABEL_ENV = "production";
-process.env.NODE_ENV = "production";
+import chalk, { supportsColor } from "chalk";
+import webpack from "webpack";
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
-process.on("unhandledRejection", (err) => {
+process.on("unhandledRejection", err => {
     throw err;
 });
 
-const chalk = require("chalk");
-const webpack = require("webpack");
-
-const webpackConfig = require("../config/webpack.config");
-
+// These needs to be set prior to importing the webpack config. The only way to
+// do that with ES modules is by using a dynamic import.
+process.env.BABEL_ENV = "production";
+process.env.NODE_ENV = "production";
+const { default: webpackConfig } = await import("../config/webpack.config.js");
 const build = () => {
     console.log("Creating an optimized production build...\n");
 
     const compiler = webpack(webpackConfig);
-    return new Promise((resolve, reject) => {
+    /**
+     * @type { Promise<void> }
+     */
+    const promise = new Promise((resolve, reject) => {
         compiler.run((err, stats) => {
             if (err) {
                 return reject(err);
             }
 
             console.log(
-                stats.toString({
+                stats?.toString({
                     preset: "normal",
-                    colors: chalk.supportsColor
-                        ? chalk.supportsColor.hasBasic
-                        : false,
+                    colors: supportsColor ? supportsColor.hasBasic : false,
                 })
             );
 
-            if (stats.hasErrors()) {
+            if (stats?.hasErrors()) {
                 return reject();
             }
 
             if (
                 process.env.CI &&
-                (typeof process.env.CI !== "string" ||
-                    process.env.CI.toLowerCase() !== "false") &&
-                stats.hasWarnings()
+                (typeof process.env.CI !== "string" || process.env.CI.toLowerCase() !== "false") &&
+                stats?.hasWarnings()
             ) {
                 console.log(
                     chalk.yellow(
@@ -55,14 +52,12 @@ const build = () => {
                 return reject();
             }
 
-            if (stats.hasWarnings()) {
+            if (stats?.hasWarnings()) {
                 console.log(chalk.yellow("\nCompiled with warnings.\n"));
             } else {
                 console.log(chalk.green("\nCompiled successfully.\n"));
                 console.log(
-                    `Your production build was created inside the ${chalk.cyan(
-                        "build"
-                    )} folder.`
+                    `Your production build was created inside the ${chalk.cyan("build")} folder.`
                 );
                 console.log(
                     `You can learn more about deploying your custom code at ${chalk.cyan(
@@ -74,15 +69,14 @@ const build = () => {
             resolve();
         });
     });
+    return promise;
 };
 
-(async () => {
-    try {
-        await build();
-    } catch (e) {
-        if (e && e.message) {
-            console.error(e);
-        }
-        process.exit(1);
+try {
+    await build();
+} catch (e) {
+    if (e instanceof Error && e.message) {
+        console.error(e);
     }
-})();
+    process.exit(1);
+}

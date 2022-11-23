@@ -5,11 +5,11 @@ module.exports = {
         ecmaFeatures: {
             jsx: true,
         },
-        ecmaVersion: 2018,
+        ecmaVersion: 2021,
         project: "./tsconfig.json",
         sourceType: "module",
     },
-    plugins: ["@typescript-eslint", "react", "react-hooks"],
+    plugins: ["@typescript-eslint", "only-warn", "react", "react-hooks"],
     env: {
         browser: true,
         commonjs: true,
