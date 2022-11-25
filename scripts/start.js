@@ -22,7 +22,7 @@ const httpAgent = new http.Agent({ keepAlive: true });
 const httpsAgent = new https.Agent({ keepAlive: true });
 
 const viewerTarget = process.env.VIEWER_URL || "https://apps.vertigisstudio.com/web";
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 const compiler = webpack(webpackConfig);
 /**
