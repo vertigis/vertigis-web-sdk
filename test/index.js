@@ -84,7 +84,7 @@ async function testStartProject() {
 
     try {
         const page = await browser.newPage();
-        await pRetry(() => page.goto("http://localhost:3000"), {
+        await pRetry(() => page.goto("http://localhost:3001"), {
             maxRetryTime: 10000,
         });
         const frame = page.frame("viewer");

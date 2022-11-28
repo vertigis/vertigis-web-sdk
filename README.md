@@ -25,7 +25,7 @@ Inside the newly created project, you can run some built-in commands:
 
 ### `npm start`
 
-Runs the project in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Runs the project in development mode. Open [http://localhost:3001](http://localhost:3001) to view it in the browser.
 
 The page will automatically reload if you make changes to the code. You will see build errors and warnings in the console.
 
