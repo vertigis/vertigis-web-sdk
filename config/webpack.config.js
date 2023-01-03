@@ -2,13 +2,17 @@
 // @ts-check
 "use strict";
 
-const path = require("path");
-const paths = require("./paths");
-const webpack = require("webpack");
+import * as path from "path";
+import paths from "./paths.js";
+import webpack from "webpack";
+import * as crypto from "crypto";
 
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import HtmlWebPackPlugin from "html-webpack-plugin";
+import { fileURLToPath } from "url";
+
+const dirName = path.dirname(fileURLToPath(import.meta.url));
 
 const isEnvDevelopment = process.env.NODE_ENV === "development";
 const isEnvProduction = process.env.NODE_ENV === "production";
@@ -16,14 +20,15 @@ const isEnvProduction = process.env.NODE_ENV === "production";
 // Generate random identifier to ensure uniqueness in the application. This is
 // especially important to avoid collisions when multiple webpack runtimes are
 // in the same document, such as Web's runtime and this library's runtime.
-const libId = require("crypto").randomBytes(8).toString("hex");
+const libId = crypto.randomBytes(8).toString("hex");
 
-module.exports = {
+/**
+ * @type { webpack.Configuration }
+ */
+export default {
     mode: isEnvProduction ? "production" : "development",
     context: paths.projRoot,
-    devtool: isEnvProduction
-        ? false
-        : process.env.DEV_TOOL || "inline-source-map",
+    devtool: isEnvProduction ? false : process.env.DEV_TOOL ?? "inline-source-map",
     // Disable perf hints as it's mostly out of the developer's control as we
     // only allow one chunk.
     performance: false,
@@ -34,13 +39,7 @@ module.exports = {
         },
     },
     entry: paths.projEntry,
-    externals: [
-        /^@arcgis\/core\/.+$/,
-        /^esri\/.+$/,
-        /^@vertigis\/.+$/,
-        "react",
-        "react-dom",
-    ],
+    externals: [/^@arcgis\/core\/.+$/, /^esri\/.+$/, /^@vertigis\/.+$/, "react", "react-dom"],
     output: {
         // Technically this shouldn't be needed as we restrict the library to
         // one chunk, but we set this here just to be extra safe against
@@ -67,14 +66,14 @@ module.exports = {
                     // in our case) as data URLs.
                     {
                         test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
-                        loader: require.resolve("url-loader"),
+                        loader: "url-loader",
                     },
                     // Process application JS with Babel.
                     // The preset includes JSX, Flow, TypeScript, and some ESnext features.
                     {
                         test: /\.(js|jsx|ts|tsx)$/i,
                         include: paths.projSrc,
-                        loader: require.resolve("ts-loader"),
+                        loader: "ts-loader",
                         options: {
                             context: paths.projRoot,
                             transpileOnly: true,
@@ -85,10 +84,10 @@ module.exports = {
                         sideEffects: true,
                         use: [
                             {
-                                loader: require.resolve("style-loader"),
+                                loader: "style-loader",
                             },
                             {
-                                loader: require.resolve("css-loader"),
+                                loader: "css-loader",
                                 options: {
                                     // How many loaders before "css-loader" should be applied to "@import"ed resources
                                     importLoaders: 1,
@@ -97,7 +96,7 @@ module.exports = {
                             {
                                 // Adds vendor prefixing based on your specified browser support in
                                 // package.json
-                                loader: require.resolve("postcss-loader"),
+                                loader: "postcss-loader",
                                 options: {
                                     postcssOptions: {
                                         plugins: ["postcss-preset-env"],
@@ -123,7 +122,7 @@ module.exports = {
                 enabled: true,
                 files: "./src/**/*.{js,jsx,ts,tsx}",
                 options: {
-                    resolvePluginsRelativeTo: __dirname,
+                    resolvePluginsRelativeTo: dirName,
                 },
             },
             formatter: "codeframe",

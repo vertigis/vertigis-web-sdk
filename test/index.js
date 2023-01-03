@@ -4,17 +4,21 @@
 process.env.OPEN_BROWSER = "false";
 process.env.SDK_LOCAL_DEV = "true";
 
-const execa = require("execa");
-const assert = require("assert").strict;
-const fs = require("fs");
-const path = require("path");
-const { chromium } = require("playwright-chromium");
-const pRetry = require("p-retry");
+import * as execa from "execa";
+import { strict as assert } from "assert";
+import * as fs from "fs";
+import * as path from "path";
+import { chromium } from "playwright-chromium";
+import pRetry from "p-retry";
+import { fileURLToPath } from "url";
 
-const rootDir = path.join(__dirname, "..");
+const dirName = path.dirname(fileURLToPath(import.meta.url));
+const rootDir = path.join(dirName, "..");
 const testLibProjPath = path.join(rootDir, "test-lib");
 
-/** @type {execa.ExecaChildProcess<string>} */
+/**
+ * @type {execa.ExecaChildProcess<string> | undefined}
+ */
 let subprocess;
 
 /**
@@ -23,7 +27,7 @@ let subprocess;
  */
 function runNpmScript(args, opts) {
     console.log(`Executing CLI script: ${args.join(" ")}`);
-    const scriptProcess = execa.node(
+    const scriptProcess = execa.execaNode(
         path.join(rootDir, "bin/vertigis-web-sdk.js"),
         args,
         opts
@@ -32,14 +36,14 @@ function runNpmScript(args, opts) {
     // Pipe process output to current process output so it is visible in the
     // console, but still allows us to examine the subprocess stdout/stderr
     // variables.
-    scriptProcess.stdout.pipe(process.stdout);
-    scriptProcess.stderr.pipe(process.stderr);
+    scriptProcess?.stdout?.pipe(process.stdout);
+    scriptProcess?.stderr?.pipe(process.stderr);
 
     return scriptProcess;
 }
 
 function killSubprocess() {
-    if (subprocess && !subprocess.killed) {
+    if (subprocess != null && !subprocess.killed) {
         subprocess.kill();
         subprocess = undefined;
     }
@@ -80,17 +84,20 @@ async function testStartProject() {
 
     try {
         const page = await browser.newPage();
-        await pRetry(() => page.goto("http://localhost:3000"), {
+        await pRetry(() => page.goto("http://localhost:3001"), {
             maxRetryTime: 10000,
         });
         const frame = page.frame("viewer");
-        await frame.waitForSelector("text=Points of Interest");
+        await frame?.waitForSelector("text=Points of Interest");
     } finally {
         await browser.close();
         killSubprocess();
     }
 }
 
+/**
+ * @param {fs.PathLike} path
+ */
 function rmdir(path) {
     fs.rmdirSync(path, { recursive: true });
 }
@@ -102,17 +109,15 @@ function cleanup() {
     console.log("Done cleaning.");
 }
 
-(async () => {
-    try {
-        await testCreateProject();
-        await testBuildProject();
-        await testStartProject();
-        console.log("All tests passed!");
-        cleanup();
-    } catch (error) {
-        console.error("Test failed.");
-        console.error(error);
-        cleanup();
-        process.exit(1);
-    }
-})();
+try {
+    await testCreateProject();
+    await testBuildProject();
+    await testStartProject();
+    console.log("All tests passed!");
+    cleanup();
+} catch (error) {
+    console.error("Test failed.");
+    console.error(error);
+    cleanup();
+    process.exit(1);
+}

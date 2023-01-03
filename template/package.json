@@ -5,6 +5,7 @@
     "description": "",
     "license": "UNLICENSED",
     "author": "",
+    "type": "commonjs",
     "scripts": {
         "build": "vertigis-web-sdk build",
         "start": "vertigis-web-sdk start",
@@ -12,6 +13,6 @@
     },
     "dependencies": {},
     "devDependencies": {
-        "typescript": "^4.5.5"
+        "typescript": "^4.8.4"
     }
 }

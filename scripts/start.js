@@ -1,32 +1,33 @@
 // @ts-check
-"use strict";
-
-// Do this as the first thing so that any code reading it knows the right env.
-process.env.BABEL_ENV = "development";
-process.env.NODE_ENV = "development";
+import * as http from "http";
+import * as https from "https";
+import webpack from "webpack";
+import WebpackDevServer from "webpack-dev-server";
+import paths from "../config/paths.js";
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
-process.on("unhandledRejection", (err) => {
+process.on("unhandledRejection", err => {
     throw err;
 });
 
-const http = require("http");
-const https = require("https");
-const webpack = require("webpack");
-const WebpackDevServer = require("webpack-dev-server");
-const paths = require("../config/paths");
-const webpackConfig = require("../config/webpack.config");
+// These needs to be set prior to importing the webpack config. The only way to
+// do that with ES modules is by using a dynamic import.
+process.env.BABEL_ENV = "development";
+process.env.NODE_ENV = "development";
+const { default: webpackConfig } = await import("../config/webpack.config.js");
 
 const httpAgent = new http.Agent({ keepAlive: true });
 const httpsAgent = new https.Agent({ keepAlive: true });
 
-const viewerTarget =
-    process.env.VIEWER_URL || "https://apps.vertigisstudio.com/web";
-const port = process.env.PORT || 3000;
+const viewerTarget = process.env.VIEWER_URL || "https://apps.vertigisstudio.com/web";
+const port = process.env.PORT || 3001;
 
 const compiler = webpack(webpackConfig);
+/**
+ * @type { WebpackDevServer.Configuration }
+ */
 const serverConfig = {
     allowedHosts: "all",
     client: {
@@ -65,4 +66,4 @@ const serverConfig = {
 };
 
 const devServer = new WebpackDevServer(serverConfig, compiler);
-devServer.start();
+await devServer.start();
