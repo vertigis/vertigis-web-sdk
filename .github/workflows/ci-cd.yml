@@ -21,10 +21,10 @@ jobs:
         steps:
             - uses: actions/checkout@v2
 
-            - name: Use Node.js 14
+            - name: Use Node.js 16
               uses: actions/setup-node@v1
               with:
-                  node-version: 14.x
+                  node-version: 16.x
 
             - run: npm install
 
@@ -47,10 +47,10 @@ jobs:
             - name: Fetch git tags
               run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
 
-            - name: Use Node.js 14
+            - name: Use Node.js 16
               uses: actions/setup-node@v1
               with:
-                  node-version: 14.x
+                  node-version: 16.x
 
             - run: npm install
               env:
