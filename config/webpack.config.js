@@ -121,6 +121,7 @@ export default {
             new HtmlWebPackPlugin({
                 inject: false,
                 template: path.resolve(paths.ownPath, "lib", "index.ejs"),
+                additionalLibs: process.env.ADDITIONAL_LIBS
             }),
 
         new ForkTsCheckerWebpackPlugin({
