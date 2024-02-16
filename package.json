@@ -4,14 +4,14 @@
     "description": "The SDK for extending VertiGIS Studio Web",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/geocortex/vertigis-web-sdk.git"
+        "url": "git+https://github.com/vertigis/vertigis-web-sdk.git"
     },
     "author": "VertiGIS Ltd. <eric.parsons@vertigis.com>",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/geocortex/vertigis-web-sdk/issues"
+        "url": "https://github.com/vertigis/vertigis-web-sdk/issues"
     },
-    "homepage": "https://github.com/geocortex/vertigis-web-sdk#readme",
+    "homepage": "https://github.com/vertigis/vertigis-web-sdk#readme",
     "files": [
         "bin",
         "config",
