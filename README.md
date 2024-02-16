@@ -1,6 +1,6 @@
 # VertiGIS Studio Web SDK
 
-![CI/CD](https://github.com/geocortex/vertigis-web-sdk/workflows/CI/CD/badge.svg)
+![CI/CD](https://github.com/vertigis/vertigis-web-sdk/workflows/CI/CD/badge.svg)
 
 This SDK makes it easy to create custom libraries for [VertiGIS Studio Web](https://vertigisstudio.com/products/vertigis-studio-web/).
 
@@ -39,11 +39,11 @@ Builds the library for production to the `build` folder. It optimizes the build 
 
 Your custom library is now ready to be deployed!
 
-See the [section about deployment](https://developers.geocortex.com/docs/web/sdk-deployment/) in the [Developer Center](https://developers.geocortex.com/docs/web/overview/) for more information.
+See the [section about deployment](https://developers.vertigis.com/docs/web/sdk-deployment/) in the [Developer Center](https://developers.vertigis.com/docs/web/overview/) for more information.
 
 ## Documentation
 
-Find [further documentation on the SDK](https://developers.geocortex.com/docs/web/sdk-overview/) on the [VertiGIS Studio Developer Center](https://developers.geocortex.com/docs/web/overview/)
+Find [further documentation on the SDK](https://developers.vertigis.com/docs/web/sdk-overview/) on the [VertiGIS Studio Developer Center](https://developers.vertigis.com/docs/web/overview/)
 
 ## Contributing
 
