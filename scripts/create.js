@@ -82,10 +82,11 @@ const installNpmDeps = projectPath => {
     // user's machine. This can have unintended side-effects, such as generating
     // a lock file with the wrong version. Temporarily rename the whole folder
     // to avoid this.
-    fs.renameSync(
-        path.join(rootDir, "node_modules", ".bin"),
-        path.join(rootDir, "node_modules", ".bin.ignore")
-    );
+    const localBinDir = path.join(rootDir, "node_modules", ".bin");
+    const localBinDirRenamed = `${localBinDir}.ignore`;
+    if (fs.existsSync(localBinDir)) {
+        fs.renameSync(localBinDir, localBinDirRenamed);
+    }
 
     try {
         // First install existing deps.
@@ -116,10 +117,9 @@ const installNpmDeps = projectPath => {
             )
         );
     } finally {
-        fs.renameSync(
-            path.join(rootDir, "node_modules", ".bin.ignore"),
-            path.join(rootDir, "node_modules", ".bin")
-        );
+        if (fs.existsSync(localBinDirRenamed)) {
+            fs.renameSync(localBinDirRenamed, localBinDir);
+        }
     }
 };
 
