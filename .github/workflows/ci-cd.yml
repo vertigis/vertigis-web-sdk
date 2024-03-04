@@ -19,10 +19,10 @@ jobs:
     test:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
 
             - name: Use Node.js 20
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v4
               with:
                   node-version: 20.x
 
@@ -36,7 +36,7 @@ jobs:
             - test
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/alpha' || github.ref == 'refs/heads/beta'
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
               with:
                   # Pulls all commits (needed for semantic release to correctly version)
                   # See https://github.com/semantic-release/semantic-release/issues/1526
@@ -48,7 +48,7 @@ jobs:
               run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
 
             - name: Use Node.js 20
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v4
               with:
                   node-version: 20.x
 
