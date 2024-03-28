@@ -61,7 +61,7 @@ const build = () => {
                 );
                 console.log(
                     `You can learn more about deploying your custom code at ${chalk.cyan(
-                        "https://developers.vertigis.com/docs/web/overview/"
+                        "https://developers.vertigisstudio.com/docs/web/overview/"
                     )}`
                 );
             }

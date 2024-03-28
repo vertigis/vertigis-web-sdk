@@ -4,10 +4,21 @@
     "compilerOptions": {
         "allowJs": true,
         "esModuleInterop": true,
+        "jsx": "react",
         "module": "ESNext",
         "moduleResolution": "node",
         "outDir": "bogus",
         "target": "ESNext"
     },
-    "include": [".eslintrc.cjs", "bin", "config", "lib", "scripts", "test"]
+    "include": [
+        ".eslintrc.cjs",
+        "bin",
+        "config",
+        "lib",
+        "scripts",
+        "test",
+        "template/src/*.ts",
+        "template/src/**/**/*.ts",
+        "template/src/**/**/*.tsx"
+    ]
 }
