@@ -1,6 +1,7 @@
 import { xyToLngLat } from "@arcgis/core/geometry/support/webMercatorUtils";
 import { format as formatNumber } from "@vertigis/arcgis-extensions/utilities/number";
 import { useWatchAndRerender } from "@vertigis/web/ui";
+import Box from "@vertigis/web/ui/Box";
 import DynamicIcon from "@vertigis/web/ui/DynamicIcon";
 import IconButton from "@vertigis/web/ui/IconButton";
 import ListItemText from "@vertigis/web/ui/ListItemText";
@@ -35,7 +36,7 @@ const PointOfInterest: FC<PointOfInterestProps> = ({
     const [lon, lat] = xyToLngLat(geometry.x, geometry.y);
     return (
         <MenuItem {...other}>
-            <div
+            <Box
                 className="PointOfInterest-swatch"
                 style={{ backgroundColor: color.toCss() }}
             />
