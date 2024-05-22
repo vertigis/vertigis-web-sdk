@@ -63,7 +63,7 @@
     },
     "devDependencies": {
         "@types/node": "~18.19.17",
-        "@vertigis/web": "^5.28.0",
+        "@vertigis/web": "^5.29.0",
         "conventional-changelog-conventionalcommits": "7.0.2",
         "cross-env": "7.0.3",
         "execa": "8.0.1",
@@ -74,6 +74,9 @@
         "semantic-release": "23.0.6",
         "simple-git-hooks": "2.9.0",
         "typescript": "5.3.3"
+    },
+    "overrides": {
+        "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
     },
     "simple-git-hooks": {
         "pre-commit": "npx lint-staged"
