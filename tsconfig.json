@@ -1,17 +1,16 @@
 {
-    // This project does not contain any TS files, so the outDir is irrelevant.
-    // This config is only used for checking .js files.
     "compilerOptions": {
         "allowJs": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
         "esModuleInterop": true,
-        "jsx": "react",
+        "jsx": "react-jsx",
         "module": "ESNext",
         "moduleResolution": "node",
-        "outDir": "bogus",
         "target": "ESNext"
     },
     "include": [
-        ".eslintrc.cjs",
+        "**/.eslintrc.js",
         "bin",
         "config",
         "lib",

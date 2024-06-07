@@ -88,9 +88,7 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
         // Registration handles for event handlers should be saved and cleaned
         // up when no longer needed.
         this._handles.push(
-            this.messages.events.locationMarker.updated.subscribe(
-                this._onMarkerUpdated
-            ),
+            this.messages.events.locationMarker.updated.subscribe(this._onMarkerUpdated),
             // Event handlers registered via `on()` are invoked asynchronously,
             // but are typed as accepting a function that returns `void`. In
             // this case, our function returns `Promise<void>`, so we need to
@@ -105,13 +103,11 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
         await super._onDestroy();
 
         // Clean up event handlers.
-        this._handles.forEach((h) => h.remove());
+        this._handles.forEach(h => h.remove());
     }
 
     private readonly _onMarkerUpdated = (e: LocationMarkerEvent): void => {
-        const matchingPoi = this.pointsOfInterest.find(
-            (poi) => poi.id === e.id
-        );
+        const matchingPoi = this.pointsOfInterest.find(poi => poi.id === e.id);
         if (matchingPoi) {
             matchingPoi.geometry = e.geometry as Point;
         }
@@ -124,7 +120,7 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
         // collection changes.
         if (e.added?.length) {
             await Promise.all(
-                e.added.map((poi) =>
+                e.added.map(poi =>
                     this.messages.commands.locationMarker.create.execute({
                         id: poi.id,
                         geometry: poi.geometry,
@@ -138,7 +134,7 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
         }
         if (e.removed?.length) {
             await Promise.all(
-                e.removed.map((poi) =>
+                e.removed.map(poi =>
                     this.messages.commands.locationMarker.remove.execute({
                         id: poi.id,
                         maps: this.map,

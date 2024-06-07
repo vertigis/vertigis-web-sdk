@@ -6,7 +6,7 @@ import * as path from "path";
 import { fileURLToPath } from "url";
 
 const dirName = path.dirname(fileURLToPath(import.meta.url));
-const moduleFileExtensions = [".tsx", ".ts", ".jsx", ".js", ".json"];
+const moduleFileExtensions = [".tsx", ".ts", ".jsx", ".js", ".json", ".xml"];
 // This assumes that commands are always run from project root.
 const projRoot = process.cwd();
 

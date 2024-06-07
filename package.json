@@ -32,7 +32,7 @@
         "create": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-web-sdk.js create",
         "start": "cd template && npm link \"../\" --no-package-lock && npm run start",
         "test": "node ./test/index.js",
-        "prettier": "prettier --write \"**/*.json\" \"**/*.js\""
+        "prettier": "prettier --write \"**/*.json\" \"**/*.js\" \"**/*.ts\" \"**/*.tsx\""
     },
     "dependenciesComments": {
         "fork-ts-checker-webpack-plugin": "Support for eslint was removed in 7.x. We need to stay on 6.x until we find a replacement strategy for linting."
@@ -45,6 +45,7 @@
         "css-loader": "~6.10.0",
         "eslint": "~8.56.0",
         "eslint-config-prettier": "~9.1.0",
+        "eslint-plugin-import": "~2.29.1",
         "eslint-plugin-only-warn": "~1.1.0",
         "eslint-plugin-react": "~7.33.2",
         "eslint-plugin-react-hooks": "~4.6.0",

@@ -37,6 +37,11 @@ export default {
         alias: {
             esri: "@arcgis/core",
         },
+        fallback: {
+            buffer: false,
+            timers: false,
+            stream: false,
+        },
     },
     entry: paths.projEntry,
     externals: [
@@ -73,6 +78,11 @@ export default {
                     {
                         test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
                         loader: "url-loader",
+                    },
+                    // Includes supplementary assets as text files.
+                    {
+                        test: /(\.md|\.xml)$/i,
+                        type: "asset/source",
                     },
                     // Process application JS with Babel.
                     // The preset includes JSX, Flow, TypeScript, and some ESnext features.

@@ -41,6 +41,14 @@ const copyTemplate = projectPath => {
         errorOnExist: true,
         overwrite: false,
     });
+    copySync(
+        path.join(rootDir, "config/tsconfig.json.template"),
+        path.join(projectPath, "tsconfig.json"),
+        {
+            errorOnExist: true,
+            overwrite: false,
+        }
+    );
     // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
     // See: https://github.com/npm/npm/issues/1862
     moveSync(path.join(projectPath, "gitignore"), path.join(projectPath, ".gitignore"));
@@ -84,8 +92,16 @@ const installNpmDeps = projectPath => {
     // to avoid this.
     const localBinDir = path.join(rootDir, "node_modules", ".bin");
     const localBinDirRenamed = `${localBinDir}.ignore`;
-    if (fs.existsSync(localBinDir)) {
-        fs.renameSync(localBinDir, localBinDirRenamed);
+    try {
+        if (fs.existsSync(localBinDir)) {
+            fs.renameSync(localBinDir, localBinDirRenamed);
+        }
+    } catch (e) {
+        console.warn(
+            chalk.yellow(
+                "Could not repath npm to the globally installed version before executing commands. Please check that the resulting package.lock file is correct."
+            )
+        );
     }
 
     try {
@@ -107,7 +123,7 @@ const installNpmDeps = projectPath => {
                     "--save-exact",
                     process.env.SDK_LOCAL_DEV === "true"
                         ? process.cwd()
-                        : `@vertigis/web-sdk@${selfVersion}`,
+                        : `@vertigis/web-sdk@${selfVersion.includes("semantically-released") ? "*" : selfVersion}`,
                     "@vertigis/web",
                 ],
                 {
