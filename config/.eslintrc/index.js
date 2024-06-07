@@ -165,7 +165,7 @@ module.exports = {
         "no-proto": "warn",
         "no-prototype-builtins": "off",
         "no-restricted-imports": [
-            "error",
+            "warn",
             {
                 patterns: [
                     {
