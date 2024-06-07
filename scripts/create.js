@@ -1,13 +1,14 @@
 // @ts-check
 "use strict";
 
-import chalk from "chalk";
 import * as crypto from "crypto";
-import * as spawn from "cross-spawn";
 import * as fs from "fs";
-import fsExtra from "fs-extra";
 import * as path from "path";
 import { fileURLToPath } from "url";
+
+import chalk from "chalk";
+import * as spawn from "cross-spawn";
+import fsExtra from "fs-extra";
 
 const { copySync, moveSync } = fsExtra;
 const dirName = path.dirname(fileURLToPath(import.meta.url));
@@ -92,16 +93,8 @@ const installNpmDeps = projectPath => {
     // to avoid this.
     const localBinDir = path.join(rootDir, "node_modules", ".bin");
     const localBinDirRenamed = `${localBinDir}.ignore`;
-    try {
-        if (fs.existsSync(localBinDir)) {
-            fs.renameSync(localBinDir, localBinDirRenamed);
-        }
-    } catch (e) {
-        console.warn(
-            chalk.yellow(
-                "Could not repath npm to the globally installed version before executing commands. Please check that the resulting package.lock file is correct."
-            )
-        );
+    if (fs.existsSync(localBinDir)) {
+        fs.renameSync(localBinDir, localBinDirRenamed);
     }
 
     try {

@@ -5,11 +5,12 @@ import Box from "@vertigis/web/ui/Box";
 import DynamicIcon from "@vertigis/web/ui/DynamicIcon";
 import IconButton from "@vertigis/web/ui/IconButton";
 import ListItemText from "@vertigis/web/ui/ListItemText";
-import MenuItem, { MenuItemProps } from "@vertigis/web/ui/MenuItem";
+import type { MenuItemProps } from "@vertigis/web/ui/MenuItem";
+import MenuItem from "@vertigis/web/ui/MenuItem";
 import MenuItemSecondaryAction from "@vertigis/web/ui/MenuItemSecondaryAction";
-import { FC } from "react";
+import type { FC } from "react";
 
-import PointOfInterestModel from "./PointOfInterestModel";
+import type PointOfInterestModel from "./PointOfInterestModel";
 import "./PointOfInterest.css";
 
 function formatLatLon(n: number): string {

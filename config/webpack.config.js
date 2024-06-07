@@ -2,15 +2,16 @@
 // @ts-check
 "use strict";
 
-import * as path from "path";
-import paths from "./paths.js";
-import webpack from "webpack";
 import * as crypto from "crypto";
+import * as path from "path";
+import { fileURLToPath } from "url";
 
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import HtmlWebPackPlugin from "html-webpack-plugin";
-import { fileURLToPath } from "url";
+import webpack from "webpack";
+
+import paths from "./paths.js";
 
 const dirName = path.dirname(fileURLToPath(import.meta.url));
 

@@ -1,11 +1,12 @@
-import { LayoutElement, LayoutElementProperties } from "@vertigis/web/components";
+import type { LayoutElementProperties } from "@vertigis/web/components";
+import { LayoutElement } from "@vertigis/web/components";
 import { useWatchCollectionAndRerender } from "@vertigis/web/ui";
 import MenuList from "@vertigis/web/ui/MenuList";
 import Typography from "@vertigis/web/ui/Typography";
-import { FC } from "react";
+import type { FC } from "react";
 
-import PointsOfInterestModel from "./PointsOfInterestModel";
 import PointOfInterest from "./PointOfInterest";
+import type PointsOfInterestModel from "./PointsOfInterestModel";
 import "./PointsOfInterest.css";
 
 const PointsOfInterest: FC<LayoutElementProperties<PointsOfInterestModel>> = props => {

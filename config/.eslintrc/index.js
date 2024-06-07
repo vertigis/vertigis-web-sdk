@@ -36,12 +36,6 @@ module.exports = {
         "@typescript-eslint/ban-types": "warn",
         "@typescript-eslint/consistent-type-definitions": ["warn", "interface"],
         "@typescript-eslint/consistent-type-imports": ["warn", { disallowTypeAnnotations: false }],
-        "@typescript-eslint/explicit-function-return-type": [
-            "warn",
-            {
-                allowExpressions: true,
-            },
-        ],
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/member-delimiter-style": "warn",
         "@typescript-eslint/member-ordering": [
@@ -85,9 +79,10 @@ module.exports = {
         "@typescript-eslint/no-redundant-type-constituents": "off",
         "@typescript-eslint/no-unnecessary-boolean-literal-compare": "warn",
         "@typescript-eslint/no-unnecessary-condition": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
         "@typescript-eslint/no-unsafe-enum-comparison": "off",
         "@typescript-eslint/no-unsafe-member-access": "off",
-        "@typescript-eslint/no-unused-expressions": "warn",
         "@typescript-eslint/no-unused-vars": [
             "warn",
             {
@@ -99,7 +94,6 @@ module.exports = {
         "@typescript-eslint/prefer-for-of": "warn",
         "@typescript-eslint/prefer-function-type": "warn",
         "@typescript-eslint/prefer-includes": "warn",
-        "@typescript-eslint/prefer-nullish-coalescing": "warn",
         "@typescript-eslint/prefer-optional-chain": "warn",
         "@typescript-eslint/prefer-readonly": "warn",
         "@typescript-eslint/prefer-reduce-type-parameter": "warn",
@@ -114,7 +108,7 @@ module.exports = {
         "accessor-pairs": "warn",
         "array-callback-return": "warn",
         "arrow-body-style": "warn",
-        complexity: ["warn", 20],
+        complexity: "off",
         "default-case-last": "warn",
         "default-param-last": "warn",
         eqeqeq: [
@@ -128,8 +122,8 @@ module.exports = {
         "import/default": "off",
         "import/export": "off",
         "import/namespace": "off",
-        "import/no-amd": "warn",
-        "import/no-commonjs": "warn",
+        "import/no-amd": "off",
+        "import/no-commonjs": "off",
         "import/no-duplicates": "warn",
         "import/no-named-as-default": "off",
         "import/no-namespace": "off",
@@ -149,7 +143,6 @@ module.exports = {
         "no-alert": "warn",
         "no-await-in-loop": "warn",
         "no-caller": "warn",
-        "no-console": "warn",
         "no-constant-condition": [
             "warn",
             {
@@ -174,9 +167,13 @@ module.exports = {
         "no-restricted-imports": [
             "error",
             {
-                patterns: ["@mui/material/*", "@vertigis/react-ui/*"],
-                message:
-                    "React UI components should always be imported from '@vertigis/web/ui' when used in a Web library.",
+                patterns: [
+                    {
+                        group: ["@mui/material/*", "@vertigis/react-ui/*"],
+                        message:
+                            "React UI components should always be imported from '@vertigis/web/ui' when used in a Web library.",
+                    },
+                ],
             },
         ],
         "no-return-assign": "warn",
