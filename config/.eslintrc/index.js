@@ -83,6 +83,7 @@ module.exports = {
         "@typescript-eslint/no-unsafe-call": "off",
         "@typescript-eslint/no-unsafe-enum-comparison": "off",
         "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-unsafe-return": "off",
         "@typescript-eslint/no-unused-vars": [
             "warn",
             {
@@ -102,7 +103,6 @@ module.exports = {
         "@typescript-eslint/no-floating-promises": "warn",
         "@typescript-eslint/promise-function-async": "off",
         "@typescript-eslint/restrict-template-expressions": "off",
-        "@typescript-eslint/return-await": "error",
         "@typescript-eslint/require-await": "off",
         "@typescript-eslint/switch-exhaustiveness-check": "warn",
         "accessor-pairs": "warn",
