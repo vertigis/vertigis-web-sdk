@@ -1,5 +1,6 @@
+import type { LibraryRegistry } from "@vertigis/web/config";
+
 import PointsOfInterest, { PointsOfInterestModel } from "./components/PointsOfInterest";
-import { LibraryRegistry } from "@vertigis/web/config";
 
 const LAYOUT_NAMESPACE = "custom.foo";
 

@@ -4,13 +4,14 @@
 process.env.OPEN_BROWSER = "false";
 process.env.SDK_LOCAL_DEV = "true";
 
-import * as execa from "execa";
 import { strict as assert } from "assert";
 import * as fs from "fs";
 import * as path from "path";
-import { chromium } from "playwright-chromium";
-import pRetry from "p-retry";
 import { fileURLToPath } from "url";
+
+import * as execa from "execa";
+import pRetry from "p-retry";
+import { chromium } from "playwright-chromium";
 
 const dirName = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.join(dirName, "..");
@@ -23,7 +24,7 @@ let subprocess;
 
 /**
  * @param {Array<string>} args
- * @param {execa.Options<string>} [opts]
+ * @param {execa.Options} [opts]
  */
 function runNpmScript(args, opts) {
     console.log(`Executing CLI script: ${args.join(" ")}`);

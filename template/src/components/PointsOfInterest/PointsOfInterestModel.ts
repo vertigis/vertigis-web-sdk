@@ -1,16 +1,16 @@
+import Collection from "@arcgis/core/core/Collection";
+import type Point from "@arcgis/core/geometry/Point";
+import type { ChangeEvent } from "@vertigis/arcgis-extensions/support/esri";
+import type { LocationMarkerEvent } from "@vertigis/viewer-spec/messaging/registry/location-marker";
+import { toColor } from "@vertigis/web/branding";
+import type { MapModel } from "@vertigis/web/mapping";
+import { command, type HasGeometry } from "@vertigis/web/messaging";
 import {
     ComponentModelBase,
     serializable,
-    ComponentModelProperties,
+    type ComponentModelProperties,
     importModel,
 } from "@vertigis/web/models";
-import { LocationMarkerEvent } from "@vertigis/viewer-spec/messaging/registry/location-marker";
-import { toColor } from "@vertigis/web/branding";
-import { command, HasGeometry } from "@vertigis/web/messaging";
-import { MapModel } from "@vertigis/web/mapping";
-import { ChangeEvent } from "@vertigis/arcgis-extensions/support/esri";
-import Collection from "@arcgis/core/core/Collection";
-import Point from "@arcgis/core/geometry/Point";
 
 import PointOfInterestModel from "./PointOfInterestModel";
 
@@ -40,7 +40,7 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
     // changes.
     readonly pointsOfInterest = new Collection<PointOfInterestModel>();
     private _nextId = 1;
-    private _handles: IHandle[] = [];
+    private readonly _handles: IHandle[] = [];
 
     /**
      * Creates a new point of interest at the specified location.
@@ -77,7 +77,7 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
         });
     }
 
-    protected async _onInitialize(): Promise<void> {
+    protected override async _onInitialize(): Promise<void> {
         // This method is invoked automatically when the model is first created.
         // It gives you an opportunity to perform async initialization. It is
         // also the first opportunity to use injected dependencies such as the
@@ -98,7 +98,7 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
         );
     }
 
-    protected async _onDestroy(): Promise<void> {
+    protected override async _onDestroy(): Promise<void> {
         // Always invoke the super implementation.
         await super._onDestroy();
 

@@ -1,5 +1,5 @@
-import Point from "@arcgis/core/geometry/Point";
-import Color from "@arcgis/core/Color";
+import type Color from "@arcgis/core/Color";
+import type Point from "@arcgis/core/geometry/Point";
 import { ModelBase, serializable } from "@vertigis/web/models";
 
 /**
