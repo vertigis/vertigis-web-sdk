@@ -1,16 +1,16 @@
+import Collection from "@arcgis/core/core/Collection";
+import type Point from "@arcgis/core/geometry/Point";
+import type { ChangeEvent } from "@vertigis/arcgis-extensions/support/esri";
+import type { LocationMarkerEvent } from "@vertigis/viewer-spec/messaging/registry/location-marker";
+import { toColor } from "@vertigis/web/branding";
+import type { MapModel } from "@vertigis/web/mapping";
+import { command, type HasGeometry } from "@vertigis/web/messaging";
 import {
     ComponentModelBase,
     serializable,
-    ComponentModelProperties,
+    type ComponentModelProperties,
     importModel,
 } from "@vertigis/web/models";
-import { LocationMarkerEvent } from "@vertigis/viewer-spec/messaging/registry/location-marker";
-import { toColor } from "@vertigis/web/branding";
-import { command, HasGeometry } from "@vertigis/web/messaging";
-import { MapModel } from "@vertigis/web/mapping";
-import { ChangeEvent } from "@vertigis/arcgis-extensions/support/esri";
-import Collection from "@arcgis/core/core/Collection";
-import Point from "@arcgis/core/geometry/Point";
 
 import PointOfInterestModel from "./PointOfInterestModel";
 
@@ -40,7 +40,7 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
     // changes.
     readonly pointsOfInterest = new Collection<PointOfInterestModel>();
     private _nextId = 1;
-    private _handles: IHandle[] = [];
+    private readonly _handles: IHandle[] = [];
 
     /**
      * Creates a new point of interest at the specified location.
@@ -77,7 +77,7 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
         });
     }
 
-    protected async _onInitialize(): Promise<void> {
+    protected override async _onInitialize(): Promise<void> {
         // This method is invoked automatically when the model is first created.
         // It gives you an opportunity to perform async initialization. It is
         // also the first opportunity to use injected dependencies such as the
@@ -88,9 +88,7 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
         // Registration handles for event handlers should be saved and cleaned
         // up when no longer needed.
         this._handles.push(
-            this.messages.events.locationMarker.updated.subscribe(
-                this._onMarkerUpdated
-            ),
+            this.messages.events.locationMarker.updated.subscribe(this._onMarkerUpdated),
             // Event handlers registered via `on()` are invoked asynchronously,
             // but are typed as accepting a function that returns `void`. In
             // this case, our function returns `Promise<void>`, so we need to
@@ -100,18 +98,16 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
         );
     }
 
-    protected async _onDestroy(): Promise<void> {
+    protected override async _onDestroy(): Promise<void> {
         // Always invoke the super implementation.
         await super._onDestroy();
 
         // Clean up event handlers.
-        this._handles.forEach((h) => h.remove());
+        this._handles.forEach(h => h.remove());
     }
 
     private readonly _onMarkerUpdated = (e: LocationMarkerEvent): void => {
-        const matchingPoi = this.pointsOfInterest.find(
-            (poi) => poi.id === e.id
-        );
+        const matchingPoi = this.pointsOfInterest.find(poi => poi.id === e.id);
         if (matchingPoi) {
             matchingPoi.geometry = e.geometry as Point;
         }
@@ -124,7 +120,7 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
         // collection changes.
         if (e.added?.length) {
             await Promise.all(
-                e.added.map((poi) =>
+                e.added.map(poi =>
                     this.messages.commands.locationMarker.create.execute({
                         id: poi.id,
                         geometry: poi.geometry,
@@ -138,7 +134,7 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
         }
         if (e.removed?.length) {
             await Promise.all(
-                e.removed.map((poi) =>
+                e.removed.map(poi =>
                     this.messages.commands.locationMarker.remove.execute({
                         id: poi.id,
                         maps: this.map,

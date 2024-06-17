@@ -32,7 +32,7 @@
         "create": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-web-sdk.js create",
         "start": "cd template && npm link \"../\" --no-package-lock && npm run start",
         "test": "node ./test/index.js",
-        "prettier": "prettier --write \"**/*.json\" \"**/*.js\""
+        "prettier": "prettier --write \"**/*.json\" \"**/*.js\" \"**/*.ts\" \"**/*.tsx\""
     },
     "dependenciesComments": {
         "fork-ts-checker-webpack-plugin": "Support for eslint was removed in 7.x. We need to stay on 6.x until we find a replacement strategy for linting."
@@ -45,6 +45,7 @@
         "css-loader": "~6.10.0",
         "eslint": "~8.56.0",
         "eslint-config-prettier": "~9.1.0",
+        "eslint-plugin-import": "~2.29.1",
         "eslint-plugin-only-warn": "~1.1.0",
         "eslint-plugin-react": "~7.33.2",
         "eslint-plugin-react-hooks": "~4.6.0",
@@ -63,7 +64,7 @@
     },
     "devDependencies": {
         "@types/node": "~18.19.17",
-        "@vertigis/web": "^5.28.0",
+        "@vertigis/web": "^5.29.0",
         "conventional-changelog-conventionalcommits": "7.0.2",
         "cross-env": "7.0.3",
         "execa": "8.0.1",
@@ -74,6 +75,9 @@
         "semantic-release": "23.0.6",
         "simple-git-hooks": "2.9.0",
         "typescript": "5.3.3"
+    },
+    "overrides": {
+        "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
     },
     "simple-git-hooks": {
         "pre-commit": "npx lint-staged"

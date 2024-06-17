@@ -2,15 +2,16 @@
 // @ts-check
 "use strict";
 
-import * as path from "path";
-import paths from "./paths.js";
-import webpack from "webpack";
 import * as crypto from "crypto";
+import * as path from "path";
+import { fileURLToPath } from "url";
 
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import HtmlWebPackPlugin from "html-webpack-plugin";
-import { fileURLToPath } from "url";
+import webpack from "webpack";
+
+import paths from "./paths.js";
 
 const dirName = path.dirname(fileURLToPath(import.meta.url));
 
@@ -36,6 +37,11 @@ export default {
         extensions: paths.moduleFileExtensions,
         alias: {
             esri: "@arcgis/core",
+        },
+        fallback: {
+            buffer: false,
+            timers: false,
+            stream: false,
         },
     },
     entry: paths.projEntry,
@@ -73,6 +79,11 @@ export default {
                     {
                         test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
                         loader: "url-loader",
+                    },
+                    // Includes supplementary assets as text files.
+                    {
+                        test: /(\.md|\.xml)$/i,
+                        type: "asset/source",
                     },
                     // Process application JS with Babel.
                     // The preset includes JSX, Flow, TypeScript, and some ESnext features.
@@ -121,7 +132,7 @@ export default {
             new HtmlWebPackPlugin({
                 inject: false,
                 template: path.resolve(paths.ownPath, "lib", "index.ejs"),
-                additionalLibs: process.env.ADDITIONAL_LIBS
+                additionalLibs: process.env.ADDITIONAL_LIBS,
             }),
 
         new ForkTsCheckerWebpackPlugin({

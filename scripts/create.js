@@ -1,13 +1,14 @@
 // @ts-check
 "use strict";
 
-import chalk from "chalk";
 import * as crypto from "crypto";
-import * as spawn from "cross-spawn";
 import * as fs from "fs";
-import fsExtra from "fs-extra";
 import * as path from "path";
 import { fileURLToPath } from "url";
+
+import chalk from "chalk";
+import * as spawn from "cross-spawn";
+import fsExtra from "fs-extra";
 
 const { copySync, moveSync } = fsExtra;
 const dirName = path.dirname(fileURLToPath(import.meta.url));
@@ -41,6 +42,14 @@ const copyTemplate = projectPath => {
         errorOnExist: true,
         overwrite: false,
     });
+    copySync(
+        path.join(rootDir, "config/tsconfig.json.template"),
+        path.join(projectPath, "tsconfig.json"),
+        {
+            errorOnExist: true,
+            overwrite: false,
+        }
+    );
     // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
     // See: https://github.com/npm/npm/issues/1862
     moveSync(path.join(projectPath, "gitignore"), path.join(projectPath, ".gitignore"));
@@ -107,7 +116,7 @@ const installNpmDeps = projectPath => {
                     "--save-exact",
                     process.env.SDK_LOCAL_DEV === "true"
                         ? process.cwd()
-                        : `@vertigis/web-sdk@${selfVersion}`,
+                        : `@vertigis/web-sdk@${selfVersion.includes("semantically-released") ? "*" : selfVersion}`,
                     "@vertigis/web",
                 ],
                 {

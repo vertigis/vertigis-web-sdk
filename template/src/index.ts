@@ -1,7 +1,6 @@
-import PointsOfInterest, {
-    PointsOfInterestModel,
-} from "./components/PointsOfInterest";
-import { LibraryRegistry } from "@vertigis/web/config";
+import type { LibraryRegistry } from "@vertigis/web/config";
+
+import PointsOfInterest, { PointsOfInterestModel } from "./components/PointsOfInterest";
 
 const LAYOUT_NAMESPACE = "custom.foo";
 
@@ -17,7 +16,7 @@ export default function (registry: LibraryRegistry): void {
         title: "Points of Interest",
     });
     registry.registerModel({
-        getModel: (config) => new PointsOfInterestModel(config),
+        getModel: config => new PointsOfInterestModel(config),
         itemType: "points-of-interest-model",
     });
     registry.registerCommand({
