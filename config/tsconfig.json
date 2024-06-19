@@ -14,8 +14,6 @@
         "moduleResolution": "node",
         "noEmit": true,
         "noImplicitAny": false,
-        "noImplicitOverride": true,
-        "noImplicitReturns": true,
         "paths": {
             "esri/*": ["./node_modules/@arcgis/core/*"]
         },
