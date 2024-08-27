@@ -48,7 +48,10 @@ export default {
     externals: [
         /^@arcgis\/core\/.+$/,
         /^esri\/.+$/,
-        /^@vertigis\/.+$/,
+        /^@vertigis\/arcgis-extensions\/.+$/,
+        /^@vertigis\/viewer-spec\/.+$/,
+        /^@vertigis\/web\/.+$/,
+        /^@vertigis\/workflow\/.+$/,
         /^react(\/.+)*$/,
         /^react-dom(\/.+)*$/,
     ],
