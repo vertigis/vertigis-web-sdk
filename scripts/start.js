@@ -1,8 +1,10 @@
 // @ts-check
 import * as http from "http";
 import * as https from "https";
+
 import webpack from "webpack";
 import WebpackDevServer from "webpack-dev-server";
+
 import paths from "../config/paths.js";
 
 // Makes the script crash on unhandled rejections instead of silently
@@ -47,8 +49,9 @@ const serverConfig = {
         process.env.OPEN_BROWSER !== "false" &&
         `http://localhost:${port}${process.env.OPEN_PAGE || ""}`,
     port,
-    proxy: {
-        "/viewer": {
+    proxy: [
+        {
+            path: "/viewer",
             target: viewerTarget,
             agent: viewerTarget.startsWith("https") ? httpsAgent : httpAgent,
             changeOrigin: true,
@@ -59,7 +62,7 @@ const serverConfig = {
                 "^/viewer": "",
             },
         },
-    },
+    ],
     static: {
         directory: paths.projPublicDir,
     },
