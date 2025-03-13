@@ -70,7 +70,11 @@ export default {
         filename: "[name].js",
     },
     module: {
-        strictExportPresence: true,
+        parser: {
+            javascript: {
+                exportsPresence: "error",
+            },
+        },
         rules: [
             {
                 // "oneOf" will traverse all following loaders until one will

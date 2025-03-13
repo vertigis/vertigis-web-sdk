@@ -42,9 +42,20 @@ const copyTemplate = projectPath => {
         errorOnExist: true,
         overwrite: false,
     });
+
+    // Not keeping these files in the template directory allows the template
+    // code to be checked from within this project.
     copySync(
         path.join(rootDir, "config/tsconfig.json.template"),
         path.join(projectPath, "tsconfig.json"),
+        {
+            errorOnExist: true,
+            overwrite: false,
+        }
+    );
+    copySync(
+        path.join(rootDir, "config/eslint.config.js.template"),
+        path.join(projectPath, "eslint.config.js"),
         {
             errorOnExist: true,
             overwrite: false,
@@ -118,6 +129,7 @@ const installNpmDeps = projectPath => {
                         ? process.cwd()
                         : `@vertigis/web-sdk@${selfVersion.includes("semantically-released") ? "*" : selfVersion}`,
                     "@vertigis/web",
+                    process.env.SDK_LOCAL_DEV === "true" ? "ts-loader" : "",
                 ],
                 {
                     cwd: projectPath,
@@ -139,8 +151,7 @@ const installNpmDeps = projectPath => {
  */
 const gitInit = projectPath => {
     console.log(`Initializing git in ${projectPath}\n`);
-
-    spawn.sync(`git init`, { cwd: projectPath }).status;
+    spawn.sync(`git init -b main`, { cwd: projectPath }).status;
 };
 
 const printSuccess = () => {

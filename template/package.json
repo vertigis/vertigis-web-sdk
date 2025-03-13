@@ -5,7 +5,7 @@
     "description": "",
     "license": "UNLICENSED",
     "author": "",
-    "type": "commonjs",
+    "type": "module",
     "scripts": {
         "build": "vertigis-web-sdk build",
         "start": "vertigis-web-sdk start",
@@ -15,6 +15,7 @@
     "dependencies": {},
     "devDependencies": {
         "typescript": ">=4.7.4 <5.4.0",
+        "eslint": "~9.22.0",
         "prettier": "^3.3.1"
     },
     "overrides": {

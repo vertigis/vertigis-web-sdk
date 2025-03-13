@@ -93,7 +93,6 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
             // but are typed as accepting a function that returns `void`. In
             // this case, our function returns `Promise<void>`, so we need to
             // disable the linting rule that warns about the type difference.
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             this.pointsOfInterest.on("change", this._onPointOfInterestsChange)
         );
     }

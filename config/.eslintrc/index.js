@@ -77,7 +77,6 @@ module.exports = {
             },
         ],
         "@typescript-eslint/no-redundant-type-constituents": "off",
-        "@typescript-eslint/no-unnecessary-boolean-literal-compare": "warn",
         "@typescript-eslint/no-unnecessary-condition": "off",
         "@typescript-eslint/no-unsafe-assignment": "off",
         "@typescript-eslint/no-unsafe-call": "off",

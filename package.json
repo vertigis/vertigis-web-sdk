@@ -38,17 +38,16 @@
         "fork-ts-checker-webpack-plugin": "Support for eslint was removed in 7.x. We need to stay on 6.x until we find a replacement strategy for linting."
     },
     "dependencies": {
-        "@typescript-eslint/eslint-plugin": "~7.4.0",
-        "@typescript-eslint/parser": "~7.4.0",
+        "@eslint/js": "~9.22.0",
         "chalk": "~5.3.0",
         "clean-webpack-plugin": "~4.0.0",
         "css-loader": "~7.1.0",
-        "eslint": "~8.56.0",
-        "eslint-config-prettier": "~9.1.0",
-        "eslint-plugin-import": "~2.29.1",
+        "eslint": "~9.22.0",
+        "eslint-config-prettier": "~10.1.1",
+        "eslint-plugin-import": "~2.31.0",
         "eslint-plugin-only-warn": "~1.1.0",
-        "eslint-plugin-react": "~7.36.0",
-        "eslint-plugin-react-hooks": "~4.6.0",
+        "eslint-plugin-react": "~7.37.4",
+        "eslint-plugin-react-hooks": "~5.2.0",
         "fork-ts-checker-webpack-plugin": "~6.5.2",
         "fs-extra": "~11.2.0",
         "html-webpack-plugin": "~5.6.0",
@@ -58,6 +57,7 @@
         "style-loader": "~4.0.0",
         "terser-webpack-plugin": "~5.3.10",
         "ts-loader": "~9.5.1",
+        "typescript-eslint": "~8.26.1",
         "url-loader": "~4.1.1",
         "webpack": "~5.94.0",
         "webpack-dev-server": "~5.1.0"
@@ -72,15 +72,17 @@
         "p-retry": "6.2.0",
         "playwright-chromium": "1.41.2",
         "prettier": "3.2.5",
-        "semantic-release": "23.0.6",
+        "semantic-release": "^24.2.1",
         "simple-git-hooks": "2.9.0",
-        "typescript": "5.3.3"
+        "typescript": "^5.3.3"
     },
     "overrides": {
+        "npm": "^10.9.0",
         "send": "0.19.0",
         "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
     },
     "overridesComments": {
+        "npm": "Force semantic-release to use a copy of npm without vulnerabilities.",
         "send": "Remove this when webpack-dev-server can be upgraded to not use a vulnerable version.",
         "xlsx": "New versions are no longer published to npm."
     },
