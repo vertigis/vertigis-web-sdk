@@ -39,11 +39,11 @@ Builds the library for production to the `build` folder. It optimizes the build 
 
 Your custom library is now ready to be deployed!
 
-See the [section about deployment](https://developers.vertigis.com/docs/web/sdk-deployment/) in the [Developer Center](https://developers.vertigis.com/docs/web/overview/) for more information.
+See the [section about deployment](https://developers.vertigisstudio.com/docs/web/sdk-deployment/) in the [Developer Center](https://developers.vertigisstudio.com/docs/web/overview/) for more information.
 
 ## Documentation
 
-Find [further documentation on the SDK](https://developers.vertigis.com/docs/web/sdk-overview/) on the [VertiGIS Studio Developer Center](https://developers.vertigis.com/docs/web/overview/)
+Find [further documentation on the SDK](https://developers.vertigisstudio.com/docs/web/sdk-overview/) on the [VertiGIS Studio Developer Center](https://developers.vertigisstudio.com/docs/web/overview/)
 
 ## Contributing
 
