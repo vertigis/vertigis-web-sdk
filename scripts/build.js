@@ -20,15 +20,15 @@ process.env.BABEL_ENV = "production";
 process.env.NODE_ENV = "production";
 
 // Load the webpack.config.js from the project folder if it exists.
-let wepackConfigUrl;
+let webpackConfigUrl;
 try {
     const localWebPackPath = path.join(paths.projRoot, "webpack.config.js");
     accessSync(localWebPackPath);
-    wepackConfigUrl = pathToFileURL(localWebPackPath).href;
+    webpackConfigUrl = pathToFileURL(localWebPackPath).href;
 } catch (e) {
-    wepackConfigUrl = "../config/webpack.config.js";
+    webpackConfigUrl = "../config/webpack.config.js";
 }
-const { default: webpackConfig } = await import(wepackConfigUrl);
+const { default: webpackConfig } = await import(webpackConfigUrl);
 
 const build = () => {
     console.log("Creating an optimized production build...\n");
