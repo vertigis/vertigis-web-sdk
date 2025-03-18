@@ -7,13 +7,13 @@ import reactPlugin from "eslint-plugin-react";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
 import globals from "globals";
 
-// This "plugin" actually works by patching an eslint method.
+// This "plugin" actually works by monkeypatching an eslint method.
 import "eslint-plugin-only-warn";
 
 /**
  * A default eslint configuration that can be extended.
  */
-export const recommended = defineConfig([
+export const vertigisRecommended = defineConfig([
     {
         name: "vertigis/recommended",
         languageOptions: {
@@ -51,7 +51,7 @@ export const recommended = defineConfig([
  */
 export default defineConfig([
     globalIgnores(["node_modules/**/*", "**/*.js", "**/*.d.ts", "**/*.cjs"]),
-    recommended,
+    vertigisRecommended,
     {
         name: "vertigis/web-sdk/recommended",
         rules: {

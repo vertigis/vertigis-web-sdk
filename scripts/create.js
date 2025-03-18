@@ -129,7 +129,15 @@ const installNpmDeps = projectPath => {
                         ? process.cwd()
                         : `@vertigis/web-sdk@${selfVersion.includes("semantically-released") ? "*" : selfVersion}`,
                     "@vertigis/web",
-                    process.env.SDK_LOCAL_DEV === "true" ? "ts-loader" : "",
+                    ...(process.env.SDK_LOCAL_DEV === "true"
+                        ? [
+                              "ts-loader",
+                              "style-loader",
+                              "css-loader",
+                              "postcss-loader",
+                              "postcss-preset-env",
+                          ]
+                        : []),
                 ],
                 {
                     cwd: projectPath,

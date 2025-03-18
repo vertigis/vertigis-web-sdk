@@ -1,9 +1,9 @@
 import { defineConfig } from "eslint/config";
 
-import eslintConfig from "./config/eslint.config.js";
+import baseConfig from "./config/eslint.config.js";
 
 export default defineConfig([
-    eslintConfig,
+    baseConfig,
     {
         rules: {
             "@typescript-eslint/no-var-requires": "off",

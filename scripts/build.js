@@ -1,6 +1,11 @@
 // @ts-check
 import chalk, { supportsColor } from "chalk";
+import { access, accessSync } from "fs";
 import webpack from "webpack";
+import * as path from "path";
+import { pathToFileURL } from "url";
+
+import paths from "../config/paths.js";
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
@@ -13,7 +18,18 @@ process.on("unhandledRejection", err => {
 // do that with ES modules is by using a dynamic import.
 process.env.BABEL_ENV = "production";
 process.env.NODE_ENV = "production";
-const { default: webpackConfig } = await import("../config/webpack.config.js");
+
+// Load the webpack.config.js from the project folder if it exists.
+let wepackConfigUrl;
+try {
+    const localWebPackPath = path.join(paths.projRoot, "webpack.config.js");
+    accessSync(localWebPackPath);
+    wepackConfigUrl = pathToFileURL(localWebPackPath).href;
+} catch (e) {
+    wepackConfigUrl = "../config/webpack.config.js";
+}
+const { default: webpackConfig } = await import(wepackConfigUrl);
+
 const build = () => {
     console.log("Creating an optimized production build...\n");
 

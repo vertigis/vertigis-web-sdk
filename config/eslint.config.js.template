@@ -1,8 +1,8 @@
 import { defineConfig } from "eslint/config";
-import defaultEslintConfig from "@vertigis/web-sdk/config/eslint.config.js"
+import baseConfig from "@vertigis/web-sdk/config/eslint.config.js"
 
 export default defineConfig([
-    defaultEslintConfig,
+    baseConfig,
     {
         // Add your custom rules or other eslint config overrides here.
         rules: {}
