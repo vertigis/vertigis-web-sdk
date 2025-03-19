@@ -62,11 +62,6 @@ export const baseConfig = {
                 test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
                 loader: "url-loader",
             },
-            // Includes supplementary assets as text files.
-            {
-                test: /(\.md|\.xml)$/i,
-                type: "asset/source",
-            },
             // Process application JS with Babel.
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
@@ -131,11 +126,6 @@ export const baseConfig = {
  */
 export default merge(baseConfig, {
     resolve: {
-        fallback: {
-            buffer: false,
-            timers: false,
-            stream: false,
-        },
         alias: {
             esri: "@arcgis/core",
         },
