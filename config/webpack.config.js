@@ -5,7 +5,6 @@ import * as crypto from "crypto";
 import * as path from "path";
 import { fileURLToPath } from "url";
 
-import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import HtmlWebPackPlugin from "html-webpack-plugin";
 import webpack from "webpack";
@@ -38,6 +37,7 @@ export const baseConfig = {
     entry: paths.projEntry,
     externals: [/^@arcgis\/.+$/, /^esri\/.+$/, "react", "react-dom"],
     output: {
+        clean: isEnvProduction,
         // Technically this shouldn't be needed as we restrict the library to
         // one chunk, but we set this here just to be extra safe against
         // collisions.
@@ -106,13 +106,9 @@ export const baseConfig = {
         new webpack.DefinePlugin({
             "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
         }),
-
         new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
-
         new ForkTsCheckerWebpackPlugin(),
-
-        isEnvProduction && new CleanWebpackPlugin(),
-    ].filter(Boolean),
+    ],
     watchOptions: {
         // Don't bother watching node_modules files for changes. This reduces
         // CPU/mem overhead, but means that changes from `npm install` while the
