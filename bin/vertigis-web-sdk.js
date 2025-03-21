@@ -13,5 +13,5 @@ const script = scriptIndex === -1 ? args[0] : args[scriptIndex];
 if (["build", "create", "start", "upgrade"].includes(script)) {
     await import(`../scripts/${script}.js`);
 } else {
-    console.error('Unknown script "' + script + '".');
+    console.error(`Unknown script '${script}'.`);
 }

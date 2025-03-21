@@ -1,3 +1,7 @@
+UPDATE: This eslint configuration is deprecated as of the upgrade of the sdk to
+eslint v9. However, DO NOT REMOVE this folder, it is required for existing SDK
+projects to run.
+
 This folder may seem bizarre but is necessary since existing SDK projects have
 their own eslint config that extends
 `require.resolve("@vertigis/web-sdk/config/.eslintrc")`. This will only work if
