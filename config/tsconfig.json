@@ -1,27 +1,3 @@
 {
-    "compilerOptions": {
-        "module": "esnext",
-        "target": "es2022",
-        "lib": ["es2022", "dom", "dom.iterable"],
-        "allowJs": true,
-        // Assumes <projectdir>/node_modules/@vertigis/web-sdk/config
-        "baseUrl": "../../../../",
-        "esModuleInterop": true,
-        "experimentalDecorators": true,
-        "forceConsistentCasingInFileNames": true,
-        "isolatedModules": true,
-        "jsx": "react-jsx",
-        "moduleResolution": "node",
-        "noEmit": true,
-        "noImplicitAny": false,
-        "paths": {
-            "esri/*": ["./node_modules/@arcgis/core/*"]
-        },
-        "resolveJsonModule": true,
-        "skipLibCheck": true,
-        "sourceMap": true,
-        "strict": true,
-        "strictNullChecks": false,
-        "strictFunctionTypes": false
-    }
+    "extends": "@vertigis/sdk-library/config/tsconfig.base.json"
 }

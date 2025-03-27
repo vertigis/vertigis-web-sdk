@@ -1,14 +1,9 @@
 {
+    "extends": "@vertigis/sdk-library/config/tsconfig.base.json",
     "compilerOptions": {
-        "allowJs": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "esModuleInterop": true,
-        "jsx": "react-jsx",
-        "module": "ESNext",
-        "moduleResolution": "node",
-        "outDir": "bogus",
-        "target": "ESNext"
+        "paths": {
+            "esri": ["./node_modules/@arcgis/core/*"]
+        }
     },
     "include": [
         "eslint.config.js",

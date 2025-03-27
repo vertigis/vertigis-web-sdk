@@ -1,57 +1,13 @@
-import eslint from "@eslint/js";
-import tseslint from "typescript-eslint";
+import baseConfig from "@vertigis/sdk-library/config/eslint.base.config.js";
 import { defineConfig, globalIgnores } from "eslint/config";
 import prettierConfig from "eslint-config-prettier";
-import importPlugin from "eslint-plugin-import";
-import reactPlugin from "eslint-plugin-react";
-import reactHooksPlugin from "eslint-plugin-react-hooks";
-import globals from "globals";
-
-// This "plugin" actually works by monkeypatching an eslint method.
-import "eslint-plugin-only-warn";
-
-/**
- * A default eslint configuration that can be extended.
- */
-export const vertigisRecommended = defineConfig([
-    {
-        name: "vertigis/recommended",
-        languageOptions: {
-            globals: {
-                ...globals.browser,
-                ...globals.node,
-            },
-            ecmaVersion: 2022,
-            sourceType: "module",
-            parser: tseslint.parser,
-            parserOptions: {
-                ecmaFeatures: {
-                    jsx: true,
-                },
-                projectService: true,
-            },
-        },
-        settings: {
-            react: {
-                version: "detect",
-            },
-        },
-    },
-    tseslint.config(eslint.configs.recommended, tseslint.configs.recommendedTypeChecked),
-    reactPlugin.configs.flat.recommended,
-    reactPlugin.configs.flat["jsx-runtime"],
-    reactHooksPlugin.configs["recommended-latest"],
-    importPlugin.flatConfigs.recommended,
-    importPlugin.flatConfigs.typescript,
-    prettierConfig,
-]);
 
 /**
  * Adds rules specific to the Web SDK.
  */
 export default defineConfig([
-    globalIgnores(["node_modules/**/*", "**/*.js", "**/*.d.ts", "**/*.cjs"]),
-    vertigisRecommended,
+    globalIgnores(["**/*.js", "**/*.d.ts", "**/*.cjs"]),
+    baseConfig,
     {
         name: "vertigis/web-sdk/recommended",
         rules: {
