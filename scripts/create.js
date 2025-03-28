@@ -42,9 +42,20 @@ const copyTemplate = projectPath => {
         errorOnExist: true,
         overwrite: false,
     });
+
+    // Not keeping these files in the template directory allows the template
+    // code to be checked from within this project.
     copySync(
         path.join(rootDir, "config/tsconfig.json.template"),
         path.join(projectPath, "tsconfig.json"),
+        {
+            errorOnExist: true,
+            overwrite: false,
+        }
+    );
+    copySync(
+        path.join(rootDir, "config/eslint.config.js.template"),
+        path.join(projectPath, "eslint.config.js"),
         {
             errorOnExist: true,
             overwrite: false,
@@ -106,6 +117,17 @@ const installNpmDeps = projectPath => {
             })
         );
 
+        // Copy a freshly packaged instance of this repo to install from if this
+        // is a local dev copy. This is done because eslint no longer plays nice
+        // with linked repos.
+        if (process.env.SDK_LOCAL_DEV === "true") {
+            fs.copyFileSync(
+                path.join(rootDir, "vertigis-web-sdk-0.0.0-semantically-released.tgz"),
+                path.join(projectPath, "vertigis-web-sdk.tgz")
+            );
+            fs.unlinkSync(path.join(rootDir, "vertigis-web-sdk-0.0.0-semantically-released.tgz"));
+        }
+
         // Add SDK and Web runtime packages.
         checkSpawnSyncResult(
             spawn.sync(
@@ -115,8 +137,8 @@ const installNpmDeps = projectPath => {
                     "--save-dev",
                     "--save-exact",
                     process.env.SDK_LOCAL_DEV === "true"
-                        ? process.cwd()
-                        : `@vertigis/web-sdk@${selfVersion.includes("semantically-released") ? "*" : selfVersion}`,
+                        ? path.join(projectPath, "./vertigis-web-sdk.tgz")
+                        : `@vertigis/web-sdk@${selfVersion}`,
                     "@vertigis/web",
                 ],
                 {
@@ -139,8 +161,7 @@ const installNpmDeps = projectPath => {
  */
 const gitInit = projectPath => {
     console.log(`Initializing git in ${projectPath}\n`);
-
-    spawn.sync(`git init`, { cwd: projectPath }).status;
+    spawn.sync(`git init -b main`, { cwd: projectPath }).status;
 };
 
 const printSuccess = () => {

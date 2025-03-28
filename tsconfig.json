@@ -11,15 +11,13 @@
         "target": "ESNext"
     },
     "include": [
-        ".eslintrc.cjs",
-        "**/.eslintrc.js",
-        "bin",
-        "config",
-        "lib",
-        "scripts",
-        "test",
-        "template/src/*.ts",
-        "template/src/**/**/*.ts",
-        "template/src/**/**/*.tsx"
+        "eslint.config.js",
+        "config/.eslintrc/index.js",
+        "bin/*.js",
+        "config/*.js",
+        "scripts/*.js",
+        "test/*.js",
+        "template/src/**/*.ts",
+        "template/src/**/*.tsx"
     ]
 }
