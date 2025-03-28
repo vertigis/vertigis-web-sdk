@@ -10,6 +10,15 @@ import globals from "globals";
 // This "plugin" actually works by monkeypatching an eslint method.
 import "eslint-plugin-only-warn";
 
+// Versions of the 'globals' package prior to v13.12.1 have an extra space in a
+// key that crashes eslint (https://github.com/sindresorhus/globals/pull/184).
+// As Web itself (5.34) only demands v11.2 and SDK projects don't have an
+// explicit dependency, the wrong package can sometimes end up being used.
+const eslintGlobals = Object.keys(globals).reduce((acc, key) => {
+    acc[key.trim()] = globals[key];
+    return acc;
+}, {});
+
 /**
  * A default eslint configuration that can be extended.
  */
@@ -18,8 +27,8 @@ export const vertigisRecommended = defineConfig([
         name: "vertigis/recommended",
         languageOptions: {
             globals: {
-                ...globals.browser,
-                ...globals.node,
+                ...eslintGlobals.browser,
+                ...eslintGlobals.node,
             },
             ecmaVersion: 2022,
             sourceType: "module",

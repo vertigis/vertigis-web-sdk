@@ -29,7 +29,7 @@
     },
     "scripts": {
         "build": "cd template && npm link \"../\" --no-package-lock && npm run build",
-        "create": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-web-sdk.js create",
+        "create": "npm pack && cross-env SDK_LOCAL_DEV=true node bin/vertigis-web-sdk.js create",
         "start": "cd template && npm link \"../\" --no-package-lock && npm run start",
         "test": "node ./test/index.js",
         "prettier": "prettier --write \"**/*.json\" \"**/*.js\" \"**/*.ts\" \"**/*.tsx\""
