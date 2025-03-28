@@ -5,6 +5,7 @@ process.env.OPEN_BROWSER = "false";
 process.env.SDK_LOCAL_DEV = "true";
 
 import { strict as assert } from "assert";
+import { execSync } from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
@@ -52,6 +53,7 @@ function killSubprocess() {
 
 async function testCreateProject() {
     // First try creating the project.
+    execSync("npm pack");
     subprocess = runNpmScript(["create", "test-lib"]);
     await subprocess;
 
