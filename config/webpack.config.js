@@ -145,5 +145,5 @@ export default merge(baseConfig, {
                 template: path.resolve(paths.ownPath, "lib", "index.ejs"),
                 additionalLibs: process.env.ADDITIONAL_LIBS,
             }),
-    ],
+    ].filter(Boolean),
 });
