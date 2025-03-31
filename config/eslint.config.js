@@ -14,10 +14,11 @@ import "eslint-plugin-only-warn";
 // key that crashes eslint (https://github.com/sindresorhus/globals/pull/184).
 // As Web itself (5.34) only demands v11.2 and SDK projects don't have an
 // explicit dependency, the wrong package can sometimes end up being used.
-const eslintGlobals = Object.keys(globals).reduce((acc, key) => {
-    acc[key.trim()] = globals[key];
+const browserGlobals = Object.keys(globals.browser).reduce((acc, key) => {
+    acc[key.trim()] = globals.browser[key];
     return acc;
 }, {});
+const eslintGlobals = { ...globals, browser: browserGlobals };
 
 /**
  * A default eslint configuration that can be extended.

@@ -1,3 +1,4 @@
+//@ts-check
 "use strict";
 
 // This script will update the custom library to target the latest version of
@@ -5,7 +6,12 @@
 
 import fetch from "node-fetch";
 import * as fs from "fs";
+import * as path from "path";
 import * as spawn from "cross-spawn";
+import { fileURLToPath } from "url";
+
+const dirName = path.dirname(fileURLToPath(import.meta.url));
+const ownPath = path.resolve(dirName, "..");
 
 console.info("Determining latest versions of Web and Web SDK...");
 let responses = await Promise.all([
@@ -33,6 +39,21 @@ const projectPackage = JSON.parse(await fs.promises.readFile("package.json", "ut
 // Update Web and SDK to latest versions.
 projectPackage.devDependencies["@vertigis/web"] = `^${latestWeb}`;
 projectPackage.devDependencies["@vertigis/web-sdk"] = `^${latestSDK}`;
+
+// Check for old eslint configuration and fix it.
+if (fs.existsSync(".eslintrc.js") && !fs.existsSync("eslint.config.js")) {
+    console.info("Adding new default configuration for eslint to 'eslint.config.js'.");
+    console.info(
+        "If you have existing '.eslintrc.js' configuration you will need to migrate any custom config to the new file."
+    );
+    fs.copyFileSync(path.join(ownPath, "./config/eslint.config.js.template"), "eslint.config.js");
+}
+
+// Change the type from "commonjs" to "module"
+if (projectPackage.type === "commonjs") {
+    console.info("Changing the type of the project to 'module'.");
+    projectPackage.type = "module";
+}
 
 console.info("Updating package.json...");
 await fs.promises.writeFile("package.json", JSON.stringify(projectPackage, undefined, 4), "utf8");
