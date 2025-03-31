@@ -12,7 +12,6 @@
     },
     "include": [
         "eslint.config.js",
-        "config/.eslintrc/index.js",
         "bin/*.js",
         "config/*.js",
         "scripts/*.js",
