@@ -34,20 +34,6 @@ const projectPackage = JSON.parse(await fs.promises.readFile("package.json", "ut
 projectPackage.devDependencies["@vertigis/web"] = `^${latestWeb}`;
 projectPackage.devDependencies["@vertigis/web-sdk"] = `^${latestSDK}`;
 
-// Add or update all of Web's dependencies as dev dependencies of this
-// project. Although this is not strictly necessary for the project to
-// build, aspects of VS Code intellisense like auto imports will not
-// work without this.
-console.info("Determining Web dependencies...");
-const response = await fetch(`https://registry.npmjs.com/@vertigis/web/${latestWeb}`);
-/**
- * @type {Record<string, unknown>}
- */
-const webPackage = await response.json();
-for (const [dep, version] of Object.entries(webPackage.dependencies)) {
-    projectPackage.devDependencies[dep] = version;
-}
-
 console.info("Updating package.json...");
 await fs.promises.writeFile("package.json", JSON.stringify(projectPackage, undefined, 4), "utf8");
 
