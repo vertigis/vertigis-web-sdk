@@ -1,3 +1,4 @@
+//@ts-check
 "use strict";
 
 // This script will update the custom library to target the latest version of
@@ -5,7 +6,12 @@
 
 import fetch from "node-fetch";
 import * as fs from "fs";
+import * as path from "path";
 import * as spawn from "cross-spawn";
+import { fileURLToPath } from "url";
+
+const dirName = path.dirname(fileURLToPath(import.meta.url));
+const ownPath = path.resolve(dirName, "..");
 
 console.info("Determining latest versions of Web and Web SDK...");
 let responses = await Promise.all([
@@ -34,18 +40,19 @@ const projectPackage = JSON.parse(await fs.promises.readFile("package.json", "ut
 projectPackage.devDependencies["@vertigis/web"] = `^${latestWeb}`;
 projectPackage.devDependencies["@vertigis/web-sdk"] = `^${latestSDK}`;
 
-// Add or update all of Web's dependencies as dev dependencies of this
-// project. Although this is not strictly necessary for the project to
-// build, aspects of VS Code intellisense like auto imports will not
-// work without this.
-console.info("Determining Web dependencies...");
-const response = await fetch(`https://registry.npmjs.com/@vertigis/web/${latestWeb}`);
-/**
- * @type {Record<string, unknown>}
- */
-const webPackage = await response.json();
-for (const [dep, version] of Object.entries(webPackage.dependencies)) {
-    projectPackage.devDependencies[dep] = version;
+// Check for old eslint configuration and fix it.
+if (fs.existsSync(".eslintrc.js") && !fs.existsSync("eslint.config.js")) {
+    console.info("Adding new default configuration for eslint to 'eslint.config.js'.");
+    console.info(
+        "If you have existing '.eslintrc.js' configuration you will need to migrate any custom config to the new file."
+    );
+    fs.copyFileSync(path.join(ownPath, "./config/eslint.config.js.template"), "eslint.config.js");
+}
+
+// Change the type from "commonjs" to "module"
+if (projectPackage.type === "commonjs") {
+    console.info("Changing the type of the project to 'module'.");
+    projectPackage.type = "module";
 }
 
 console.info("Updating package.json...");

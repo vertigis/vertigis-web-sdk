@@ -15,9 +15,7 @@
     "dependencies": {},
     "devDependencies": {
         "typescript": ">=5.3.3 <5.4.0",
-        "eslint": "~9.22.0",
-        "prettier": "~3.5.3",
-        "webpack-merge": "~6.0.1"
+        "prettier": "~3.5.3"
     },
     "overrides": {
         "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
