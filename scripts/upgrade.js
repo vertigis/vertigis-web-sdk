@@ -22,6 +22,7 @@ const [webInfo, sdkInfo] = await Promise.all(responses.map(r => r.json()));
 /**
  * @type {string}
  */
+// @ts-ignore
 const latestWeb = webInfo["dist-tags"]?.latest;
 if (!latestWeb) {
     throw new Error("Unable to determine the latest version VertiGIS Studio Web.");
@@ -29,6 +30,7 @@ if (!latestWeb) {
 /**
  * @type {string}
  */
+// @ts-ignore
 const latestSDK = sdkInfo["dist-tags"]?.latest;
 if (!latestSDK) {
     throw new Error("Unable to determine the latest version VertiGIS Studio Web SDK.");

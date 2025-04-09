@@ -1,4 +1,6 @@
 // @ts-check
+"use strict";
+
 import * as http from "http";
 import * as https from "https";
 import path from "path";

@@ -17,6 +17,9 @@ const createIndex = process.argv.findIndex(s => s.includes("create"));
 const directoryName = process.argv[createIndex + 1];
 const directoryPath = path.resolve(directoryName);
 
+/**
+ * @param {import("child_process").SpawnSyncReturns<Buffer>} syncResult
+ */
 const checkSpawnSyncResult = syncResult => {
     if (syncResult.status !== 0) {
         process.exit(1);
@@ -84,6 +87,9 @@ const updateTemplateContent = projectPath => {
     }
 };
 
+/**
+ * @param {string} projectPath
+ */
 const installNpmDeps = projectPath => {
     console.log(`Installing packages. This might take a couple minutes.\n`);
     /**

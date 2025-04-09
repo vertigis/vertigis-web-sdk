@@ -1,4 +1,6 @@
 // @ts-check
+"use strict";
+
 import chalk, { supportsColor } from "chalk";
 import { access, accessSync } from "fs";
 import webpack from "webpack";

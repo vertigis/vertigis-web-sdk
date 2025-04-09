@@ -1,6 +1,3 @@
-// @ts-check
-"use strict";
-
 import * as path from "path";
 
 import baseConfig from "@vertigis/sdk-library/config/webpack.base.config.js";
