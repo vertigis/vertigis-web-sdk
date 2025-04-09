@@ -52,7 +52,7 @@ if (fs.existsSync(".eslintrc.js") && !fs.existsSync("eslint.config.js")) {
 }
 
 // Change the type from "commonjs" to "module"
-if (projectPackage.type === "commonjs") {
+if (projectPackage.type === "commonjs" || !projectPackage.type) {
     console.info("Changing the type of the project to 'module'.");
     projectPackage.type = "module";
 }

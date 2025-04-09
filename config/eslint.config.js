@@ -1,6 +1,5 @@
 import baseConfig from "@vertigis/sdk-library/config/eslint.base.config.js";
 import { defineConfig, globalIgnores } from "eslint/config";
-import prettierConfig from "eslint-config-prettier";
 
 /**
  * Adds rules specific to the Web SDK.
@@ -199,5 +198,4 @@ export default defineConfig([
             "spaced-comment": "warn",
         },
     },
-    prettierConfig,
 ]);

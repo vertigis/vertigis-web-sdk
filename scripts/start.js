@@ -1,15 +1,14 @@
 // @ts-check
 "use strict";
 
+import paths from "@vertigis/sdk-library/config/paths.js";
 import * as http from "http";
 import * as https from "https";
 import path from "path";
-import { accessSync, existsSync } from "fs";
+import { existsSync } from "fs";
 import { pathToFileURL } from "url";
 import webpack from "webpack";
 import WebpackDevServer from "webpack-dev-server";
-
-import paths from "../config/paths.js";
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will

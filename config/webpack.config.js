@@ -19,10 +19,14 @@ export default merge(baseConfig, {
         },
     },
     externals: [
+        /^@arcgis\/.+$/,
+        /^esri\/.+$/,
         /^@vertigis\/arcgis-extensions\/.+$/,
         /^@vertigis\/viewer-spec\/.+$/,
         /^@vertigis\/web\/.+$/,
         /^@vertigis\/workflow\/.+$/,
+        "react",
+        "react-dom",
     ],
     output: {
         // Use "/" in dev so hot updates are requested from server root instead

@@ -101,63 +101,44 @@ const installNpmDeps = projectPath => {
         })
     ).version;
 
-    // One of this project's dependencies (semantic-release) has "npm" as a
-    // dependency. This puts a specific version of the npm binaries in the
-    // node_modules/.bin folder. Unfortunately, this means that running "npm"
-    // below will pick up this version instead of whatever is installed on the
-    // user's machine. This can have unintended side-effects, such as generating
-    // a lock file with the wrong version. Temporarily rename the whole folder
-    // to avoid this.
-    const localBinDir = path.join(rootDir, "node_modules", ".bin");
-    const localBinDirRenamed = `${localBinDir}.ignore`;
-    if (fs.existsSync(localBinDir)) {
-        fs.renameSync(localBinDir, localBinDirRenamed);
+    // First install existing deps.
+    checkSpawnSyncResult(
+        spawn.sync("npm", ["install"], {
+            cwd: projectPath,
+            stdio: "inherit",
+        })
+    );
+
+    // Copy a freshly packaged instance of this repo to install from if this
+    // is a local dev copy. This is done because eslint no longer plays nice
+    // with linked repos.
+    if (process.env.SDK_LOCAL_DEV === "true") {
+        fs.copyFileSync(
+            path.join(rootDir, "vertigis-web-sdk-0.0.0-semantically-released.tgz"),
+            path.join(projectPath, "vertigis-web-sdk.tgz")
+        );
+        fs.unlinkSync(path.join(rootDir, "vertigis-web-sdk-0.0.0-semantically-released.tgz"));
     }
 
-    try {
-        // First install existing deps.
-        checkSpawnSyncResult(
-            spawn.sync("npm", ["install"], {
+    // Add SDK and Web runtime packages.
+    checkSpawnSyncResult(
+        spawn.sync(
+            "npm",
+            [
+                "install",
+                "--save-dev",
+                "--save-exact",
+                process.env.SDK_LOCAL_DEV === "true"
+                    ? path.join(projectPath, "./vertigis-web-sdk.tgz")
+                    : `@vertigis/web-sdk@${selfVersion}`,
+                "@vertigis/web",
+            ],
+            {
                 cwd: projectPath,
                 stdio: "inherit",
-            })
-        );
-
-        // Copy a freshly packaged instance of this repo to install from if this
-        // is a local dev copy. This is done because eslint no longer plays nice
-        // with linked repos.
-        if (process.env.SDK_LOCAL_DEV === "true") {
-            fs.copyFileSync(
-                path.join(rootDir, "vertigis-web-sdk-0.0.0-semantically-released.tgz"),
-                path.join(projectPath, "vertigis-web-sdk.tgz")
-            );
-            fs.unlinkSync(path.join(rootDir, "vertigis-web-sdk-0.0.0-semantically-released.tgz"));
-        }
-
-        // Add SDK and Web runtime packages.
-        checkSpawnSyncResult(
-            spawn.sync(
-                "npm",
-                [
-                    "install",
-                    "--save-dev",
-                    "--save-exact",
-                    process.env.SDK_LOCAL_DEV === "true"
-                        ? path.join(projectPath, "./vertigis-web-sdk.tgz")
-                        : `@vertigis/web-sdk@${selfVersion}`,
-                    "@vertigis/web",
-                ],
-                {
-                    cwd: projectPath,
-                    stdio: "inherit",
-                }
-            )
-        );
-    } finally {
-        if (fs.existsSync(localBinDirRenamed)) {
-            fs.renameSync(localBinDirRenamed, localBinDir);
-        }
-    }
+            }
+        )
+    );
 };
 
 /**

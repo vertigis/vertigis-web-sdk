@@ -1,13 +1,12 @@
 // @ts-check
 "use strict";
 
+import paths from "@vertigis/sdk-library/config/paths.js";
 import chalk, { supportsColor } from "chalk";
 import { access, accessSync } from "fs";
 import webpack from "webpack";
 import * as path from "path";
 import { pathToFileURL } from "url";
-
-import paths from "../config/paths.js";
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will

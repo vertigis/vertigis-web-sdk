@@ -28,9 +28,7 @@
         "vertigis-web-sdk": "bin/vertigis-web-sdk.js"
     },
     "scripts": {
-        "build": "cd template && npm link \"../\" --no-package-lock && npm run build",
         "create": "npm pack && cross-env SDK_LOCAL_DEV=true node bin/vertigis-web-sdk.js create",
-        "start": "cd template && npm link \"../\" --no-package-lock && npm run start",
         "test": "node ./test/index.js",
         "prettier": "prettier --write \"**/*.json\" \"**/*.js\" \"**/*.ts\" \"**/*.tsx\""
     },
@@ -38,7 +36,7 @@
         "@vertigis/sdk-library": "file:../vertigis-sdk-library/vertigis-sdk-library-0.0.0-semantically-released.tgz",
         "chalk": "~5.3.0",
         "css-loader": "~7.1.2",
-        "eslint": "~9.22.0",
+        "eslint": "~9.24.0",
         "fs-extra": "~11.2.0",
         "html-webpack-plugin": "~5.6.0",
         "node-fetch": "~3.3.2",
@@ -59,21 +57,18 @@
         "conventional-changelog-conventionalcommits": "7.0.2",
         "cross-env": "7.0.3",
         "execa": "8.0.1",
-        "lint-staged": "~15.2.10",
+        "lint-staged": "~15.5.0",
         "p-retry": "6.2.0",
         "playwright-chromium": "1.41.2",
         "prettier": "3.2.5",
-        "semantic-release": "^24.2.1",
-        "simple-git-hooks": "2.9.0",
+        "simple-git-hooks": "~2.12.1",
         "typescript": "^5.3.3"
     },
     "overrides": {
-        "npm": "^10.9.0",
         "send": "0.19.0",
         "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
     },
     "overridesComments": {
-        "npm": "Force semantic-release to use a copy of npm without vulnerabilities.",
         "send": "Remove this when webpack-dev-server can be upgraded to not use a vulnerable version.",
         "xlsx": "New versions are no longer published to npm."
     },
