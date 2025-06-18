@@ -1,12 +1,13 @@
 // @ts-check
 "use strict";
 
-import paths from "@vertigis/sdk-library/config/paths.js";
+import { existsSync } from "fs";
 import * as http from "http";
 import * as https from "https";
 import path from "path";
-import { existsSync } from "fs";
 import { pathToFileURL } from "url";
+
+import paths from "@vertigis/sdk-library/config/paths.js";
 import webpack from "webpack";
 import WebpackDevServer from "webpack-dev-server";
 

@@ -1,10 +1,9 @@
 import * as path from "path";
 
+import paths from "@vertigis/sdk-library/config/paths.js";
 import baseConfig from "@vertigis/sdk-library/config/webpack.base.config.js";
 import HtmlWebPackPlugin from "html-webpack-plugin";
 import { merge } from "webpack-merge";
-
-import paths from "./paths.js";
 
 const isEnvDevelopment = process.env.NODE_ENV === "development";
 const isEnvProduction = process.env.NODE_ENV === "production";
@@ -35,11 +34,10 @@ export default merge(baseConfig, {
     },
     plugins: [
         // Generates an `index.html` file with the <script> injected.
-        // @ts-ignore
         isEnvDevelopment &&
             new HtmlWebPackPlugin({
                 inject: false,
-                template: path.resolve(paths.ownPath, "lib", "index.ejs"),
+                template: path.resolve(paths.ownPath, "../web-sdk/lib", "index.ejs"),
                 additionalLibs: process.env.ADDITIONAL_LIBS,
             }),
     ].filter(Boolean),

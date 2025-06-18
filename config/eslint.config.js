@@ -5,7 +5,7 @@ import { defineConfig, globalIgnores } from "eslint/config";
  * Adds rules specific to the Web SDK.
  */
 export default defineConfig([
-    globalIgnores(["**/*.js", "**/*.d.ts", "**/*.cjs"]),
+    globalIgnores(["**/*.cjs"]),
     baseConfig,
     {
         name: "vertigis/web-sdk/recommended",
@@ -17,7 +17,6 @@ export default defineConfig([
                 { disallowTypeAnnotations: false },
             ],
             "@typescript-eslint/explicit-module-boundary-types": "off",
-            "@typescript-eslint/member-delimiter-style": "warn",
             "@typescript-eslint/member-ordering": [
                 "warn",
                 {
@@ -108,6 +107,7 @@ export default defineConfig([
             "import/no-commonjs": "off",
             "import/no-duplicates": "warn",
             "import/no-named-as-default": "off",
+            "import/no-named-as-default-member": "off",
             "import/no-namespace": "off",
             "import/no-unresolved": "off",
             "import/order": [
