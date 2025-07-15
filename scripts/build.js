@@ -1,4 +1,11 @@
 // @ts-check
+"use strict";
+
+import { accessSync } from "fs";
+import * as path from "path";
+import { pathToFileURL } from "url";
+
+import paths from "@vertigis/sdk-library/config/paths.js";
 import chalk, { supportsColor } from "chalk";
 import webpack from "webpack";
 
@@ -13,7 +20,18 @@ process.on("unhandledRejection", err => {
 // do that with ES modules is by using a dynamic import.
 process.env.BABEL_ENV = "production";
 process.env.NODE_ENV = "production";
-const { default: webpackConfig } = await import("../config/webpack.config.js");
+
+// Load the webpack.config.js from the project folder if it exists.
+let webpackConfigUrl;
+try {
+    const localWebPackPath = path.join(paths.projRoot, "webpack.config.js");
+    accessSync(localWebPackPath);
+    webpackConfigUrl = pathToFileURL(localWebPackPath).href;
+} catch (e) {
+    webpackConfigUrl = "../config/webpack.config.js";
+}
+const { default: webpackConfig } = await import(webpackConfigUrl);
+
 const build = () => {
     console.log("Creating an optimized production build...\n");
 

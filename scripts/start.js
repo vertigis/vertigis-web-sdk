@@ -1,11 +1,15 @@
 // @ts-check
+"use strict";
+
+import { existsSync } from "fs";
 import * as http from "http";
 import * as https from "https";
+import path from "path";
+import { pathToFileURL } from "url";
 
+import paths from "@vertigis/sdk-library/config/paths.js";
 import webpack from "webpack";
 import WebpackDevServer from "webpack-dev-server";
-
-import paths from "../config/paths.js";
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
@@ -18,7 +22,14 @@ process.on("unhandledRejection", err => {
 // do that with ES modules is by using a dynamic import.
 process.env.BABEL_ENV = "development";
 process.env.NODE_ENV = "development";
-const { default: webpackConfig } = await import("../config/webpack.config.js");
+
+// Load the webpack.config.js from the project folder if it exists.
+const localWebPackPath = path.join(paths.projRoot, "webpack.config.js");
+const webpackConfigUrl = existsSync(localWebPackPath)
+    ? pathToFileURL(localWebPackPath).href
+    : "../config/webpack.config.js";
+
+const { default: webpackConfig } = await import(webpackConfigUrl);
 
 const httpAgent = new http.Agent({ keepAlive: true });
 const httpsAgent = new https.Agent({ keepAlive: true });

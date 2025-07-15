@@ -17,6 +17,9 @@ const createIndex = process.argv.findIndex(s => s.includes("create"));
 const directoryName = process.argv[createIndex + 1];
 const directoryPath = path.resolve(directoryName);
 
+/**
+ * @param {import("child_process").SpawnSyncReturns<Buffer>} syncResult
+ */
 const checkSpawnSyncResult = syncResult => {
     if (syncResult.status !== 0) {
         process.exit(1);
@@ -42,9 +45,20 @@ const copyTemplate = projectPath => {
         errorOnExist: true,
         overwrite: false,
     });
+
+    // Not keeping these files in the template directory allows the template
+    // code to be checked from within this project.
     copySync(
         path.join(rootDir, "config/tsconfig.json.template"),
         path.join(projectPath, "tsconfig.json"),
+        {
+            errorOnExist: true,
+            overwrite: false,
+        }
+    );
+    copySync(
+        path.join(rootDir, "config/eslint.config.js.template"),
+        path.join(projectPath, "eslint.config.js"),
         {
             errorOnExist: true,
             overwrite: false,
@@ -73,6 +87,9 @@ const updateTemplateContent = projectPath => {
     }
 };
 
+/**
+ * @param {string} projectPath
+ */
 const installNpmDeps = projectPath => {
     console.log(`Installing packages. This might take a couple minutes.\n`);
     /**
@@ -84,52 +101,44 @@ const installNpmDeps = projectPath => {
         })
     ).version;
 
-    // One of this project's dependencies (semantic-release) has "npm" as a
-    // dependency. This puts a specific version of the npm binaries in the
-    // node_modules/.bin folder. Unfortunately, this means that running "npm"
-    // below will pick up this version instead of whatever is installed on the
-    // user's machine. This can have unintended side-effects, such as generating
-    // a lock file with the wrong version. Temporarily rename the whole folder
-    // to avoid this.
-    const localBinDir = path.join(rootDir, "node_modules", ".bin");
-    const localBinDirRenamed = `${localBinDir}.ignore`;
-    if (fs.existsSync(localBinDir)) {
-        fs.renameSync(localBinDir, localBinDirRenamed);
+    // First install existing deps.
+    checkSpawnSyncResult(
+        spawn.sync("npm", ["install"], {
+            cwd: projectPath,
+            stdio: "inherit",
+        })
+    );
+
+    // Copy a freshly packaged instance of this repo to install from if this
+    // is a local dev copy. This is done because eslint no longer plays nice
+    // with linked repos.
+    if (process.env.SDK_LOCAL_DEV === "true") {
+        fs.copyFileSync(
+            path.join(rootDir, "vertigis-web-sdk-0.0.0-semantically-released.tgz"),
+            path.join(projectPath, "vertigis-web-sdk.tgz")
+        );
+        fs.unlinkSync(path.join(rootDir, "vertigis-web-sdk-0.0.0-semantically-released.tgz"));
     }
 
-    try {
-        // First install existing deps.
-        checkSpawnSyncResult(
-            spawn.sync("npm", ["install"], {
+    // Add SDK and Web runtime packages.
+    checkSpawnSyncResult(
+        spawn.sync(
+            "npm",
+            [
+                "install",
+                "--save-dev",
+                "--save-exact",
+                process.env.SDK_LOCAL_DEV === "true"
+                    ? path.join(projectPath, "./vertigis-web-sdk.tgz")
+                    : `@vertigis/web-sdk@${selfVersion}`,
+                "@vertigis/web",
+            ],
+            {
                 cwd: projectPath,
                 stdio: "inherit",
-            })
-        );
-
-        // Add SDK and Web runtime packages.
-        checkSpawnSyncResult(
-            spawn.sync(
-                "npm",
-                [
-                    "install",
-                    "--save-dev",
-                    "--save-exact",
-                    process.env.SDK_LOCAL_DEV === "true"
-                        ? process.cwd()
-                        : `@vertigis/web-sdk@${selfVersion.includes("semantically-released") ? "*" : selfVersion}`,
-                    "@vertigis/web",
-                ],
-                {
-                    cwd: projectPath,
-                    stdio: "inherit",
-                }
-            )
-        );
-    } finally {
-        if (fs.existsSync(localBinDirRenamed)) {
-            fs.renameSync(localBinDirRenamed, localBinDir);
-        }
-    }
+            }
+        )
+    );
 };
 
 /**
@@ -139,8 +148,7 @@ const installNpmDeps = projectPath => {
  */
 const gitInit = projectPath => {
     console.log(`Initializing git in ${projectPath}\n`);
-
-    spawn.sync(`git init`, { cwd: projectPath }).status;
+    spawn.sync(`git init -b main`, { cwd: projectPath }).status;
 };
 
 const printSuccess = () => {

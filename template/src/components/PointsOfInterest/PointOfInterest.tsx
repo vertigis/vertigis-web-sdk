@@ -1,5 +1,5 @@
 import { xyToLngLat } from "@arcgis/core/geometry/support/webMercatorUtils";
-import { format as formatNumber } from "@vertigis/arcgis-extensions/utilities/number";
+import { format as formatNumber } from "@vertigis/arcgis-extensions/utilities/format/number";
 import { useWatchAndRerender } from "@vertigis/web/ui";
 import Box from "@vertigis/web/ui/Box";
 import DynamicIcon from "@vertigis/web/ui/DynamicIcon";
