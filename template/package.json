@@ -10,6 +10,7 @@
         "build": "vertigis-web-sdk build",
         "start": "vertigis-web-sdk start",
         "upgrade": "vertigis-web-sdk upgrade",
+        "lint": "eslint --ext .ts,.tsx",
         "prettier": "prettier --write \"**/*.json\" \"**/*.js\" \"**/*.ts\" \"**/*.tsx\""
     },
     "dependencies": {},
