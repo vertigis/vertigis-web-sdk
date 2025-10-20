@@ -8,6 +8,8 @@ import { merge } from "webpack-merge";
 const isEnvDevelopment = process.env.NODE_ENV === "development";
 const isEnvProduction = process.env.NODE_ENV === "production";
 
+export { merge };
+
 /*
  * Add customizations for Web SDK libraries to the base config.
  */
@@ -37,8 +39,15 @@ export default merge(baseConfig, {
         isEnvDevelopment &&
             new HtmlWebPackPlugin({
                 inject: false,
-                template: path.resolve(paths.ownPath, "../web-sdk/lib", "index.ejs"),
+                template: path.resolve(paths.ownPath, "./lib/web/index.ejs"),
                 additionalLibs: process.env.ADDITIONAL_LIBS,
             }),
     ].filter(Boolean),
+    resolveLoader: {
+        modules: [
+            "node_modules/@vertigis/web-sdk/node_modules/@vertigis/sdk-library/node_modules/",
+            "node_modules/@vertigis/sdk-library/node_modules",
+            "node_modules",
+        ],
+    },
 });

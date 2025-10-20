@@ -1,5 +1,4 @@
-import defaultWebpackConfig from "@vertigis/web-sdk/config/webpack.config.js";
-import { merge } from "webpack-merge";
+import defaultWebpackConfig, { merge } from "@vertigis/web-sdk/config/webpack.config.js";
 
 export default merge(defaultWebpackConfig, {
     // Add custom webpack configuration for your project here.
