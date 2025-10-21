@@ -17,7 +17,8 @@
         "config",
         "lib",
         "scripts",
-        "template"
+        "template",
+        "test"
     ],
     "type": "module",
     "engines": {
@@ -44,7 +45,7 @@
         "cross-env": "7.0.3",
         "eslint": "^9.37.0",
         "eslint-import-resolver-typescript": "^4.4.4",
-        "execa": "8.0.1",
+        "execa": "^9.6.0",
         "lint-staged": "~15.5.0",
         "prettier": "3.2.5",
         "simple-git-hooks": "~2.12.1",
