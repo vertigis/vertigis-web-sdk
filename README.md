@@ -29,10 +29,6 @@ Runs the project in development mode. Open [http://localhost:3001](http://localh
 
 The page will automatically reload if you make changes to the code. You will see build errors and warnings in the console.
 
-### `npm run upgrade`
-
-Upgrades the library's dependencies to point to the latest versions of VertiGIS Studio Web and the VertiGIS Studio Web SDK.
-
 ### `npm run build`
 
 Builds the library for production to the `build` folder. It optimizes the build for the best performance.
@@ -40,6 +36,14 @@ Builds the library for production to the `build` folder. It optimizes the build 
 Your custom library is now ready to be deployed!
 
 See the [section about deployment](https://developers.vertigisstudio.com/docs/web/sdk-deployment/) in the [Developer Center](https://developers.vertigisstudio.com/docs/web/overview/) for more information.
+
+## Upgrading
+
+To update a previously created project to the latest version of the Web SDK, navigate to the root directory of that project and run
+
+```sh
+npx @vertigis/web-sdk@latest upgrade
+```
 
 ## Documentation
 

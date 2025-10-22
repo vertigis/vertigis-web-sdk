@@ -18,6 +18,14 @@ Your custom library is now ready to be deployed!
 
 See the [section about deployment](https://developers.vertigis.com/docs/web/sdk-deployment/) in the [Developer Center](https://developers.vertigis.com/docs/web/overview/) for more information.
 
+## Upgrading
+
+To update a previously created project to the latest version of the Web SDK, navigate to the root directory of that project and run
+
+```sh
+npx @vertigis/web-sdk@latest upgrade
+```
+
 ## Learn More
 
 Find [further documentation on the SDK](https://developers.vertigis.com/docs/web/sdk-overview/) on the [VertiGIS Studio Developer Center](https://developers.vertigis.com/docs/web/overview/)

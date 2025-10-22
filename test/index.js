@@ -11,6 +11,7 @@ process.env.OPEN_BROWSER = "false";
 process.env.SDK_LOCAL_DEV = "true";
 process.env.ROOT_DIRECTORY = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 process.env.TEST_PROJECT_PATH = path.join(process.env.ROOT_DIRECTORY, "test-lib");
+process.env.UPGRADE_PROJECTS_PATH = "node_modules/@vertigis/sdk-library/test/e2e/upgradeProjects";
 process.env.SMOKE_TEST = "true";
 process.env.SDK_PLATFORM = "web";
 
