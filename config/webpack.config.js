@@ -46,6 +46,7 @@ export default merge(baseConfig, {
     resolveLoader: {
         modules: [
             "node_modules/@vertigis/web-sdk/node_modules/@vertigis/sdk-library/node_modules/",
+            "node_modules/@vertigis/web-sdk/node_modules",
             "node_modules/@vertigis/sdk-library/node_modules",
             "node_modules",
         ],
