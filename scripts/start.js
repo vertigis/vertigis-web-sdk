@@ -10,7 +10,7 @@ import { pathToFileURL } from "url";
 import paths from "@vertigis/sdk-library/config/paths.js";
 import webpack from "webpack";
 import WebpackDevServer from "webpack-dev-server";
-import merge from "webpack-merge";
+import { merge } from "webpack-merge";
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
@@ -80,9 +80,12 @@ const serverConfig = {
     },
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+const mergedConfig = merge(serverConfig, webpackConfig?.devServer ?? {});
+
 const devServer = new WebpackDevServer(
-    merge(serverConfig, webpackConfig?.devServer ?? {}),
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    mergedConfig,
     compiler
 );
+
 await devServer.start();
