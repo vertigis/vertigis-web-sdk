@@ -20,7 +20,7 @@ export default merge(baseConfig, {
         },
     },
     externals: [
-        /^@arcgis\/.+$/,
+        /^@arcgis\/core\/.+$/,
         /^esri\/.+$/,
         /^@vertigis\/arcgis-extensions\/.+$/,
         /^@vertigis\/viewer-spec\/.+$/,
