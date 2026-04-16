@@ -1,16 +1,12 @@
 import Collection from "@arcgis/core/core/Collection";
+import { ResourceHandle } from "@arcgis/core/core/Handles";
 import type Point from "@arcgis/core/geometry/Point";
 import type { ChangeEvent } from "@vertigis/arcgis-extensions/support/esri";
 import type { LocationMarkerEvent } from "@vertigis/viewer-spec/messaging/registry/location-marker";
 import { toColor } from "@vertigis/web/branding";
 import type { MapModel } from "@vertigis/web/mapping";
 import { command, type HasGeometry } from "@vertigis/web/messaging";
-import {
-    ComponentModelBase,
-    serializable,
-    type ComponentModelProperties,
-    importModel,
-} from "@vertigis/web/models";
+import { ComponentModelBase, serializable, type ComponentModelProperties, importModel } from "@vertigis/web/models";
 
 import PointOfInterestModel from "./PointOfInterestModel";
 
@@ -40,7 +36,7 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
     // changes.
     readonly pointsOfInterest = new Collection<PointOfInterestModel>();
     private _nextId = 1;
-    private readonly _handles: IHandle[] = [];
+    private readonly _handles: ResourceHandle[] = [];
 
     /**
      * Creates a new point of interest at the specified location.
@@ -108,9 +104,7 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
         }
     };
 
-    private readonly _onPointOfInterestsChange = async (
-        e: ChangeEvent<PointOfInterestModel>
-    ): Promise<void> => {
+    private readonly _onPointOfInterestsChange = async (e: ChangeEvent<PointOfInterestModel>): Promise<void> => {
         // Add or remove markers on the map as appropriate whenever the
         // collection changes.
         if (e.added?.length) {
