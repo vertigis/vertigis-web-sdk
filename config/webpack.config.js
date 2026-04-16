@@ -26,8 +26,8 @@ export default merge(baseConfig, {
         /^@vertigis\/viewer-spec\/.+$/,
         /^@vertigis\/web\/.+$/,
         /^@vertigis\/workflow\/.+$/,
-        "react",
-        "react-dom",
+        /^react(\/.+)*$/,
+        /^react-dom(\/.+)*$/,
     ],
     output: {
         // Use "/" in dev so hot updates are requested from server root instead
