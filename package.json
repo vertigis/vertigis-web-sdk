@@ -40,7 +40,7 @@
     },
     "devDependencies": {
         "@types/node": "~22.13.14",
-        "@vertigis/web": "^5.38.0",
+        "@vertigis/web": "^5.42.0",
         "conventional-changelog-conventionalcommits": "7.0.2",
         "cross-env": "7.0.3",
         "eslint": "^9.37.0",
@@ -57,5 +57,12 @@
     },
     "lint-staged": {
         "*.{js,json,ts,tsx,md,xml}": "prettier --write"
+    },
+    "allowScripts": {
+        "@mui/x-telemetry": false,
+        "@vaadin/vaadin-usage-statistics": false,
+        "playwright-chromium": false,
+        "simple-git-hooks": false,
+        "unrs-resolver": false
     }
 }

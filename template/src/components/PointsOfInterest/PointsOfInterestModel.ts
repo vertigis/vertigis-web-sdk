@@ -1,5 +1,4 @@
 import Collection from "@arcgis/core/core/Collection";
-import { ResourceHandle } from "@arcgis/core/core/Handles";
 import type Point from "@arcgis/core/geometry/Point";
 import type { ChangeEvent } from "@vertigis/arcgis-extensions/support/esri";
 import type { LocationMarkerEvent } from "@vertigis/viewer-spec/messaging/registry/location-marker";
@@ -36,7 +35,6 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
     // changes.
     readonly pointsOfInterest = new Collection<PointOfInterestModel>();
     private _nextId = 1;
-    private readonly _handles: ResourceHandle[] = [];
 
     /**
      * Creates a new point of interest at the specified location.
@@ -81,20 +79,14 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
         // override a method.
         await super._onInitialize();
 
-        // Registration handles for event handlers should be saved and cleaned
-        // up when no longer needed.
-        this._handles.push(
+        // Everything that extends `ComponentModelBase` will have a special
+        // collection attached called `_handles`. You can add the results of
+        // any event subscriptions here and they will be cleaned up
+        // automatically.
+        this._handles.add(
             this.messages.events.locationMarker.updated.subscribe(this._onMarkerUpdated),
             this.pointsOfInterest.on("change", this._onPointOfInterestsChange)
         );
-    }
-
-    protected override async _onDestroy(): Promise<void> {
-        // Always invoke the super implementation.
-        await super._onDestroy();
-
-        // Clean up event handlers.
-        this._handles.forEach(h => h.remove());
     }
 
     private readonly _onMarkerUpdated = (e: LocationMarkerEvent): void => {
