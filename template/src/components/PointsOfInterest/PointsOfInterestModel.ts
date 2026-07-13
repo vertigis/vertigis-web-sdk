@@ -89,14 +89,6 @@ export default class PointsOfInterestModel extends ComponentModelBase<PointsOfIn
         );
     }
 
-    protected override async _onDestroy(): Promise<void> {
-        // Always invoke the super implementation.
-        await super._onDestroy();
-
-        // Clean up event handlers.
-        this._handles.removeAll();
-    }
-
     private readonly _onMarkerUpdated = (e: LocationMarkerEvent): void => {
         const matchingPoi = this.pointsOfInterest.find(poi => poi.id === e.id);
         if (matchingPoi) {
