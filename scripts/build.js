@@ -8,10 +8,20 @@ import { pathToFileURL } from "node:url";
 import paths from "@vertigis/sdk-library/config/paths.js";
 import sdkBuild from "@vertigis/sdk-library/scripts/build.js";
 
+import libPackage from "../node_modules/@vertigis/sdk-library/package.json" with { type: "json" };
+import webPackage from "../node_modules/@vertigis/web/package.json" with { type: "json" };
+import sdkPackage from "../package.json" with { type: "json" };
+
 // These needs to be set prior to importing the webpack config. The only way to
 // do that with ES modules is by using a dynamic import.
 process.env.BABEL_ENV = "production";
 process.env.NODE_ENV = "production";
+
+// This information will be included in a banner comment.
+process.env.SDK_PLATFORM = "web";
+process.env.SDK_VERSION = sdkPackage.version;
+process.env.SDK_LIBRARY_VERSION = libPackage.version;
+process.env.PLATFORM_VERSION = webPackage.version;
 
 // Load the webpack.config.js from the project folder if it exists.
 const localWebPackPath = path.join(paths.projRoot, "webpack.config.js");
@@ -29,7 +39,7 @@ process.on("unhandledRejection", err => {
 });
 
 try {
-    await sdkBuild(webpackConfig, "web");
+    await sdkBuild(webpackConfig);
 } catch (e) {
     if (e instanceof Error && e.message) {
         console.error(e);

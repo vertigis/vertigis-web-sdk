@@ -19,5 +19,9 @@
     },
     "overrides": {
         "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
+    },
+    "allowScripts": {
+        "@mui/x-telemetry": false,
+        "@vaadin/vaadin-usage-statistics": false
     }
 }
