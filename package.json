@@ -61,7 +61,7 @@
     "allowScripts": {
         "@mui/x-telemetry": false,
         "@vaadin/vaadin-usage-statistics": false,
-        "playwright-chromium": false,
+        "playwright-chromium": true,
         "simple-git-hooks": false,
         "unrs-resolver": false
     }
