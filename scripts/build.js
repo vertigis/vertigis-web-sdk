@@ -6,10 +6,10 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 
 import paths from "@vertigis/sdk-library/config/paths.js";
+import libPackage from "@vertigis/sdk-library/package.json" with { type: "json" };
 import sdkBuild from "@vertigis/sdk-library/scripts/build.js";
+import webPackage from "@vertigis/web/package.json" with { type: "json" };
 
-import libPackage from "../node_modules/@vertigis/sdk-library/package.json" with { type: "json" };
-import webPackage from "../node_modules/@vertigis/web/package.json" with { type: "json" };
 import sdkPackage from "../package.json" with { type: "json" };
 
 // These needs to be set prior to importing the webpack config. The only way to
