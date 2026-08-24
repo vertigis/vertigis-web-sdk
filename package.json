@@ -34,7 +34,7 @@
         "prettier": "prettier --write \"**/*.json\" \"**/*.js\" \"**/*.ts\" \"**/*.tsx\""
     },
     "dependencies": {
-        "@vertigis/sdk-library": "^2.0.1",
+        "@vertigis/sdk-library": "~2.1.0",
         "html-webpack-plugin": "^5.6.4",
         "webpack-merge": "~6.0.1"
     },
@@ -61,7 +61,7 @@
     "allowScripts": {
         "@mui/x-telemetry": false,
         "@vaadin/vaadin-usage-statistics": false,
-        "playwright-chromium": false,
+        "playwright-chromium": true,
         "simple-git-hooks": false,
         "unrs-resolver": false
     }

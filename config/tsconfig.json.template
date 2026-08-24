@@ -1,7 +1,6 @@
 {
     "extends": "@vertigis/web-sdk/config/tsconfig.json",
     "compilerOptions": {
-        "baseUrl": ".",
         "paths": {
             "esri/*": ["./node_modules/@arcgis/core/*"]
         },
