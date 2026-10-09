@@ -22,7 +22,8 @@ libraries for VertiGIS Studio Web.
     projects.
 -   `semantic-release` releases the package from `master`, The version in `package.json` is a placeholder. Do not change
     it.
--   A `CHANGELOG.md` file is maintained. Only **user facing** changes are included.
+-   A `CHANGELOG.md` file is maintained. Only **user facing** changes are included. Do not record changes from the
+    `@vertigis/sdk-library` dependency.
 
 ## Commands
 
