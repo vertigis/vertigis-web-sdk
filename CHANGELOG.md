@@ -1,10 +1,17 @@
 # Changelog
 
+## [3.1.1] - 2026-10-15
+
+### Changed
+
+-   Update TypeScript in new projects to `^6.0.3`
+
 ## [3.1.0] - 2026-08-24
 
 ### Added
 
--   Add a banner comment with the library ID and the versions of Web, the Web SDK, and `@vertigis/sdk-library` to the built library
+-   Add a banner comment with the library ID and the versions of Web, the Web SDK, and `@vertigis/sdk-library` to the
+    built library
 -   Set `allowScripts` to false for `@mui/x-telemetry` and `@vaadin/vaadin-usage-statistics` in new projects
 
 ### Removed
@@ -21,7 +28,8 @@
 
 ### Fixed
 
--   Exclude `react` and `react-dom` subpath imports, such as `react/jsx-runtime`, from the bundle again (regression in 2.0.0)
+-   Exclude `react` and `react-dom` subpath imports, such as `react/jsx-runtime`, from the bundle again (regression in
+    2.0.0)
 -   Fix a type error in the sample project
 
 ## [3.0.1] - 2026-02-03
@@ -76,6 +84,7 @@ _To use this release with an existing project, run `npx @vertigis/web-sdk@latest
 -   Add support for a `webpack.config.js` file in the project folder to customize the webpack configuration
 -   Add a `webpack.config.js` file to new projects
 
+[3.1.1]: https://github.com/vertigis/vertigis-web-sdk/releases/tag/v3.1.1
 [3.1.0]: https://github.com/vertigis/vertigis-web-sdk/releases/tag/v3.1.0
 [3.0.3]: https://github.com/vertigis/vertigis-web-sdk/releases/tag/v3.0.3
 [3.0.2]: https://github.com/vertigis/vertigis-web-sdk/releases/tag/v3.0.2
