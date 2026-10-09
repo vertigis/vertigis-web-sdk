@@ -31,7 +31,7 @@
     "scripts": {
         "create": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-web-sdk.js create",
         "test": "node ./test/index.js",
-        "prettier": "prettier --write \"**/*.json\" \"**/*.js\" \"**/*.ts\" \"**/*.tsx\""
+        "prettier": "prettier --write \"**/*.json\" \"**/*.js\" \"**/*.ts\" \"**/*.tsx\" \"**/*.md\""
     },
     "dependencies": {
         "@vertigis/sdk-library": "~2.1.6",
