@@ -31,16 +31,16 @@
     "scripts": {
         "create": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-web-sdk.js create",
         "test": "node ./test/index.js",
-        "prettier": "prettier --write \"**/*.json\" \"**/*.js\" \"**/*.ts\" \"**/*.tsx\""
+        "prettier": "prettier --write \"**/*.json\" \"**/*.js\" \"**/*.ts\" \"**/*.tsx\" \"**/*.md\""
     },
     "dependencies": {
-        "@vertigis/sdk-library": "~2.1.0",
+        "@vertigis/sdk-library": "~2.1.6",
         "html-webpack-plugin": "^5.6.4",
         "webpack-merge": "~6.0.1"
     },
     "devDependencies": {
         "@types/node": "~22.13.14",
-        "@vertigis/web": "^5.42.0",
+        "@vertigis/web": "^5.43.1",
         "conventional-changelog-conventionalcommits": "7.0.2",
         "cross-env": "7.0.3",
         "eslint": "^9.37.0",
@@ -50,7 +50,7 @@
         "node-fetch": "^2.7.0",
         "prettier": "3.2.5",
         "simple-git-hooks": "~2.12.1",
-        "typescript": "~5.6.3"
+        "typescript": "^6.0.3"
     },
     "simple-git-hooks": {
         "pre-commit": "npx lint-staged"
