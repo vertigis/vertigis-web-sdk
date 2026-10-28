@@ -1,10 +1,20 @@
 # Changelog
 
-## [3.1.1] - 2026-10-15
+## [3.2.0] - 2026-10-30
+
+### Added
+
+-   Add a `changelog` script that may be run to determine what changes have occured since a library script was last
+    compiled
+-   Add `changelog` and `upgrade` scripts to the template for new projects
+-   Add markdown support to `prettier` config in new projects
+
+## [3.1.1] - 2026-10-19
 
 ### Changed
 
 -   Update TypeScript in new projects to `^6.0.3`
+-   Change `prettier` config in new projects to use a width of 120
 
 ## [3.1.0] - 2026-08-24
 
@@ -84,6 +94,7 @@ _To use this release with an existing project, run `npx @vertigis/web-sdk@latest
 -   Add support for a `webpack.config.js` file in the project folder to customize the webpack configuration
 -   Add a `webpack.config.js` file to new projects
 
+[3.2.0]: https://github.com/vertigis/vertigis-web-sdk/releases/tag/v3.2.0
 [3.1.1]: https://github.com/vertigis/vertigis-web-sdk/releases/tag/v3.1.1
 [3.1.0]: https://github.com/vertigis/vertigis-web-sdk/releases/tag/v3.1.0
 [3.0.3]: https://github.com/vertigis/vertigis-web-sdk/releases/tag/v3.0.3
