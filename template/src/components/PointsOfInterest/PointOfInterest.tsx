@@ -34,10 +34,7 @@ const PointOfInterest: FC<PointOfInterestProps> = ({ model, onDelete, ...other }
     return (
         <MenuItem {...other}>
             <Box className="PointOfInterest-swatch" style={{ backgroundColor: color.toCss() }} />
-            <ListItemText
-                primary={title}
-                secondary={`Lat: ${formatLatLon(lat)}, Lon: ${formatLatLon(lon)}`}
-            />
+            <ListItemText primary={title} secondary={`Lat: ${formatLatLon(lat)}, Lon: ${formatLatLon(lon)}`} />
             <MenuItemSecondaryAction>
                 <IconButton onClick={onDelete} title="Delete">
                     <DynamicIcon src="trash" />

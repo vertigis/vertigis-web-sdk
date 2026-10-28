@@ -12,10 +12,7 @@ export default defineConfig([
         rules: {
             "@typescript-eslint/array-type": "warn",
             "@typescript-eslint/consistent-type-definitions": ["warn", "interface"],
-            "@typescript-eslint/consistent-type-imports": [
-                "warn",
-                { disallowTypeAnnotations: false },
-            ],
+            "@typescript-eslint/consistent-type-imports": ["warn", { disallowTypeAnnotations: false }],
             "@typescript-eslint/explicit-module-boundary-types": "off",
             "@typescript-eslint/member-ordering": [
                 "warn",

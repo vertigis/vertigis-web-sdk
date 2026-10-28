@@ -9,6 +9,8 @@
     "scripts": {
         "build": "vertigis-web-sdk build",
         "start": "vertigis-web-sdk start",
+        "changelog": "npx @vertigis/web-sdk@latest changelog",
+        "upgrade": "npx @vertigis/web-sdk@latest upgrade",
         "lint": "eslint --ext .ts,.tsx",
         "prettier": "prettier --write \"**/*.json\" \"**/*.js\" \"**/*.ts\" \"**/*.tsx\""
     },
